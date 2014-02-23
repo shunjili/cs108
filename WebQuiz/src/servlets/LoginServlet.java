@@ -17,7 +17,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     public LoginServlet() {
         // TODO Auto-generated constructor stub
