@@ -17,6 +17,7 @@ public class AccountManager {
 	private static final int MAX_USERNAME_LEN = 32;
 	private static final int SALT_LEN = 40;
 	
+
 	private static final String USERNAME_COL = "username";
 	private static final String DISPLAYNAME_COL = "displayname";
 	private static final String PASSHASH_COL = "passhash";
@@ -33,7 +34,7 @@ public class AccountManager {
 	 * @param password
 	 * @return Account if username & password are valid, null otherwise.
 	 */
-	public Account getAccountLogin(String queryUsername, String password) {
+	public static Account getAccountLogin(String queryUsername, String password) {
 
 		//sanitize input
 		if(queryUsername.length() > MAX_USERNAME_LEN)
@@ -107,7 +108,7 @@ public class AccountManager {
 	 * @param password password string to be hashed and paired with the account
 	 * @return true on success, false on failure
 	 */
-	public boolean storeNewAccount(Account newAccount, String password) {
+	public static boolean storeNewAccount(Account newAccount, String password) {
 		
 		//sanitize input
 		if(newAccount.getUsername().length() > MAX_USERNAME_LEN)
@@ -153,13 +154,24 @@ public class AccountManager {
 			byte[] hashval = digest.digest(complete.getBytes());
 			String passhash = new String(hashval);
 			
+			String username = newAccount.getUsername();
+			String typeStr = newAccount.getTypeString();
+			String displayname = newAccount.getDisplayName();
+			
+			//build the insert statement
+			query = "INSERT INTO " + MyDBInfo.ACCOUNTS_TABLE + " VALUES "
+					+ "(\"" + username + "\",\"" + displayname + "\",\"" + passhash + "\",\"" + salt
+					+ "\",\"" + typeStr + "\");";
 
 			//execute the update
 			stmt.executeUpdate(query);
+			
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
-		
-		
-		return false;
+
 	}
 	
 	
@@ -172,7 +184,7 @@ public class AccountManager {
 	 * @return true if the password and salt create the same hash as passhash, false if they
 	 * create different hashes, or if there was an error with MessageDigest.
 	 */
-	private boolean isPasswordCorrect(String password, String passhash, String salt) {
+	private static boolean isPasswordCorrect(String password, String passhash, String salt) {
 
 		//set up the message digest
 		MessageDigest digest;
@@ -202,7 +214,7 @@ public class AccountManager {
 	 * Generates a string of random 
 	 * @return
 	 */
-	private String generateSalt() {
+	private static String generateSalt() {
 		SecureRandom random = new SecureRandom();
 		byte[] saltBytes = new byte[SALT_LEN];
 		random.nextBytes(saltBytes);
