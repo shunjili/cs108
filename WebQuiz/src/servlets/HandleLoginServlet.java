@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import objects.AccountManager;
 import objects.Account;
@@ -44,8 +45,10 @@ public class HandleLoginServlet extends HttpServlet {
 		//is checked in the LoginResult.jsp file.
 		Account loggedAccount = AccountManager.getAccountLogin(username, password);
 		request.setAttribute("loggedAccount", loggedAccount);
-		request.getRequestDispatcher("LoginResult.jsp").forward(request, response);
-		
+		HttpSession session = request.getSession();
+		session.setAttribute("loggedAccount", loggedAccount);
+		request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
+//		request.getRequestDispatcher("LoginResult.jsp").forward(request, response);	
 	}
 
 }
