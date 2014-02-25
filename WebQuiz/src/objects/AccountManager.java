@@ -15,7 +15,7 @@ import java.util.concurrent.CountDownLatch;
 public class AccountManager {
 
 	private static final int MAX_USERNAME_LEN = 32;
-	private static final int SALT_LEN = 40;
+	private static final int SALT_LEN = 20;
 	
 
 	private static final String USERNAME_COL = "username";
@@ -59,7 +59,7 @@ public class AccountManager {
 
 			//prepare query
 			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + " WHERE " + USERNAME_COL
-					+ "=" + queryUsername;
+					+ "=\"" + queryUsername + "\";";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
@@ -80,8 +80,8 @@ public class AccountManager {
 				username = rs.getString(USERNAME_COL);
 				displayname = rs.getString(DISPLAYNAME_COL);
 				passhash = rs.getString(PASSHASH_COL);
-				salt = rs.getString("SALT_COL");
-				typeString = rs.getString("TYPE_COL");
+				salt = rs.getString(SALT_COL);
+				typeString = rs.getString(TYPE_COL);
 
 				//check if password is correct
 				if(isPasswordCorrect(password, passhash, salt)) {
@@ -129,7 +129,7 @@ public class AccountManager {
 
 			//first, check if there are any existing Accounts with the same username
 			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + " WHERE " + USERNAME_COL
-					+ "=" + newAccount.getUsername();
+					+ "=\"" + newAccount.getUsername() + "\";";
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -152,7 +152,7 @@ public class AccountManager {
 			String salt = generateSalt();
 			String complete = password + salt;
 			byte[] hashval = digest.digest(complete.getBytes());
-			String passhash = new String(hashval);
+			String passhash = hexToString(hashval);
 			
 			String username = newAccount.getUsername();
 			String typeStr = newAccount.getTypeString();
@@ -165,7 +165,6 @@ public class AccountManager {
 
 			//execute the update
 			stmt.executeUpdate(query);
-			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -200,7 +199,7 @@ public class AccountManager {
 
 		//calculate the hash of the salted password
 		byte[] hashResult = digest.digest(complete.getBytes());
-		byte[] passhashBytes = passhash.getBytes();
+		byte[] passhashBytes = hexToArray(passhash);
 
 		//check if the hashResult is the same as the stored hash value
 		if(Arrays.equals(hashResult, passhashBytes)) {
@@ -208,6 +207,37 @@ public class AccountManager {
 		} else {
 			return false; // otherwise return false
 		}
+	}
+	
+	/*
+	 Given a byte[] array, produces a hex String,
+	 such as "234a6f". with 2 chars for each byte in the array.
+	 (provided code)
+	*/
+	public static String hexToString(byte[] bytes) {
+		StringBuffer buff = new StringBuffer();
+		for (int i=0; i<bytes.length; i++) {
+			int val = bytes[i];
+			val = val & 0xff;  // remove higher bits, sign
+			if (val<16) buff.append('0'); // leading 0
+			buff.append(Integer.toString(val, 16));
+		}
+		return buff.toString();
+	}
+	
+	
+	/*
+	 Given a string of hex byte values such as "24a26f", creates
+	 a byte[] array of those values, one byte value -128..127
+	 for each 2 chars.
+	 (provided code)
+	*/
+	public static byte[] hexToArray(String hex) {
+		byte[] result = new byte[hex.length()/2];
+		for (int i=0; i<hex.length(); i+=2) {
+			result[i/2] = (byte) Integer.parseInt(hex.substring(i, i+2), 16);
+		}
+		return result;
 	}
 	
 	/**
@@ -219,7 +249,7 @@ public class AccountManager {
 		byte[] saltBytes = new byte[SALT_LEN];
 		random.nextBytes(saltBytes);
 		
-		return new String(saltBytes);
+		return hexToString(saltBytes);
 	}
 
 }
