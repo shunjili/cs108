@@ -37,6 +37,8 @@ public class CreateAccountServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//grab the necessary parameters
 		String username = request.getParameter("username");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");

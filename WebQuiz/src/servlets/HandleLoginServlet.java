@@ -36,9 +36,12 @@ public class HandleLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//grab our parameters
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		//get the loggedAccount. If it's null, we'll know something was wrong. This
+		//is checked in the LoginResult.jsp file.
 		Account loggedAccount = AccountManager.getAccountLogin(username, password);
 		request.setAttribute("loggedAccount", loggedAccount);
 		request.getRequestDispatcher("LoginResult.jsp").forward(request, response);

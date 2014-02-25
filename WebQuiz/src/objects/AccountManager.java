@@ -64,14 +64,11 @@ public class AccountManager {
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
-
-
 			String username;
 			String displayname;
 			String passhash;
 			String salt;
 			String typeString;
-
 
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
@@ -132,12 +129,12 @@ public class AccountManager {
 					+ "=\"" + newAccount.getUsername() + "\";";
 			
 			ResultSet rs = stmt.executeQuery(query);
-			
 			while(rs.next()) {
 				//if we found ANY records with the given username, return false
 				return false;
 			}
 			
+			//create a MessageDigest to do hashing
 			MessageDigest digest;
 			try {
 				digest = MessageDigest.getInstance("SHA");
@@ -241,7 +238,7 @@ public class AccountManager {
 	}
 	
 	/**
-	 * Generates a string of random 
+	 * Generates a string of random hex characters
 	 * @return
 	 */
 	private static String generateSalt() {
