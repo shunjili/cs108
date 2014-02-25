@@ -19,12 +19,22 @@ page import="objects.Account"%>
 Account thisAccount= (Account) session.getAttribute("loggedAccount");
 %>
 <div class="page-header">
-  <h1>View <%= thisAccount.getDisplayName() %> Info  <small>Welcome</small></h1>
+  <h1>View My Account Info  <small>Welcome</small></h1>
 </div>
 <div class="row">
-<div class="col-md-2"></div>
-<div class="col-md-8">This is a block</div>
-<div class="col-md-2"></div>
+<div class="col-md-1">
+
+</div>
+<div class="col-md-2">
+<div>
+ <%= thisAccount.getDisplayName() %>
+</div>
+<p>
+Some Basic Information
+</p>
+</div>
+<div class="col-md-7">This is this person's main activity panel</div>
+<div class="col-md-2"><a href = "/WebQuiz/Login.html">Login Page</a></div>
 </div>
 </body>
 </html>
