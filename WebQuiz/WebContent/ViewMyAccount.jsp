@@ -19,11 +19,15 @@ page import="objects.Account"%>
 Account thisAccount= (Account) session.getAttribute("loggedAccount");
 %>
 <div class="page-header">
-  <h1>View My Account Info  <small>Welcome</small></h1>
+<div class = "row">
+<div class = "col-md-3"></div>
+<div class = "col-md-7">
+ <h1>View My Account Info  <small>Welcome</small></h1>
+</div>"
+</div>
 </div>
 <div class="row">
 <div class="col-md-1">
-
 </div>
 <div class="col-md-2">
 <div>
