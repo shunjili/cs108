@@ -23,15 +23,16 @@
 <body>
 <h1>Login to Quizzville</h1>
 <div>
-	<img src="images/quiz.jpg" width="400" height="250" style="float:left"/>
-	<p align = "center">
+	<img src="images/quiz2.jpg" width="347" height="310" style="float:left"/>
+	<h2 align = "center">
 		Take Quiz Anywhere
-	</p>
+	</h2>
+	<p>&nbsp;</p>
 	<form method="POST" action = "HandleLoginServlet">
-		<p>Enter Username:<input type="text" name="username" placeholder="Username"/></p>
-		<p>Enter Password:<input type="text" name="password" placeholder="Password"/></p>
+		<p align = "center">Enter Username:<input type="text" name="username" placeholder="Username"/></p>
+		<p align = "center">Enter Password:<input type="text" name="password" placeholder="Password"/></p>
 		<p align = "center"><input type="submit" value="login" class="btn btn-primary"/></p>
-		<p align = "center"><input type="checkbox"> Remember me</p>
+		<p align = "center"><input name="remember" type="checkbox" id="rememberUser"> Remember me</p>
 	</form>
 	<h2 align = "center"><a href="CreateAccount.html">Sign up</a></h2>
 </div>
@@ -55,7 +56,7 @@
 			    · <a href=#>Shunji</a>
 			    · <a href=#>JB</a>
 			    </p>
-  		 <p align = "center">Copyright © 2013 WebQuiz , all rights reserved</p>
+  		 <p align = "center">Copyright © 2014 WebQuiz , all rights reserved</p>
 	</div>
 	
 	
