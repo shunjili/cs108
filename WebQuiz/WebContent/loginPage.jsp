@@ -16,7 +16,7 @@
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="cookies.js"></script>
 <script type="text/javascript">
-        onload = checkCookie();
+        windows.onload = checkCookie();
 </script>
 
 </head>
@@ -28,7 +28,7 @@
 	<form method="POST" action = "HandleLoginServlet">
 		<p>Enter Username:<input type="text" name="username"/></p>
 		<p>Enter Password:<input type="text" name="password"/></p>
-		<p><input type="submit" value="login"/></p>
+		<p><input type="submit" value="login" class="btn btn-primary"/></p>
 	</form>
 	<h2><a href="CreateAccount.html">Sign up</a></h2>
 </div>
