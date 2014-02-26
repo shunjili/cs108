@@ -23,7 +23,7 @@ Account thisAccount= (Account) session.getAttribute("loggedAccount");
 <div class = "col-md-3"></div>
 <div class = "col-md-7">
  <h1>View My Account Info  <small>Welcome</small></h1>
-</div>"
+</div>
 </div>
 </div>
 <div class="row">
@@ -37,8 +37,41 @@ Account thisAccount= (Account) session.getAttribute("loggedAccount");
 Some Basic Information
 </p>
 </div>
-<div class="col-md-7">This is this person's main activity panel</div>
-<div class="col-md-2"><a href = "/WebQuiz/Login.html">Login Page</a></div>
+<div class="col-md-7">
+<h3>
+Announcements
+</h3>
+
+<h3>
+List of Popular Quiz
+</h3>
+<h3>
+List of Recently Created Quiz
+</h3>
+<h3>
+List of Taken Quiz
+</h3>
+<h3>
+List of their recent quiz creating activities
+</h3>
+
+</div>
+<div class="col-md-2">
+<ul>
+<li>
+<a href = "/WebQuiz/Login.html">Login Page</a>
+</li>
+<li>
+<a href="/WebQuiz/messages.jsp">
+ You have received 1 message from another user
+</a>
+</li>
+<li>
+<div>
+Your friends recent activities
+</div>
+</li>
+</ul>
 </div>
 </body>
 </html>
