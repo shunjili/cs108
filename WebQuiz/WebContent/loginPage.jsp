@@ -24,13 +24,16 @@
 <h1>Login to Quizzville</h1>
 <div>
 	<img src="images/quiz.jpg" width="400" height="250" style="float:left"/>
-	<p>Take Quiz Anywhere</p>
+	<p align = "center">
+		Take Quiz Anywhere
+	</p>
 	<form method="POST" action = "HandleLoginServlet">
-		<p>Enter Username:<input type="text" name="username"/></p>
-		<p>Enter Password:<input type="text" name="password"/></p>
-		<p><input type="submit" value="login" class="btn btn-primary"/></p>
+		<p>Enter Username:<input type="text" name="username" placeholder="Username"/></p>
+		<p>Enter Password:<input type="text" name="password" placeholder="Password"/></p>
+		<p align = "center"><input type="submit" value="login" class="btn btn-primary"/></p>
+		<p align = "center"><input type="checkbox"> Remember me</p>
 	</form>
-	<h2><a href="CreateAccount.html">Sign up</a></h2>
+	<h2 align = "center"><a href="CreateAccount.html">Sign up</a></h2>
 </div>
 
 <p>&nbsp;</p>
