@@ -124,7 +124,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log." suffix=".txt"/>
 
-      <Context docBase="/home/steven/Documents/cs108final/cs108/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ROOT" path="" reloadable="false"/><Context docBase="/home/steven/Documents/cs108final/cs108/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/WebQuiz" path="/WebQuiz" reloadable="true" source="org.eclipse.jst.jee.server:WebQuiz"/></Host>
+      <Context docBase="/Users/JB/Documents/Stanford/CS108/FinalProject/cs108/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ROOT" path="" reloadable="false"/><Context docBase="/Users/JB/Documents/Stanford/CS108/FinalProject/cs108/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/WebQuizMakeshift" path="/WebQuizMakeshift" reloadable="true" source="org.eclipse.jst.jee.server:WebQuizMakeshift"/><Context docBase="/Users/JB/Documents/Stanford/CS108/FinalProject/cs108/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/WebQuiz" path="/WebQuiz" reloadable="true" source="org.eclipse.jst.jee.server:WebQuiz"/></Host>
     </Engine>
   </Service>
 </Server>
