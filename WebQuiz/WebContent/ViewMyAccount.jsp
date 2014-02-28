@@ -59,7 +59,7 @@ List of their recent quiz creating activities
 <div class="col-md-2">
 <ul>
 <li>
-<a href = "/WebQuiz/Login.html">Login Page</a>
+<a href = "/WebQuiz/loginPage.jsp">Login Page</a>
 </li>
 <li>
 <a href="/WebQuiz/messages.jsp">
