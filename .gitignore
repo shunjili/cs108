@@ -1,7 +1,7 @@
 *.class
-.metadata/
-Servers/
-*/.classpath
+.metadata/**
+Servers/**
+**/.classpath
 
 # Package Files #
 *.jar
