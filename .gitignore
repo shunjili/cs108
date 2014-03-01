@@ -1,6 +1,5 @@
 *.class
 .metadata/**
-.metadata/.plugins/*
 Servers/**
 **/.classpath
 
