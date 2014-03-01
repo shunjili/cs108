@@ -1,4 +1,5 @@
 USE c_cs108_svellon;
+  -- >>>>>>>>>>>> change this line so it uses your database, not mine <<<<<<<<<<<<<<<
   
 DROP TABLE IF EXISTS Accounts;
 DROP TABLE IF EXISTS UsersToAchievements;
@@ -24,6 +25,8 @@ CREATE TABLE Accounts (
     passhash CHAR(80),
     salt CHAR(80),
 	type CHAR(64),
+	email VARCHAR(64),
+	is_private TINYINT(1),
 	PRIMARY KEY(username)
 );
 
@@ -148,6 +151,6 @@ CREATE TABLE Accouncements (
 );
 
 INSERT INTO Accounts VALUES
-	("john","john","94f8f397b809abadcc4730044e28ba93a21d7db0","d47242a3114bc14d2309e9f45bec20f2f781b2d0","USER"),
-	("sally","sally","1ba0f068fe9d0f424d92bf50a04dee5e9025617a","cba8a56de43d217c7f14fe64daf10f5186d2548d","USER");
+	("john","john","94f8f397b809abadcc4730044e28ba93a21d7db0","d47242a3114bc14d2309e9f45bec20f2f781b2d0","USER","john@derp.com",0),
+	("sally","sally","1ba0f068fe9d0f424d92bf50a04dee5e9025617a","cba8a56de43d217c7f14fe64daf10f5186d2548d","USER","sally@test.net",1);
 
