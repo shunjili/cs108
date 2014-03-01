@@ -1,5 +1,4 @@
 USE c_cs108_svellon;
-  -- >>>>>>>>>>>> change this line so it uses your database, not mine <<<<<<<<<<<<<<<
   
 DROP TABLE IF EXISTS Accounts;
 DROP TABLE IF EXISTS UsersToAchievements;
