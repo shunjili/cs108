@@ -2,9 +2,10 @@ package objects;
 
 import java.util.ArrayList;
 
-public class QuestionResponseQuestion {
+public class MultipleChoiceQuestion {
 	private String question;
-	private ArrayList<String> answers;
+	private int answerIndex;
+	private ArrayList<String> possibleAnswers;
 	private String description;
 	private Account creator;
 	private Question.Type type;
@@ -12,13 +13,14 @@ public class QuestionResponseQuestion {
 	private long timestamp;
 	
 	
-	public QuestionResponseQuestion(String question, ArrayList<String> answers,
+	public MultipleChoiceQuestion(String question, int answerIndex, ArrayList<String> possibleAnswers,
 					String description, Account creator, int score, long timestamp) {
 		this.question = question;
-		this.answers = answers;
+		this.answerIndex = answerIndex;
+		this.possibleAnswers = possibleAnswers;
 		this.description = description;
 		this.creator = creator;
-		this.type = Question.Type.QUESTION_RESPONSE;
+		this.type = Question.Type.MULTIPLE_CHOICE;
 		this.score = score;
 		this.timestamp = timestamp;
 	}
@@ -27,8 +29,12 @@ public class QuestionResponseQuestion {
 		return this.question;
 	}
 	
-	public ArrayList<String> getAnswers() {
-		return this.answers;
+	public int getAnswerIndex() {
+		return this.answerIndex;
+	}
+	
+	public ArrayList<String> getPossibleAnswers() {
+		return this.possibleAnswers;
 	}
 	
 	public String getDescription() {
@@ -51,7 +57,7 @@ public class QuestionResponseQuestion {
 		return this.timestamp;
 	}
 	
-	public boolean isCorrectAnswer(String answer) {
-		return this.answers.contains(answer);
+	public boolean isCorrectAnswer(int answerIndex) {
+		return (answerIndex == this.answerIndex);
 	}
 }

@@ -23,7 +23,7 @@ public class FillInBlankQuestion {
 		this.timestamp = timestamp;
 	}
 	
-	public String getQuestions() {
+	public String getQuestion() {
 		return this.question;
 	}
 	
