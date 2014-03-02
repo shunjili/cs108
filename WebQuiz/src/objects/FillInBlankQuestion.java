@@ -43,6 +43,10 @@ public class FillInBlankQuestion {
 		return this.type;
 	}
 	
+	public String getTypeString() {
+		return "FILL_IN_BLANK";
+	}
+	
 	public int getScore() {
 		return this.score;
 	}

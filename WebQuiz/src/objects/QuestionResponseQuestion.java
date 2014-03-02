@@ -43,6 +43,10 @@ public class QuestionResponseQuestion {
 		return this.type;
 	}
 	
+	public String getTypeString() {
+		return "QUESTION_RESPONSE";
+	}
+	
 	public int getScore() {
 		return this.score;
 	}

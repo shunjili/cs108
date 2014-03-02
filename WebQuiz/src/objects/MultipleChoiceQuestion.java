@@ -49,6 +49,10 @@ public class MultipleChoiceQuestion {
 		return this.type;
 	}
 	
+	public String getTypeString() {
+		return "MULTIPLE_CHOICE";
+	}
+	
 	public int getScore() {
 		return this.score;
 	}
