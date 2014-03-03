@@ -2,7 +2,7 @@ package objects;
 
 import java.util.ArrayList;
 
-public class MultipleChoiceQuestion {
+public class MultipleChoiceQuestion implements Question {
 	private String question;
 	private int answerIndex;
 	private ArrayList<String> possibleAnswers;

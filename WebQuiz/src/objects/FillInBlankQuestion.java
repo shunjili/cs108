@@ -2,7 +2,7 @@ package objects;
 
 import java.util.ArrayList;
 
-public class FillInBlankQuestion {
+public class FillInBlankQuestion implements Question {
 	private String question;
 	private ArrayList<String> answers;
 	private String description;
