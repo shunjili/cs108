@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@
-page import="objects.*"%>
+page import="objects.*, java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +27,7 @@ page import="objects.*"%>
 </body>
 <%
 	} else {
+		ArrayList<String> announcements = AnnouncementManager.getRecentAnnouncements(10);
 %>
 <body>
 	<div class="page-header">
@@ -49,7 +50,9 @@ page import="objects.*"%>
 		</div>
 		<div class="col-md-7">
 			<h3>Announcements</h3>
-
+			<% for (int i = 0; i < announcements.size(); i++) {%>
+			<p> <%= announcements.get(i) %></p>
+			<%} %>
 			<h3>List of Popular Quiz</h3>
 			<h3>List of Recently Created Quiz</h3>
 			<h3>List of Taken Quiz</h3>
@@ -62,9 +65,11 @@ page import="objects.*"%>
 				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
 				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
 				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
+				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</li>
 				<li>
 					<div>Your friends recent activities</div>
 				</li>
+				
 			</ul>
 		</div>
 </body>
