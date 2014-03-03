@@ -59,6 +59,7 @@ page import="objects.*"%>
 		<div class="col-md-2">
 			<ul>
 				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
+				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
 				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
 				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
 				<li>

@@ -7,13 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Accounts Index</title>
 </head>
+<%
+	Account thisAccount = (Account) session
+		.getAttribute("loggedAccount");
+%>
 <body>
+	<% if(thisAccount == null) { %>
+	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
+	<% } else { %>
+	<p><a href="ViewMyAccount.jsp">Return to account view</a></p>
+	<%} %>
 	<h2>This is a list of all accounts. Usernames are in parentheses</h2>
+	]
 	<ul>
-		<% 
+		<%
 			for(Account acct : AccountManager.getAllAccounts()){
 		%>
-			<li><%= acct.getDisplayName() %> (<%=acct.getUsername()%>) - <%=acct.getTypeString() %></li>
+		<li><%=acct.getDisplayName()%> (<%=acct.getUsername()%>) - <%=acct.getTypeString()%></li>
 		<%
 			}
 		%>
