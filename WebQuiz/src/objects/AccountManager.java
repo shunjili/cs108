@@ -96,6 +96,57 @@ public class AccountManager {
 			return null;
 		}
 	}
+	
+	public static ArrayList<Account> getAllAccounts() {
+		ArrayList<Account> accountList = new ArrayList<Account>();
+		//Check for user in database
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + ";";
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			String username;
+			String displayname;
+			String passhash;
+			String salt;
+			String typeString;
+
+			
+			//get results. If no Account is return in this loop, then no account
+			//with matching credentials was found, and we return null.
+			while(rs.next()) {
+				//grab query info
+				username = rs.getString(USERNAME_COL);
+				displayname = rs.getString(DISPLAYNAME_COL);
+				passhash = rs.getString(PASSHASH_COL);
+				salt = rs.getString(SALT_COL);
+				typeString = rs.getString(TYPE_COL);
+
+				accountList.add(new Account(username, displayname, Account.stringToType(typeString)));
+			}
+
+			//if we reach this point, there was no account found, or the password was incorrect
+			return accountList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return accountList;
+		}
+	}
+	
 	public static Account getAccountByUsername(String queryUsername) {
 
 		//sanitize input
