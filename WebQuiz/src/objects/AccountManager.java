@@ -267,9 +267,9 @@ public class AccountManager {
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
 			while(rs.next()) {
-				return false;
+				return true;
 			}
-			return true;
+			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

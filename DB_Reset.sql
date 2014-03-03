@@ -25,8 +25,6 @@ CREATE TABLE Accounts (
     passhash CHAR(80),
     salt CHAR(80),
 	type CHAR(64),
-	email VARCHAR(64),
-	is_private TINYINT(1),
 	PRIMARY KEY(username)
 );
 
@@ -63,6 +61,7 @@ CREATE TABLE FriendRequests (
 );
 
 CREATE TABLE Messages (
+	message_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	sender CHAR(64),
 	receiver CHAR(64),
 	message VARCHAR(128),
@@ -151,6 +150,11 @@ CREATE TABLE Accouncements (
 );
 
 INSERT INTO Accounts VALUES
-	("john","john","94f8f397b809abadcc4730044e28ba93a21d7db0","d47242a3114bc14d2309e9f45bec20f2f781b2d0","USER","john@derp.com",0),
-	("sally","sally","1ba0f068fe9d0f424d92bf50a04dee5e9025617a","cba8a56de43d217c7f14fe64daf10f5186d2548d","USER","sally@test.net",1);
+	("john","John Smith","94f8f397b809abadcc4730044e28ba93a21d7db0","d47242a3114bc14d2309e9f45bec20f2f781b2d0","USER"),
+	("sally","Sally Jones","1ba0f068fe9d0f424d92bf50a04dee5e9025617a","cba8a56de43d217c7f14fe64daf10f5186d2548d","USER");
 
+INSERT INTO Messages (sender, receiver, message, time_stamp) VALUES
+	("john","sally","Test message from John to Sally", NOW()),
+	("john","sally","Another test message to Sally", NOW()),
+	("sally","john","Test message from Sally to John", NOW()),
+	("sally","john","Another test message to John",Now());

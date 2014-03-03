@@ -49,7 +49,7 @@ page import="objects.Account"%>
 		<div class="col-md-2">
 			<ul>
 				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
-				<li><a href="/WebQuiz/Messages.jsp"> You have received 1
+				<li><a href="/WebQuiz/messages.jsp"> You have received 1
 						message from another user </a></li>
 				<li>
 					<div>Your friends recent activities</div>

@@ -48,7 +48,7 @@ public class Message {
 	
 	
 	public String getTimeString() {
-		return timestamp.toString().split(".")[0];
+		return timestamp.toString();
 	}
 
 }
