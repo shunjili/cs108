@@ -170,6 +170,51 @@ public class AccountManager {
 
 	}
 	
+	public static boolean usernameExists(String queryUsername) {
+
+		//sanitize input
+		if(queryUsername.length() > MAX_USERNAME_LEN)
+			return false;
+
+		//change queryUsername to lower case; don't want to be case-sensitive
+		queryUsername = queryUsername.toLowerCase();
+
+		//Check for user in database
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + " WHERE " + USERNAME_COL
+					+ "=\"" + queryUsername + "\";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+
+
+
+			//get results. If no Account is return in this loop, then no account
+			//with matching credentials was found, and we return null.
+			while(rs.next()) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 	/**
 	 * This functions determines whether or not the password and salt passed in create

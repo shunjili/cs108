@@ -14,5 +14,6 @@ public class MyDBInfo {
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_svellon";
 	
 	public static final String ACCOUNTS_TABLE = "Accounts";
+	public static final String MESSAGES_TABLE = "Messages";
 
 }
