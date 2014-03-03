@@ -14,11 +14,21 @@ page import="objects.Account"%>
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
-<body>
-	<%
+<%
 		Account thisAccount = (Account) session
 				.getAttribute("loggedAccount");
-	%>
+
+	if(thisAccount == null) {
+%>
+<body>
+	<h2>
+		Please <a href="loginPage.jsp">login</a> to view your account.
+	</h2>
+</body>
+<%
+	} else {
+%>
+<body>
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-3"></div>
@@ -57,4 +67,7 @@ page import="objects.Account"%>
 			</ul>
 		</div>
 </body>
+<%
+	}
+%>
 </html>

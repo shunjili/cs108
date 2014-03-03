@@ -46,9 +46,9 @@ public class MessageManager {
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.MESSAGES_TABLE
 					+ " (" + SENDER_COL + "," + RECEIVER_COL + "," + MESSAGE_COL + "," + TIMESTAMP_COL +")"
-					+ " VALUES (" + newMsg.getSender()
-					+ ", " + newMsg.getReceiver() + ", " + newMsg.getMessage() + ", "
-					+ new Timestamp(System.currentTimeMillis()).toString() + ");";
+					+ " VALUES (\"" + newMsg.getSender()
+					+ "\", \"" + newMsg.getReceiver() + "\", \"" + newMsg.getMessage() + "\", "
+					+ "NOW()" + ");";
 
 			//execute the query
 			int returnVal = stmt.executeUpdate(query);

@@ -26,7 +26,10 @@ page import="objects.*,java.util.ArrayList"%>
 %>
 <body>
 	<h2>
-		<a href="ViewMyAccount.jsp"> Return to Account Page. </a>
+		<a href="ViewMyAccount.jsp">Return to Account Page. </a>
+	</h2>
+	<h2>
+		<a href="sendMessage.jsp">Send a message.</a>
 	</h2>
 	<h4>Your Messages:</h4>
 	<ul>
