@@ -16,14 +16,14 @@ public class AccountManager {
 
 	private static final int MAX_USERNAME_LEN = 32;
 	private static final int SALT_LEN = 20;
-	
+
 
 	private static final String USERNAME_COL = "username";
 	private static final String DISPLAYNAME_COL = "displayname";
 	private static final String PASSHASH_COL = "passhash";
 	private static final String SALT_COL = "salt";
 	private static final String TYPE_COL = "type";
-	
+
 
 
 	/**
@@ -96,6 +96,67 @@ public class AccountManager {
 			return null;
 		}
 	}
+	public static Account getAccountByUsername(String queryUsername) {
+
+		//sanitize input
+		if(queryUsername.length() > MAX_USERNAME_LEN)
+			return null;
+
+		//change queryUsername to lower case; don't want to be case-sensitive
+		queryUsername = queryUsername.toLowerCase();
+
+		//Check for user in database
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + " WHERE " + USERNAME_COL
+					+ "=\"" + queryUsername + "\";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			String username;
+			String displayname;
+			String passhash;
+			String salt;
+			String typeString;
+
+			//get results. If no Account is return in this loop, then no account
+			//with matching credentials was found, and we return null.
+			while(rs.next()) {
+				//grab query info
+				username = rs.getString(USERNAME_COL);
+				displayname = rs.getString(DISPLAYNAME_COL);
+				passhash = rs.getString(PASSHASH_COL);
+				salt = rs.getString(SALT_COL);
+				typeString = rs.getString(TYPE_COL);
+
+				//check if password is correct
+
+				Account resultAcct = new Account(username, displayname, Account.stringToType(typeString));
+				return resultAcct;
+
+			}
+
+			//if we reach this point, there was no account found, or the password was incorrect
+			return null;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 
 	/**
@@ -106,11 +167,11 @@ public class AccountManager {
 	 * @return true on success, false on failure
 	 */
 	public static boolean storeNewAccount(Account newAccount, String password) {
-		
+
 		//sanitize input
 		if(newAccount.getUsername().length() > MAX_USERNAME_LEN)
 			return false;
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -127,13 +188,13 @@ public class AccountManager {
 			//first, check if there are any existing Accounts with the same username
 			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + " WHERE " + USERNAME_COL
 					+ "=\"" + newAccount.getUsername() + "\";";
-			
+
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
 				//if we found ANY records with the given username, return false
 				return false;
 			}
-			
+
 			//create a MessageDigest to do hashing
 			MessageDigest digest;
 			try {
@@ -142,19 +203,19 @@ public class AccountManager {
 				e.printStackTrace();
 				return false;
 			}
-			
+
 			//if there was not existing account, create the account
-			
+
 			//create the passhash and salt
 			String salt = generateSalt();
 			String complete = password + salt;
 			byte[] hashval = digest.digest(complete.getBytes());
 			String passhash = hexToString(hashval);
-			
+
 			String username = newAccount.getUsername();
 			String typeStr = newAccount.getTypeString();
 			String displayname = newAccount.getDisplayName();
-			
+
 			//build the insert statement
 			query = "INSERT INTO " + MyDBInfo.ACCOUNTS_TABLE + " VALUES "
 					+ "(\"" + username + "\",\"" + displayname + "\",\"" + passhash + "\",\"" + salt
@@ -169,7 +230,7 @@ public class AccountManager {
 		}
 
 	}
-	
+
 	public static boolean usernameExists(String queryUsername) {
 
 		//sanitize input
@@ -199,7 +260,7 @@ public class AccountManager {
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 
 
 
@@ -214,8 +275,8 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
-	
+
+
 	/**
 	 * This functions determines whether or not the password and salt passed in create
 	 * a hash equal to the hash value passed in.
@@ -250,12 +311,12 @@ public class AccountManager {
 			return false; // otherwise return false
 		}
 	}
-	
+
 	/*
 	 Given a byte[] array, produces a hex String,
 	 such as "234a6f". with 2 chars for each byte in the array.
 	 (provided code)
-	*/
+	 */
 	public static String hexToString(byte[] bytes) {
 		StringBuffer buff = new StringBuffer();
 		for (int i=0; i<bytes.length; i++) {
@@ -266,14 +327,14 @@ public class AccountManager {
 		}
 		return buff.toString();
 	}
-	
-	
+
+
 	/*
 	 Given a string of hex byte values such as "24a26f", creates
 	 a byte[] array of those values, one byte value -128..127
 	 for each 2 chars.
 	 (provided code)
-	*/
+	 */
 	public static byte[] hexToArray(String hex) {
 		byte[] result = new byte[hex.length()/2];
 		for (int i=0; i<hex.length(); i+=2) {
@@ -281,7 +342,7 @@ public class AccountManager {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Generates a string of random hex characters
 	 * @return
@@ -290,7 +351,7 @@ public class AccountManager {
 		SecureRandom random = new SecureRandom();
 		byte[] saltBytes = new byte[SALT_LEN];
 		random.nextBytes(saltBytes);
-		
+
 		return hexToString(saltBytes);
 	}
 

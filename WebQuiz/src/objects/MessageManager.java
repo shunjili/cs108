@@ -60,7 +60,7 @@ public class MessageManager {
 	}
 
 
-	public ArrayList<Message> getReceived(String username) {
+	public static ArrayList<Message> getReceived(String username) {
 		if(!AccountManager.usernameExists(username))
 			return null;
 
@@ -108,7 +108,7 @@ public class MessageManager {
 	}
 
 
-	public ArrayList<Message> getSent(String username) {
+	public static ArrayList<Message> getSent(String username) {
 		if(!AccountManager.usernameExists(username))
 			return null;
 
@@ -155,7 +155,7 @@ public class MessageManager {
 		}
 	}
 
-	public boolean deleteMessage(Message msg) {
+	public static boolean deleteMessage(Message msg) {
 
 		//Check for user in database
 		try {

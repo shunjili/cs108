@@ -15,63 +15,46 @@ page import="objects.Account"%>
 <title>Insert title here</title>
 </head>
 <body>
-<% 
-Account thisAccount= (Account) session.getAttribute("loggedAccount");
-%>
-<div class="page-header">
-<div class = "row">
-<div class = "col-md-3"></div>
-<div class = "col-md-7">
- <h1>View My Account Info  <small>Welcome</small></h1>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-md-1">
-</div>
-<div class="col-md-2">
-<div>
- <%= thisAccount.getDisplayName() %>
-</div>
-<p>
-Some Basic Information
-</p>
-</div>
-<div class="col-md-7">
-<h3>
-Announcements
-</h3>
+	<%
+		Account thisAccount = (Account) session
+				.getAttribute("loggedAccount");
+	%>
+	<div class="page-header">
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-7">
+				<h1>
+					View My Account Info <small>Welcome</small>
+				</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-2">
+			<div>
+				<%=thisAccount.getDisplayName()%>
+			</div>
+			<p>Some Basic Information</p>
+		</div>
+		<div class="col-md-7">
+			<h3>Announcements</h3>
 
-<h3>
-List of Popular Quiz
-</h3>
-<h3>
-List of Recently Created Quiz
-</h3>
-<h3>
-List of Taken Quiz
-</h3>
-<h3>
-List of their recent quiz creating activities
-</h3>
+			<h3>List of Popular Quiz</h3>
+			<h3>List of Recently Created Quiz</h3>
+			<h3>List of Taken Quiz</h3>
+			<h3>List of their recent quiz creating activities</h3>
 
-</div>
-<div class="col-md-2">
-<ul>
-<li>
-<a href = "/WebQuiz/loginPage.jsp">Login Page</a>
-</li>
-<li>
-<a href="/WebQuiz/messages.jsp">
- You have received 1 message from another user
-</a>
-</li>
-<li>
-<div>
-Your friends recent activities
-</div>
-</li>
-</ul>
-</div>
+		</div>
+		<div class="col-md-2">
+			<ul>
+				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
+				<li><a href="/WebQuiz/Messages.jsp"> You have received 1
+						message from another user </a></li>
+				<li>
+					<div>Your friends recent activities</div>
+				</li>
+			</ul>
+		</div>
 </body>
 </html>
