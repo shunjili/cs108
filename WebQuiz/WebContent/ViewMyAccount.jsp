@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@
-page import="objects.Account"%>
+page import="objects.*"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,8 +59,8 @@ page import="objects.Account"%>
 		<div class="col-md-2">
 			<ul>
 				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
-				<li><a href="/WebQuiz/messages.jsp"> You have received 1
-						message from another user </a></li>
+				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
+				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
 				<li>
 					<div>Your friends recent activities</div>
 				</li>
