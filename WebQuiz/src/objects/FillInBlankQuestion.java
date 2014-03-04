@@ -1,42 +1,44 @@
 package objects;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class FillInBlankQuestion implements Question {
+	private String questionID;
 	private String question;
-	private ArrayList<String> answers;
 	private String description;
-	private Account creator;
+	private String creator_id;
 	private Question.Type type;
 	private int score;
-	private long timestamp;
+	private Timestamp timestamp;
 	
 	
-	public FillInBlankQuestion(String question, ArrayList<String> answers,
-					String description, Account creator, int score, long timestamp) {
+	public FillInBlankQuestion(String questionID, String question, String description,
+			String creator_id, int score, Timestamp timestamp) {
+		this.questionID = questionID;
 		this.question = question;
-		this.answers = answers;
 		this.description = description;
-		this.creator = creator;
+		this.creator_id = creator_id;
 		this.type = Question.Type.FILL_IN_BLANK;
 		this.score = score;
 		this.timestamp = timestamp;
+	}
+	
+	public String getQuestionID() {
+		return this.questionID;
 	}
 	
 	public String getQuestion() {
 		return this.question;
 	}
 	
-	public ArrayList<String> getAnswers() {
-		return this.answers;
-	}
 	
 	public String getDescription() {
 		return this.description;
 	}
 	
-	public Account getCreator() {
-		return this.creator;
+	public String getCreatorID() {
+		return this.creator_id;
 	}
 	
 	public Question.Type getType() {
@@ -51,12 +53,12 @@ public class FillInBlankQuestion implements Question {
 		return this.score;
 	}
 	
-	public long getTimestamp() {
+	public Timestamp getTimestamp() {
 		return this.timestamp;
 	}
 	
-	public boolean isCorrectAnswer(String answer) {
-		return this.answers.contains(answer);
+	public String getTimestampString() {
+		return this.timestamp.toString();
 	}
 	
 	public String getHTML() {

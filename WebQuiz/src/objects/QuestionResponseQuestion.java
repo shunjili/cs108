@@ -1,23 +1,22 @@
 package objects;
 
 import java.util.ArrayList;
+import java.sql.Timestamp;
 
 public class QuestionResponseQuestion implements Question {
 	private String question;
-	private ArrayList<String> answers;
 	private String description;
-	private Account creator;
+	private String creator_id;
 	private Question.Type type;
 	private int score;
-	private long timestamp;
+	private Timestamp timestamp;
 	
 	
-	public QuestionResponseQuestion(String question, ArrayList<String> answers,
-					String description, Account creator, int score, long timestamp) {
+	public QuestionResponseQuestion(String question, String description, String creator_id,
+			int score, Timestamp timestamp) {
 		this.question = question;
-		this.answers = answers;
 		this.description = description;
-		this.creator = creator;
+		this.creator_id = creator_id;
 		this.type = Question.Type.QUESTION_RESPONSE;
 		this.score = score;
 		this.timestamp = timestamp;
@@ -27,16 +26,12 @@ public class QuestionResponseQuestion implements Question {
 		return this.question;
 	}
 	
-	public ArrayList<String> getAnswers() {
-		return this.answers;
-	}
-	
 	public String getDescription() {
 		return this.description;
 	}
 	
-	public Account getCreator() {
-		return this.creator;
+	public String getCreatorID() {
+		return this.creator_id;
 	}
 	
 	public Question.Type getType() {
@@ -51,12 +46,12 @@ public class QuestionResponseQuestion implements Question {
 		return this.score;
 	}
 	
-	public long getTimestamp() {
+	public Timestamp getTimestamp() {
 		return this.timestamp;
 	}
 	
-	public boolean isCorrectAnswer(String answer) {
-		return this.answers.contains(answer);
+	public String getTimestampString() {
+		return this.timestamp.toString();
 	}
 	
 	public String getHTML() {

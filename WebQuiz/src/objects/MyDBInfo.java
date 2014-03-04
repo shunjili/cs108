@@ -16,5 +16,7 @@ public class MyDBInfo {
 	public static final String ACCOUNTS_TABLE = "Accounts";
 	public static final String MESSAGES_TABLE = "Messages";
 	public static final String ANNOUNCEMENTS_TABLE = "Announcements";
+	public static final String QUESTIONS_TABLE = "Questions";
+	public static final String QUIZ_QUESTION_TABLE = "QuizQuestionTable";
 
 }

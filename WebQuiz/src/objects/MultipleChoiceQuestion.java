@@ -1,48 +1,43 @@
 package objects;
 
 import java.util.ArrayList;
+import java.sql.Timestamp;
 
 public class MultipleChoiceQuestion implements Question {
+	private String questionID;
 	private String question;
-	private int answerIndex;
-	private ArrayList<String> possibleAnswers;
 	private String description;
-	private Account creator;
+	private String creator_id;
 	private Question.Type type;
 	private int score;
-	private long timestamp;
+	private Timestamp timestamp;
 	
 	
-	public MultipleChoiceQuestion(String question, int answerIndex, ArrayList<String> possibleAnswers,
-					String description, Account creator, int score, long timestamp) {
+	public MultipleChoiceQuestion(String questionID, String question, String description,
+			String creator_id, int score, Timestamp timestamp) {
+		this.questionID = questionID;
 		this.question = question;
-		this.answerIndex = answerIndex;
-		this.possibleAnswers = possibleAnswers;
 		this.description = description;
-		this.creator = creator;
+		this.creator_id = creator_id;
 		this.type = Question.Type.MULTIPLE_CHOICE;
 		this.score = score;
 		this.timestamp = timestamp;
+	}
+	
+	public String getQuestionID() {
+		return this.questionID;
 	}
 	
 	public String getQuestion() {
 		return this.question;
 	}
 	
-	public int getAnswerIndex() {
-		return this.answerIndex;
-	}
-	
-	public ArrayList<String> getPossibleAnswers() {
-		return this.possibleAnswers;
-	}
-	
 	public String getDescription() {
 		return this.description;
 	}
 	
-	public Account getCreator() {
-		return this.creator;
+	public String getCreatorID() {
+		return this.creator_id;
 	}
 	
 	public Question.Type getType() {
@@ -57,12 +52,12 @@ public class MultipleChoiceQuestion implements Question {
 		return this.score;
 	}
 	
-	public long getTimestamp() {
+	public Timestamp getTimestamp() {
 		return this.timestamp;
 	}
 	
-	public boolean isCorrectAnswer(int answerIndex) {
-		return (answerIndex == this.answerIndex);
+	public String getTimestampString() {
+		return this.timestamp.toString();
 	}
 
 	public String getHTML() {
