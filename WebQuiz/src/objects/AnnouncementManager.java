@@ -56,6 +56,7 @@ public class AnnouncementManager {
 			//execute the query
 			System.out.println(query);
 			int returnVal = stmt.executeUpdate(query);
+			con.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,6 +91,7 @@ public class AnnouncementManager {
 				announcement = rs.getString(ANNOUNCEMENT_COL);
 				resultList.add(announcement);
 			}
+			con.close();
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();

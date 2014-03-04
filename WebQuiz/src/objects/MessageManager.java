@@ -52,6 +52,7 @@ public class MessageManager {
 
 			//execute the query
 			int returnVal = stmt.executeUpdate(query);
+			con.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,6 +101,7 @@ public class MessageManager {
 				time_stamp = rs.getTimestamp(TIMESTAMP_COL);
 				resultList.add(new Message(id, sender, receiver, message, time_stamp));
 			}
+			con.close();
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -148,6 +150,7 @@ public class MessageManager {
 				time_stamp = rs.getTimestamp(TIMESTAMP_COL);
 				resultList.add(new Message(id, sender, receiver, message, time_stamp));
 			}
+			con.close();
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -177,6 +180,7 @@ public class MessageManager {
 
 			//execute the query
 			int returnVal = stmt.executeUpdate(query);
+			con.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

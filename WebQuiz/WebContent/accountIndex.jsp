@@ -18,7 +18,6 @@
 	<p><a href="ViewMyAccount.jsp">Return to account view</a></p>
 	<%} %>
 	<h2>This is a list of all accounts. Usernames are in parentheses</h2>
-	]
 	<ul>
 		<%
 			for(Account acct : AccountManager.getAllAccounts()){

@@ -139,6 +139,7 @@ public class AccountManager {
 			}
 
 			//if we reach this point, there was no account found, or the password was incorrect
+			con.close();
 			return accountList;
 
 		} catch (SQLException e) {
@@ -196,11 +197,13 @@ public class AccountManager {
 				//check if password is correct
 
 				Account resultAcct = new Account(username, displayname, Account.stringToType(typeString));
+				con.close();
 				return resultAcct;
 
 			}
 
 			//if we reach this point, there was no account found, or the password was incorrect
+			con.close();
 			return null;
 
 		} catch (SQLException e) {
@@ -274,6 +277,7 @@ public class AccountManager {
 
 			//execute the update
 			stmt.executeUpdate(query);
+			con.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -318,8 +322,10 @@ public class AccountManager {
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
 			while(rs.next()) {
+				con.close();
 				return true;
 			}
+			con.close();
 			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
