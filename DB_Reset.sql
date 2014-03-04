@@ -143,7 +143,7 @@ CREATE TABLE QuizReview (
 	FOREIGN KEY (username) REFERENCES Accounts(username)
 );
 
-CREATE TABLE Announcement (
+CREATE TABLE Announcements (
 	username CHAR(64),
 	announcement VARCHAR(128),
 	time_stamp TIMESTAMP,

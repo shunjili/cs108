@@ -16,6 +16,8 @@ public class AnnouncementManager {
 	public static final int maxRecentAnnouncement = 5;
 	private static final String USERNAME_COL = "username";
 	private static final String ANNOUNCEMENT_COL = "announcement";
+	private static final String TIMESTAMP_COL = "time_stamp";
+
 	public static class Announcement {
 		String username;
 		String announcement;
@@ -46,11 +48,13 @@ public class AnnouncementManager {
 
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.ANNOUNCEMENTS_TABLE
-					+ " (" + USERNAME_COL + "," + ANNOUNCEMENT_COL  +")"
+					+ " (" + USERNAME_COL + "," + ANNOUNCEMENT_COL  + "," + TIMESTAMP_COL + ")"
 					+ " VALUES (\"" + announcement.username
-					+ "\", \"" + announcement.announcement + "\");";
+					+ "\", \"" + announcement.announcement +"\", "
+					+ "NOW()"+ ");";
 
 			//execute the query
+			System.out.println(query);
 			int returnVal = stmt.executeUpdate(query);
 			return true;
 		} catch (SQLException e) {
