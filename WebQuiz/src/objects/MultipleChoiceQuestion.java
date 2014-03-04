@@ -64,4 +64,8 @@ public class MultipleChoiceQuestion implements Question {
 	public boolean isCorrectAnswer(int answerIndex) {
 		return (answerIndex == this.answerIndex);
 	}
+
+	public String getHTML() {
+		return "";
+	}
 }

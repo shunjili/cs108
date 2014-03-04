@@ -58,4 +58,8 @@ public class QuestionResponseQuestion implements Question {
 	public boolean isCorrectAnswer(String answer) {
 		return this.answers.contains(answer);
 	}
+	
+	public String getHTML() {
+		return "";
+	}
 }
