@@ -73,5 +73,9 @@ Your friends recent activities
 </li>
 </ul>
 </div>
+ <form action="QuizquestionServlet" method="post"></form>
+ <a href = "/WebQuiz/CreateQuestion.jsp">click me</a>>
+<br>
+<br>
 </body>
 </html>
