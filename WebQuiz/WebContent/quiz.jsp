@@ -31,5 +31,73 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 			</div>
 		</div>
 	</div>
+	<div class="col-md-1"></div>
+		<div class="col-md-2">
+			<div>
+				Some Information About this quiz
+			</div>
+			<p>Description of the Quiz</p>
+		</div>
+	<div class="col-md-7">
+			<form action="post">
+			
+		<%for (int i = 0; i < 3; i ++){ %>
+
+				<div class="panel panel-primary"> <div class="panel-heading">
+	    		<h3 class="panel-title">Question # <%= i %></h3>
+	  			</div>
+	  			<%if(i ==0){ %>
+		 			 <div class="panel-body">
+		    		This is Question Response Question
+		    		<div class="input-group">
+		  			<span class="input-group-addon">Your Answer</span>
+		 			 <input type="text" class="form-control" placeholder="Username">
+					</div>
+		  			</div>
+	  			<%} %>
+	  			<%if(i ==1){ %>
+		 			 <div class="panel-body">
+		    		This is Mutiple Choice Question
+		    		<div class="input-group">
+      				<span class="input-group-addon">
+        			<input type="radio">
+      				</span>
+      				<label type="text" class="form-control">This is choice one!</label>
+    				</div>
+    				<br>
+    				<div class="input-group">
+      				<span class="input-group-addon">
+        			<input type="radio">
+      				</span>
+      				<label type="text" class="form-control">This is choice two!</label>
+    				</div>
+    				<br>
+    				
+    				<div class="input-group">
+      				<span class="input-group-addon">
+        			<input type="radio">
+      				</span>
+      				<label type="text" class="form-control">This is choice three!</label>
+    				</div>
+		  			</div>
+	  			<%} %>
+	  			<%if(i ==2){ %>
+		 			 <div class="panel-body">
+		    		This is a filling the blank Question
+		    		<div class="input-group">
+		  			<span class="input-group-addon">Your Answer</span>
+		 			 <input type="text" class="form-control" placeholder="Username">
+					</div>
+		  			</div>
+	  			<%} %>
+	  			</div>	
+		<%} %>
+		 <button type="submit" class="btn btn-default">Submit</button>
+	
+	</form>
+
+
+	</div>
+	
 </body>
 </html>
