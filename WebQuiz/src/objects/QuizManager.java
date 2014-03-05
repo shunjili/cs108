@@ -129,9 +129,9 @@ public class QuizManager {
 	}
 	
 	//main method for testing
-	public static void main(String[] args) {
-		Quiz quiz1 = QuizManager.getQuizById("1");
-		Quiz quiz2 = QuizManager.getQuizById("3");
-	}
+//	public static void main(String[] args) {
+//		Quiz quiz1 = QuizManager.getQuizById("1");
+//		Quiz quiz2 = QuizManager.getQuizById("3");
+//	}
 
 }
