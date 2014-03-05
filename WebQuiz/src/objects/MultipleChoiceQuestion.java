@@ -78,13 +78,16 @@ public class MultipleChoiceQuestion implements Question {
 		return this.timestamp.toString();
 	}
 
-	public String getHTML() {
+	public String getHTML(boolean answer) {
 		String html =  " <div class=\"panel-body\">"+ question;
 //		for (int i = 0; i < 4; i++){
 //			html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">This is choice one!</label></div><br>", questionID) ;
 //		}
 		for (int i = 0; i < choices.length; i++){
 			html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, choices[i]) ;
+		}
+		if(answer){
+			html += String.format("<br><div class=\"panel-footer\">%s</div>", "This is a dummy answer");
 		}
 		html += "</div>";
 		return html;

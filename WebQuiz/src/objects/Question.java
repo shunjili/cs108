@@ -24,5 +24,5 @@ public interface Question {
 	public int getScore();
 	public Timestamp getTimestamp();
 	public String getTimestampString();
-	public String getHTML();
+	public String getHTML(boolean showAnswer);
 }

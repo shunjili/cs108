@@ -45,7 +45,7 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 					<div class="panel panel-primary"> <div class="panel-heading">
 		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
 		  			</div>
-		  			<%= Questions.get(i).getHTML() %>
+		  			<%= Questions.get(i).getHTML(false) %>
 		  			</div>	
 			<%} %>
 		 	<button type="submit" class="btn btn-default">Submit</button>

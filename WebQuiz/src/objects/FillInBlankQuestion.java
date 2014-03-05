@@ -61,7 +61,9 @@ public class FillInBlankQuestion implements Question {
 		return this.timestamp.toString();
 	}
 	
-	public String getHTML() {
+	@Override
+	public String getHTML(boolean showAnswer) {
+		// TODO Auto-generated method stub
 		return " <div class=\"panel-body\">"+
  		question + 
  		"<div class=\"input-group\">"+ 

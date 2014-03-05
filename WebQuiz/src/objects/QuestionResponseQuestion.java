@@ -55,8 +55,8 @@ public class QuestionResponseQuestion implements Question {
 	public String getTimestampString() {
 		return this.timestamp.toString();
 	}
-	
-	public String getHTML() {
+	@Override
+	public String getHTML(boolean showAnswer) {
 		
 		return " <div class=\"panel-body\">"+
  		question + 
