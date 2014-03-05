@@ -1,5 +1,6 @@
 package objects;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,25 +9,26 @@ public class Quiz {
 	// correct_immediately, one_page, random_order, number_of_times_taken,
 	// number_of_reviews, average_rating
 	
-	public enum QuizCategory {};
+	//public enum QuizCategory {};
 	
 	private String name;
 	private String description;
 	private ArrayList<Question> questions;
-	private Account creator;
-	private QuizCategory category;
+	private String creator;
+	private String category;
 	private ArrayList<String> tags;
 	private boolean correctImmediately;
 	private boolean onePage;
 	private boolean randomOrder;
 	private int timesTaken;
+	private int numReviews;
 	private double rating;
-	private long timestamp;
+	private Timestamp timestamp;
 	
 	public Quiz(String name, String description, ArrayList<Question> questions, 
-			Account creator, QuizCategory category, ArrayList<String> tags,
+			String creator, String category, ArrayList<String> tags,
 			boolean correctImmediately, boolean onePage, boolean randomOrder,
-			int timesTaken, double rating, long timestamp) {
+			int timesTaken, int numReviews, double rating, Timestamp timestamp) {
 		this.name = name;
 		this.description = description;
 		this.questions = questions;
@@ -37,6 +39,7 @@ public class Quiz {
 		this.onePage = onePage;
 		this.randomOrder = randomOrder;
 		this.timesTaken = timesTaken;
+		this.numReviews = numReviews;
 		this.rating = rating;
 		this.timestamp = timestamp;
 	}
@@ -67,11 +70,11 @@ public class Quiz {
 		}
 	}
 	
-	public Account getQuizCreator() {
+	public String getQuizCreator() {
 		return this.creator;
 	}
 	
-	public QuizCategory getQuizCategory() {
+	public String getQuizCategory() {
 		return this.category;
 	}
 	
@@ -99,8 +102,12 @@ public class Quiz {
 		return this.rating;
 	}
 	
-	public long getQuizTimestamp() {
+	public Timestamp getQuizTimestamp() {
 		return this.timestamp;
+	}
+	
+	public String getQuizTimestampString() {
+		return this.timestamp.toString();
 	}
 	
 	

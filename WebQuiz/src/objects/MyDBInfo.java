@@ -19,5 +19,6 @@ public class MyDBInfo {
 	public static final String QUESTIONS_TABLE = "Questions";
 	public static final String QUIZ_QUESTION_TABLE = "QuizQuestionTable";
 	public static final String QUIZ_TABLE = "Quizzes";
+	public static final String QUIZ_TAG_TABLE = "QuizTagTable";
 
 }
