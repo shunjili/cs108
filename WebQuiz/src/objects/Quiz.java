@@ -98,6 +98,10 @@ public class Quiz {
 		return this.timesTaken;
 	}
 	
+	public int getNumReviews() { 
+		return this.numReviews;
+	}
+	
 	public double getQuizRating() {
 		return this.rating;
 	}

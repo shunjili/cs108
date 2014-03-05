@@ -80,7 +80,7 @@ CREATE TABLE HistoryTable (
 
 CREATE TABLE Questions (
 	question_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	question VARCHAR(128),
+	question VARCHAR(1024),
 	description VARCHAR(128),
 	type CHAR(64),
 	creator CHAR(64),
@@ -157,10 +157,18 @@ INSERT INTO Messages (sender, receiver, message, time_stamp) VALUES
 	("sally","john","Test message from Sally to John", NOW()),
 	("sally","john","Another test message to John",Now());
 
-INSERT INTO Questions (question,description,type,creator,score,time_stamp) VALUES
-	("Test1 question.", "Test1 description", "MULTIPLE_CHOICE", "john", 10, NOW()),
-	("Test2 question.", "Test2 description", "FILL_IN_BLANK", "john", 10, NOW());
+INSERT INTO Questions (question_id,question,description,type,creator,score,time_stamp) VALUES
+	(1,"Who of the following was consul of Rome during the end of the Second Punic War?#Cato the Elder#Cato the Younger#Julius Caesar#Scipio Africanus?"
+	,"This is a question about the Roman Republic.","MULTIPLE_CHOICE","sally",50,NOW()),
+	(3,"Which Roman consul was defeated at the battle of Cannae?","This is a question about the Roman Republic.", "QUESTION_REPSONSE","sally","10",NOW());
+
+
+
+
+INSERT INTO Quizzes (quiz_id,quiz_name, creator, description, time_stamp, category,
+	correct_immediately, one_page, random_order, number_of_times_taken, number_of_reviews, average_rating) VALUES
+	(1,"quiz on Ancient Rome","sally","This is a quiz on Ancient Rome",NOW(),"History",0,0,0,0,0,0.0);
 
 INSERT INTO QuizQuestionTable VALUES
-	(1, 1, 1),
-	(1, 3, 2);
+	(1, 1, 0),
+	(1, 3, 1);
