@@ -40,20 +40,19 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		</div>
 	<div class="col-md-7">
 			<form action="post">
-			
-		<%for (int i = 0; i < Questions.size(); i ++){ %>
-
-				<div class="panel panel-primary"> <div class="panel-heading">
-	    		<h3 class="panel-title">Question # <%= i %></h3>
-	  			</div>
-	  			<%= Questions.get(i).getHTML() %>
-	  			</div>	
+		<%if (Questions != null){ %>
+			<%for (int i = 0; i < Questions.size(); i ++){ %>
+					<div class="panel panel-primary"> <div class="panel-heading">
+		    		<h3 class="panel-title">Question # <%= i %></h3>
+		  			</div>
+		  			<%= Questions.get(i).getHTML() %>
+		  			</div>	
+			<%} %>
+		 	<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		<%}else{ %>
+		<p>You do not have a quiz for this id or you dont have any questions in this quiz!</p>
 		<%} %>
-		 <button type="submit" class="btn btn-default">Submit</button>
-	
-	</form>
-
-
 	</div>
 	
 </body>
