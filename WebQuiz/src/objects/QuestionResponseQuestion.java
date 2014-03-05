@@ -12,7 +12,7 @@ public class QuestionResponseQuestion implements Question {
 	private Timestamp timestamp;
 	
 	
-	public QuestionResponseQuestion(String question, String description, String creator_id,
+	public QuestionResponseQuestion(String question_id, String question, String description, String creator_id,
 			int score, Timestamp timestamp) {
 		this.question = question;
 		this.description = description;
@@ -56,5 +56,11 @@ public class QuestionResponseQuestion implements Question {
 	
 	public String getHTML() {
 		return "";
+	}
+
+	@Override
+	public String getQuestionID() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
