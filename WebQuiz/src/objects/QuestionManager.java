@@ -22,7 +22,6 @@ public class QuestionManager {
 	public static final String SCORE_COL = "score";
 	public static final String TIMESTAMP_COL = "time_stamp";
 	
-	private static int question_count = 0;
 
 	private static Question.Type getTypeForString(String type) {
 		if (type.equals(Question.FILL_IN_BLANK_STR)) {
@@ -134,12 +133,16 @@ public class QuestionManager {
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
-			question_count++;
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.QUESTIONS_TABLE
-					+ " VALUES("
-					+ question_count
-					+ ",\"" + toStore.getQuestion() + "\""
+					+ " (" + QUESTION_COL
+					+ "," + DESCRIPTION_COL
+					+ "," + TYPE_COL
+					+ "," + CREATOR_COL
+					+ "," + SCORE_COL
+					+ "," + TIMESTAMP_COL
+					+ ") VALUES("
+					+ "\"" + toStore.getQuestion() + "\""
 					+ ",\"" + toStore.getDescription() + "\""
 					+ ",\"" + getStringForType(toStore.getType()) + "\""
 					+ ",\"" + toStore.getCreatorID() + "\""
@@ -149,9 +152,17 @@ public class QuestionManager {
 			//execute the query
 			int result = stmt.executeUpdate(query);
 			
+			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID();");
+			
+			rs.next();
+			
+			int questionId = rs.getInt("LAST_INSERT_ID()");
+			
+			
+			
 			//now, add to the QuizQuestionTable
 			query = "INSERT INTO " + MyDBInfo.QUIZ_QUESTION_TABLE + " VALUES (\""
-					+ quiz_id + "\",\"" + toStore.getQuestionID() + "\"," + index + ");";
+					+ quiz_id + "\",\"" + questionId + "\"," + index + ");";
 			
 			//execute the query to add to QuizQuestionTable
 			result = stmt.executeUpdate(query);
@@ -177,21 +188,21 @@ public class QuestionManager {
 	
 	
 	// Main method to test QuestionManager
-	//public static void main(String[] args) {
-//		Question test1 = new MultipleChoiceQuestion("1", "test1 question", "test1 description",
-//				"john", 10, new Timestamp(System.currentTimeMillis()));
-//		
-//		Question test2 = new QuestionResponseQuestion("2", "test2 question", "test2 description",
-//				"sally", 50, new Timestamp(System.currentTimeMillis()));
-//		
-//		QuestionManager.storeNewQuestion(test1, "1", 1);
-//		QuestionManager.storeNewQuestion(test2, "1", 2);
-//		
-//		ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("1");
-//		Question test3 = questionList.get(0);
-//		Question test4 = questionList.get(1);
-//		
-//	}
+	public static void main(String[] args) {
+		Question test1 = new MultipleChoiceQuestion("1", "test3 question", "test3 description",
+				"john", 10, new Timestamp(System.currentTimeMillis()));
+		
+		Question test2 = new QuestionResponseQuestion("2", "test4 question", "test4 description",
+				"sally", 50, new Timestamp(System.currentTimeMillis()));
+		
+		QuestionManager.storeNewQuestion(test1, "2", 1);
+		QuestionManager.storeNewQuestion(test2, "2", 2);
+		
+		ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
+		Question test3 = questionList.get(0);
+		Question test4 = questionList.get(1);
+
+	}
 	
 	
 	

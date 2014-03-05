@@ -79,7 +79,7 @@ CREATE TABLE HistoryTable (
 );
 
 CREATE TABLE Questions (
-	question_id INT NOT NULL PRIMARY KEY,
+	question_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	question VARCHAR(128),
 	description VARCHAR(128),
 	type CHAR(64),
@@ -96,7 +96,7 @@ CREATE TABLE Answers (
 );
 
 CREATE TABLE Quizzes (
-	quiz_id INT NOT NULL PRIMARY KEY,
+	quiz_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	quiz_name VARCHAR(128),
 	creator CHAR(64),
 	description VARCHAR(128),
@@ -156,3 +156,11 @@ INSERT INTO Messages (sender, receiver, message, time_stamp) VALUES
 	("john","sally","Another test message to Sally", NOW()),
 	("sally","john","Test message from Sally to John", NOW()),
 	("sally","john","Another test message to John",Now());
+
+INSERT INTO Questions (question,description,type,creator,score,time_stamp) VALUES
+	("Test1 question.", "Test1 description", "MULTIPLE_CHOICE", "john", 10, NOW()),
+	("Test2 question.", "Test2 description", "FILL_IN_BLANK", "john", 10, NOW());
+
+INSERT INTO QuizQuestionTable VALUES
+	(1, 1, 1),
+	(1, 3, 2);
