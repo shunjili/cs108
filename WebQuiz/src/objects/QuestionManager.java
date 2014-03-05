@@ -18,20 +18,41 @@ public class QuestionManager {
 	public static final String QUESTION_ID_COL = "question_id";
 	public static final String QUESTION_COL = "question";
 	public static final String DESCRIPTION_COL = "description";
-	public static final String CREATOR_ID_COL = "creator";
+	public static final String CREATOR_COL = "creator";
 	public static final String SCORE_COL = "score";
-	public static final String TIMESTAMP_COL = "timestamp";
+	public static final String TIMESTAMP_COL = "time_stamp";
+	
+	private static int question_count = 0;
 
 	private static Question.Type getTypeForString(String type) {
-		if (type.equals("FILL_IN_BLANK")) {
+		if (type.equals(Question.FILL_IN_BLANK_STR)) {
 			return Question.Type.FILL_IN_BLANK;
-		} else if (type.equals("MULTIPLE_CHOICE")) {
+		} else if (type.equals(Question.MULTIPLE_CHOICE_STR)) {
 			return Question.Type.MULTIPLE_CHOICE;
-		} else if (type.equals("QUESTION_RESPONSE")) {
+		} else if (type.equals(Question.QUESTION_RESPONSE_STR)) {
 			return Question.Type.QUESTION_RESPONSE;
 		} else return Question.Type.BAD_TYPE;
 	}
 
+	private static String getStringForType(Question.Type type) {
+		switch(type) {
+		case FILL_IN_BLANK: return Question.FILL_IN_BLANK_STR;
+		case MULTIPLE_CHOICE: return Question.MULTIPLE_CHOICE_STR;
+		case PIC_RESPONSE: return Question.PIC_RESPONSE_STR;
+		case QUESTION_RESPONSE: return Question.QUESTION_RESPONSE_STR;
+		default: return Question.BAD_TYPE_STR;
+		}
+	}
+	
+	
+	/**
+	 * Finds all questions belonging to the quiz with the ID passed in by performing
+	 * and inner join on QuizQuestionsTable. Returns an array list of questions
+	 * ordered by their index in the quiz.
+	 * @param quiz_id Quiz id (quiz_id) to which the returned questions belong.
+	 * @return ArrayList<Question> containing all the questions belonging to the quiz
+	 * with the specified quiz_id.
+	 */
 	public static ArrayList<Question> getQuestionsForQuiz(String quiz_id) {
 		try {
 			try {
@@ -57,7 +78,7 @@ public class QuestionManager {
 
 			ArrayList<Question> questions = new ArrayList<Question>();
 			Question.Type type;
-			String question_id;
+			int question_id;
 			String question;
 			String description;
 			String creator_id;
@@ -67,14 +88,15 @@ public class QuestionManager {
 			//get results and puts the questions into an arraylist.
 			while(rs.next()) {
 				type = getTypeForString(rs.getString(TYPE_COL));
-				question_id = rs.getString(QUESTION_ID_COL);
+				question_id = rs.getInt(QUESTION_ID_COL);
+				String question_id_str = "" + question_id;
 				question = rs.getString(QUESTION_COL);
 				description = rs.getString(DESCRIPTION_COL);
-				creator_id = rs.getString(CREATOR_ID_COL);
+				creator_id = rs.getString(CREATOR_COL);
 				score = rs.getInt(SCORE_COL);
 				timestamp = rs.getTimestamp(TIMESTAMP_COL);
 				
-				Question q = constructQuestion(type, question_id, question, description, creator_id,
+				Question q = constructQuestion(type, question_id_str, question, description, creator_id,
 						score, timestamp);
 				questions.add(q);
 			}
@@ -92,6 +114,55 @@ public class QuestionManager {
 			return null;
 		}
 	}
+	
+	/**
+	 * Writes the question passed in to the Questions table in the database.
+	 * @param toStore
+	 * @return true on successful write, false if writing to database was unsuccessful.
+	 */
+	public static boolean storeNewQuestion(Question toStore, String quiz_id, int index) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			question_count++;
+			//prepare query
+			String query = "INSERT INTO " + MyDBInfo.QUESTIONS_TABLE
+					+ " VALUES("
+					+ question_count
+					+ ",\"" + toStore.getQuestion() + "\""
+					+ ",\"" + toStore.getDescription() + "\""
+					+ ",\"" + getStringForType(toStore.getType()) + "\""
+					+ ",\"" + toStore.getCreatorID() + "\""
+					+ "," + toStore.getScore()
+					+ ",\'" + toStore.getTimestamp().toString() + "\');";
+
+			//execute the query
+			int result = stmt.executeUpdate(query);
+			
+			//now, add to the QuizQuestionTable
+			query = "INSERT INTO " + MyDBInfo.QUIZ_QUESTION_TABLE + " VALUES (\""
+					+ quiz_id + "\",\"" + toStore.getQuestionID() + "\"," + index + ");";
+			
+			//execute the query to add to QuizQuestionTable
+			result = stmt.executeUpdate(query);
+			
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	private static Question constructQuestion(Question.Type type, String question_id,
 			String question, String description, String creator_id, int score,
@@ -103,6 +174,25 @@ public class QuestionManager {
 			default: return null;
 		}
 	}
+	
+	
+	// Main method to test QuestionManager
+	//public static void main(String[] args) {
+//		Question test1 = new MultipleChoiceQuestion("1", "test1 question", "test1 description",
+//				"john", 10, new Timestamp(System.currentTimeMillis()));
+//		
+//		Question test2 = new QuestionResponseQuestion("2", "test2 question", "test2 description",
+//				"sally", 50, new Timestamp(System.currentTimeMillis()));
+//		
+//		QuestionManager.storeNewQuestion(test1, "1", 1);
+//		QuestionManager.storeNewQuestion(test2, "1", 2);
+//		
+//		ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("1");
+//		Question test3 = questionList.get(0);
+//		Question test4 = questionList.get(1);
+//		
+//	}
+	
 	
 	
 

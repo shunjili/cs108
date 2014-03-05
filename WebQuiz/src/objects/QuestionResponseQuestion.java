@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.sql.Timestamp;
 
 public class QuestionResponseQuestion implements Question {
+	private String question_id;
 	private String question;
 	private String description;
 	private String creator_id;
@@ -14,6 +15,7 @@ public class QuestionResponseQuestion implements Question {
 	
 	public QuestionResponseQuestion(String question_id, String question, String description, String creator_id,
 			int score, Timestamp timestamp) {
+		this.question_id = question_id;
 		this.question = question;
 		this.description = description;
 		this.creator_id = creator_id;
@@ -60,7 +62,6 @@ public class QuestionResponseQuestion implements Question {
 
 	@Override
 	public String getQuestionID() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.question_id;
 	}
 }

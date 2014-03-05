@@ -79,14 +79,13 @@ CREATE TABLE HistoryTable (
 );
 
 CREATE TABLE Questions (
-	question_id CHAR(64),
+	question_id INT NOT NULL PRIMARY KEY,
 	question VARCHAR(128),
 	description VARCHAR(128),
 	type CHAR(64),
 	creator CHAR(64),
 	score INT,
 	time_stamp TIMESTAMP,
-	PRIMARY KEY (question_id),
 	FOREIGN KEY (creator) REFERENCES Accounts(username)
 );
 
@@ -97,7 +96,7 @@ CREATE TABLE Answers (
 );
 
 CREATE TABLE Quizzes (
-	quiz_id CHAR(64),
+	quiz_id INT NOT NULL PRIMARY KEY,
 	quiz_name VARCHAR(128),
 	creator CHAR(64),
 	description VARCHAR(128),
@@ -109,7 +108,6 @@ CREATE TABLE Quizzes (
 	number_of_times_taken INT,
 	number_of_reviews INT,
 	average_rating FLOAT(5,3),
-	PRIMARY KEY (quiz_id),
 	FOREIGN KEY (creator) REFERENCES Accounts(username)
 );
 
@@ -143,10 +141,9 @@ CREATE TABLE QuizReview (
 	FOREIGN KEY (username) REFERENCES Accounts(username)
 );
 
-CREATE TABLE Announcements (
+CREATE TABLE Accouncements (
 	username CHAR(64),
 	announcement VARCHAR(128),
-	time_stamp TIMESTAMP,
 	FOREIGN KEY (username) REFERENCES Accounts(username)
 );
 
