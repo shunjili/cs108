@@ -77,8 +77,6 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 			</div>
 			</div>
  			 </form>
- 			 
-
 		<%}else{ %>
 		<p>You do not have a quiz for this id or you dont have any questions in this quiz!</p>
 		<%} %>
