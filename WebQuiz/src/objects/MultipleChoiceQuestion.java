@@ -26,7 +26,7 @@ public class MultipleChoiceQuestion implements Question {
 		this.timestamp = timestamp;
 	}
 	public boolean parseQuestionAndChoices(String questionString){
-		String[] stringArray = questionString.split(";");
+		String[] stringArray = questionString.split("#");
 		if(stringArray.length < 2){
 			question = questionString;
 			choices = null;
