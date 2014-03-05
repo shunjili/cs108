@@ -58,13 +58,18 @@ public class QuestionResponseQuestion implements Question {
 	@Override
 	public String getHTML(boolean showAnswer) {
 		
-		return " <div class=\"panel-body\">"+
+		
+		String html= " <div class=\"panel-body\">"+
  		question + 
  		"<div class=\"input-group\">"+ 
 			"<span class=\"input-group-addon\">Your Answer</span>"+
 			 "<input type=\"text\" class=\"form-control\" placeholder=\"Username\">"+
 			"</div>"+
 			"</div>";
+		if(showAnswer){
+			html += String.format("<div class=\"panel-footer\">%s</div>", "This is a dummy answer");
+		}
+		return html;
 	}
 
 	@Override
