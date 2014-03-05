@@ -71,6 +71,8 @@ public class QuizManager {
 				timestamp = rs.getTimestamp(TIMESTAMP_COL);
 				category = rs.getString(CATEGORY_COL);
 				correctImmediately = (rs.getInt(CORRECT_IMMEDIATELY_COL) != 0);
+				numberOfTimesTaken = rs.getInt(NUMBER_OF_TIMES_TAKEN_COL);
+				numberOfReviews = rs.getInt(NUMBER_OF_REVIEWS_COL);
 				onePage = (rs.getInt(ONE_PAGE_COL) != 0);
 				randomOrder = (rs.getInt(RANDOM_ORDER_COL) != 0);
 				averageRating = rs.getDouble(AVERAGE_RATING_COL);
@@ -107,7 +109,7 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TAG_TABLE + " WHERE "
 					+ TAG_QUIZ_ID_COL + "=" + quiz_id + ";";
 
 			//execute the query
@@ -124,6 +126,12 @@ public class QuizManager {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	//main method for testing
+	public static void main(String[] args) {
+		Quiz quiz1 = QuizManager.getQuizById("1");
+		Quiz quiz2 = QuizManager.getQuizById("3");
 	}
 
 }
