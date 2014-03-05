@@ -178,6 +178,7 @@ public class QuestionManager {
 	private static Question constructQuestion(Question.Type type, String question_id,
 			String question, String description, String creator_id, int score,
 			Timestamp timestamp) {
+		System.out.println(getStringForType(type));
 		switch (type) {
 			case FILL_IN_BLANK: return new FillInBlankQuestion(question_id, question, description, creator_id, score, timestamp);
 			case MULTIPLE_CHOICE: return new MultipleChoiceQuestion(question_id, question, description, creator_id, score, timestamp);
@@ -187,25 +188,24 @@ public class QuestionManager {
 	}
 	
 	
-	// Main method to test QuestionManager
-//	public static void main(String[] args) {
-//		Question test1 = new MultipleChoiceQuestion("1", "Who of the following was consul of Rome during the end of the Second Punic War?;" +
-//				"Cato the Elder;Cato the Younger;Julius Caesar;Scipio Africanus?", "This is a question about the Roman Republic.",
-//				"sally", 10, new Timestamp(System.currentTimeMillis()));
-//		
-//		Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
-//				"This is a question about the Roman Republic","sally", 50, new Timestamp(System.currentTimeMillis()));
-//		
-//		QuestionManager.storeNewQuestion(test1, "2", 1);
-//		QuestionManager.storeNewQuestion(test2, "2", 2);
-//		
-//		ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
-//		Question test3 = questionList.get(0);
-//		Question test4 = questionList.get(1);
+// Main method to test QuestionManager
+//     public static void main(String[] args) {
+//             Question test1 = new MultipleChoiceQuestion("1", "Who of the following was consul of Rome during the end of the Second Punic War?;
+//                             "Cato the Elder;Cato the Younger;Julius Caesar;Scipio Africanus?", "This is a question about the Roman Republic.",
+//                             "sally", 10, new Timestamp(System.currentTimeMillis()));
+//             
+//             Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
+//                             "This is a question about the Roman Republic","sally", 50, new Timestamp(System.currentTimeMillis()));
+//             
+//             QuestionManager.storeNewQuestion(test1, "2", 1);
+//             QuestionManager.storeNewQuestion(test2, "2", 2);
+//             
+//             ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
+//             Question test3 = questionList.get(0);
+//             Question test4 = questionList.get(1);
 //
-//	}
-	
-	
+//     }
+
 	
 
 }

@@ -80,12 +80,13 @@ public class MultipleChoiceQuestion implements Question {
 
 	public String getHTML(boolean answer) {
 		String html =  " <div class=\"panel-body\">"+ question;
-//		for (int i = 0; i < 4; i++){
-//			html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">This is choice one!</label></div><br>", questionID) ;
-//		}
-		for (int i = 0; i < choices.length; i++){
-			html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, choices[i]) ;
+
+		if(choices != null){
+			for (int i = 0; i < choices.length; i++){
+				html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, choices[i]) ;
+			}
 		}
+		
 		html += "</div>";
 		if(answer){
 			html += String.format("<div class=\"panel-footer\">%s</div>", "This is a dummy answer");
