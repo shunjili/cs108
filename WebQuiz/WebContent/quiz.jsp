@@ -43,7 +43,7 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		<%if (Questions != null){ %>
 			<%for (int i = 0; i < Questions.size(); i ++){ %>
 					<div class="panel panel-primary"> <div class="panel-heading">
-		    		<h3 class="panel-title">Question # <%= i %></h3>
+		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
 		  			</div>
 		  			<%= Questions.get(i).getHTML() %>
 		  			</div>	
