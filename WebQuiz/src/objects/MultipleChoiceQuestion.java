@@ -63,7 +63,7 @@ public class MultipleChoiceQuestion implements Question {
 	public String getHTML() {
 		String html =  " <div class=\"panel-body\">"+ question;
 		for (int i = 0; i < 4; i++){
-			html += "<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\"></span><label type=\"text\" class=\"form-control\">This is choice one!</label></div><br>";
+			html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">This is choice one!</label></div><br>", questionID) ;
 		}
 		html += "</div>";
 		return html;
