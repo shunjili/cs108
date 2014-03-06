@@ -332,10 +332,7 @@ public class AccountManager {
 		}
 	}
 	
-	public static boolean addFriend(String username1, String username2) {
-		// make sure usernames both exist
-		if (!usernameExists(username1) || !usernameExists(username2)) return false;
-		
+	public static boolean addFriendship(String username1, String username2) {
 		// make usernames lower case
 		username1 = username1.toLowerCase();
 		username2 = username2.toLowerCase();
@@ -366,6 +363,42 @@ public class AccountManager {
 					+ "(\"" + username2 + "\",\"" + username1 + "\");";
 			stmt.executeUpdate(query);
 			
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean removeFriendship(String username1, String username2) {
+		// make usernames lower case
+		username1 = username1.toLowerCase();
+		username2 = username2.toLowerCase();
+
+		// try to remove friendship from table (two-way relationship)
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			// prepare query
+			// Remove (username1, username2) and (username2, username1) from friends table
+			String query = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username1 + "\" AND " + FRIENDS_COL2 + "=\"" + username2 + "\";";
+			stmt.executeUpdate(query);
+			query = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username2 + "\" AND " + FRIENDS_COL2 + "=\"" + username1 + "\";";
+			stmt.executeUpdate(query);
+
 			con.close();
 			return true;
 		} catch (SQLException e) {
