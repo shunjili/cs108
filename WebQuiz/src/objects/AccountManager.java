@@ -375,6 +375,9 @@ public class AccountManager {
 		// make usernames lower case
 		username1 = username1.toLowerCase();
 		username2 = username2.toLowerCase();
+		
+		// if the two users aren't friends, return false
+		if (!areFriends(username1, username2)) return false;
 
 		// try to remove friendship from table (two-way relationship)
 		try {
