@@ -21,5 +21,5 @@ public class MyDBInfo {
 	public static final String QUIZ_TABLE = "Quizzes";
 	public static final String QUIZ_TAG_TABLE = "QuizTagTable";
 	public static final String FRIENDS_TABLE = "FriendsTable";
-
+	public static final String FRIEND_REQUESTS_TABLE = "FriendRequests";
 }
