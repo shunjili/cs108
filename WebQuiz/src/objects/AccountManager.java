@@ -23,6 +23,8 @@ public class AccountManager {
 	private static final String PASSHASH_COL = "passhash";
 	private static final String SALT_COL = "salt";
 	private static final String TYPE_COL = "type";
+	private static final String FRIENDS_COL1 = "user";
+	private static final String FRIENDS_COL2 = "friends_name";
 
 
 
@@ -284,6 +286,59 @@ public class AccountManager {
 			return false;
 		}
 
+	}
+	
+	public static boolean addFriend(String username1, String username2) {
+		// make sure usernames both exist
+		if (!usernameExists(username1) || !usernameExists(username2)) return false;
+		
+		// make usernames lower case
+		username1 = username1.toLowerCase();
+		username2 = username2.toLowerCase();
+		
+		//Check for user in database
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username1 + "\";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			// if the two users are already friends, return false
+			while (rs.next()) {
+				if (rs.getString(FRIENDS_COL2).equals(username2)) {
+					con.close();
+					return false;
+				}
+			}
+			
+			// Insert (username1, username2) and (username2, username1) into friends table
+			query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
+					+ "(\"" + username1 + "\",\"" + username2 + "\");";
+			stmt.executeUpdate(query);
+			query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
+					+ "(\"" + username2 + "\",\"" + username1 + "\");";
+			stmt.executeUpdate(query);
+			
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public static boolean usernameExists(String queryUsername) {
