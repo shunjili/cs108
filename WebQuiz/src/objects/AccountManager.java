@@ -721,5 +721,55 @@ public class AccountManager {
 		}
 		return success;
 	}
+	
+	public static ArrayList<FriendRequest> getFriendReqeustsForUser(String username) {
+		//make lower case
+		username = username.toLowerCase();
+		
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTED_COL
+					+ "=\"" + username + "\";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<FriendRequest> requests = new ArrayList<FriendRequest>();
+			
+			String requester;
+			String requested;
+			String message;
+			Timestamp timestamp;
+
+			//get results. If no FriendRequest is found in this loop, then we return an empty ArrayList.
+			while(rs.next()) {
+				requester = rs.getString(REQUESTER_COL);
+				requested = rs.getString(REQUESTED_COL);
+				message = rs.getString(MESSAGE_COL);
+				timestamp = rs.getTimestamp(TIMESTAMP_COL);
+				
+				FriendRequest r = new FriendRequest(requester, requested, message, timestamp);
+				requests.add(r);
+				
+			}
+			con.close();
+			return requests;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
