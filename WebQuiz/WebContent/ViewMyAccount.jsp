@@ -67,7 +67,7 @@ page import="objects.*, java.util.ArrayList"%>
 				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
 				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</li>
 				<li>
-					<div>Your friends recent activities</div>
+					<div>Your friends' recent activities</div>
 				</li>
 				
 			</ul>

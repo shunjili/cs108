@@ -22,7 +22,8 @@
 		<%
 			for(Account acct : AccountManager.getAllAccounts()){
 		%>
-		<li><%=acct.getDisplayName()%> (<%=acct.getUsername()%>) - <%=acct.getTypeString()%></li>
+		<li><a href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName() %></a> (<%=acct.getUsername()%>) - <%=acct.getTypeString()%></li>
+		<%-- <li><%=acct.getDisplayName()%> (<%=acct.getUsername()%>) - <%=acct.getTypeString()%></li> --%>
 		<%
 			}
 		%>
