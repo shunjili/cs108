@@ -20,6 +20,10 @@ public class Account {
 		this.displayname = displayname;
 		this.userType = userType;
 	}
+	
+	public boolean equals(Account acct) {
+		return this.username.equals(acct.username);
+	}
 
 	public String getUsername() {
 		return this.username;
