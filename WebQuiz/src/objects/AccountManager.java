@@ -409,6 +409,51 @@ public class AccountManager {
 			return false;
 		}
 	}
+	
+	public static ArrayList<Account> getFriendsForUser(String username) {
+		// make lower case
+		username = username.toLowerCase();
+		
+		// if the username doesn't exist, return null
+		if (!usernameExists(username)) return null;
+		
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username + "\";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<Account> friends = new ArrayList<Account>();
+			
+			while (rs.next()) {
+				String friendName = rs.getString(FRIENDS_COL2);
+				Account friend = getAccountByUsername(friendName);
+				if (!friend.equals(null)) {
+					friends.add(friend);
+				}
+			}
+			
+			con.close();
+			return friends;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static boolean usernameExists(String queryUsername) {
 
