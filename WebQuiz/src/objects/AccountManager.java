@@ -288,6 +288,50 @@ public class AccountManager {
 
 	}
 	
+	public static boolean areFriends(String username1, String username2) {
+		// make sure usernames both exist
+		if (!usernameExists(username1) || !usernameExists(username2)) return false;
+		
+		// make usernames lower case
+		username1 = username1.toLowerCase();
+		username2 = username2.toLowerCase();
+		
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query (select all rows in friendsTable where user = username1 and friends_name = username2)
+			String query = "SELECT * FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username1 + "\" AND " + FRIENDS_COL2 + "=\"" + username2 + "\";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			// if the two users are friends, return true
+			while (rs.next()) {
+				con.close();
+				return true;
+			}
+			
+			// if they are not friends, return false
+			con.close();
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static boolean addFriend(String username1, String username2) {
 		// make sure usernames both exist
 		if (!usernameExists(username1) || !usernameExists(username2)) return false;
@@ -296,7 +340,10 @@ public class AccountManager {
 		username1 = username1.toLowerCase();
 		username2 = username2.toLowerCase();
 		
-		//Check for user in database
+		// if the two users are already friends, do nothing and return false
+		if (areFriends(username1, username2)) return false;
+		
+		// try to add friendship to table (two-way relationship)
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -309,24 +356,10 @@ public class AccountManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-
-			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
-					+ "=\"" + username1 + "\";";
-
-			//execute the query
-			ResultSet rs = stmt.executeQuery(query);
-
-			// if the two users are already friends, return false
-			while (rs.next()) {
-				if (rs.getString(FRIENDS_COL2).equals(username2)) {
-					con.close();
-					return false;
-				}
-			}
 			
+			// prepare query
 			// Insert (username1, username2) and (username2, username1) into friends table
-			query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
+			String query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
 					+ "(\"" + username1 + "\",\"" + username2 + "\");";
 			stmt.executeUpdate(query);
 			query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
