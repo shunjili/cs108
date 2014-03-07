@@ -41,7 +41,7 @@ public class ConfirmFriendRequestServlet extends HttpServlet {
 		String requested = request.getParameter("requested");
 		boolean success = AccountManager.confirmFriendRequest(requester, requested);
 		if (success) {
-			request.getRequestDispatcher("showProfile.jsp?username=" + requested).forward(request, response);
+			request.getRequestDispatcher("showProfile.jsp?username=" + requester).forward(request, response);
 		} else {
 			request.getRequestDispatcher("DatabaseQueryFail.html").forward(request, response);
 		}

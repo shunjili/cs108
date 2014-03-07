@@ -65,10 +65,12 @@ page import="objects.*, java.util.ArrayList"%>
 				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
 				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
 				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
-				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</li>
+				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</a></li>
 				<li>
 					<div>Your friends' recent activities</div>
 				</li>
+				<li><a href = "/WebQuiz/FriendRequests.jsp">Friend Requests: 
+				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a></li>
 				
 			</ul>
 		</div>

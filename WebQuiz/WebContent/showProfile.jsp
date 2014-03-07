@@ -28,11 +28,12 @@
 				<h3>Friend Request Pending</h3>
 <%
 			} else if (AccountManager.requestIsPending(shownUsername, loggedUsername)) {
-%>				<p><%= shownDisplayName %> has requested to be your friend</p>
+%>				
 				<form action="ConfirmFriendRequestServlet" method="post">
+					<p><%= shownDisplayName %> has requested to be your friend
 					<input type="hidden" name="requester" value="<%= shownUsername %>">
 					<input type="hidden" name="requested" value="<%= loggedUsername %>">
-					<button type="submit">Confirm Friend Request</button>
+					<button type="submit">Confirm Friend Request</button></p>
 				</form>
 <%			
 			} else {
