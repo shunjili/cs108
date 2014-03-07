@@ -63,7 +63,7 @@ public class QuestionResponseQuestion implements Question {
  		question + 
  		"<div class=\"input-group\">"+ 
 			"<span class=\"input-group-addon\">Your Answer</span>"+
-			 "<input type=\"text\" class=\"form-control\" placeholder=\"Username\">"+
+			 "<input name = \"" + question_id + "\"type=\"text\" class=\"form-control\" placeholder=\"You Anwer \">"+
 			"</div>"+
 			"</div>";
 		if(showAnswer){
