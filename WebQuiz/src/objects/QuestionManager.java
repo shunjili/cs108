@@ -23,7 +23,7 @@ public class QuestionManager {
 	public static final String TIMESTAMP_COL = "time_stamp";
 	
 
-	private static Question.Type getTypeForString(String type) {
+	public static Question.Type getTypeForString(String type) {
 		if (type.equals(Question.FILL_IN_BLANK_STR)) {
 			return Question.Type.FILL_IN_BLANK;
 		} else if (type.equals(Question.MULTIPLE_CHOICE_STR)) {
@@ -175,7 +175,7 @@ public class QuestionManager {
 		}
 	}
 
-	private static Question constructQuestion(Question.Type type, String question_id,
+	public static Question constructQuestion(Question.Type type, String question_id,
 			String question, String description, String creator_id, int score,
 			Timestamp timestamp) {
 		System.out.println(getStringForType(type));

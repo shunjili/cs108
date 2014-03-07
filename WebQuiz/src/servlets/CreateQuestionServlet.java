@@ -1,4 +1,6 @@
 package servlets;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import objects.Question;
+import objects.QuestionManager;
 
 /**
  * Servlet implementation class CreateQuestionServlet
@@ -35,6 +40,21 @@ public class CreateQuestionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO getting the information from the form post and create a question
 		
+		String quiz_id = request.getParameter("quiz_id");
+		String question = request.getParameter("question");
+		String answer = request.getParameter("answer");
+		String questionTypeString = request.getParameter("type");
+		Question.Type type = QuestionManager.getTypeForString(questionTypeString);
+		int index =  Integer.parseInt(request.getParameter("questionIndex"));
+		Timestamp timeStamp = new Timestamp( new Date().getTime());
+		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, null, "1", 10, timeStamp);
+		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index)){
+			System.out.println("Success stored question");
+		}else{
+			System.out.println("Failed to store the questions");
+		}
+		String returnURL = String.format("createQuiz.jsp?id=%s", quiz_id);
+		request.getRequestDispatcher(returnURL).forward(request, response);
 		//TODO adding question to the data base
 		
 	}

@@ -19,6 +19,7 @@ page import="objects.*, java.util.ArrayList"
 <%
 String quiz_id = request.getParameter("id");
 ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+int questionIndex = Questions.size();
 %>
 <body>
 	<div class="page-header">
@@ -48,28 +49,30 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		  			<%= Questions.get(i).getHTML(true) %>
 		  			</div>	
 			<%} %>
-			<form action="#" method="#">
+			<form action="CreateQuestionServlet" method="post">
+			<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+			<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 			<div class="panel panel-primary">
 			 <div class="panel-heading">Create a New Question</div>
 			 <div class="panel-body">
     		<div class="input-group">
  				<span class="input-group-addon">Question</span>
-  				<input type="text" class="form-control" placeholder="Question">
+  				<input type="text"  name = "question" class="form-control" placeholder="Question">
 			</div>
  			 <br>
  			 <div class="input-group">
  				<span class="input-group-addon">Question Type</span>
-  				<input type="text" class="form-control" placeholder="(Mulitple Choice? Question Response? Filling the Blank?)">
+  				<input type="text" name = "type" class="form-control" placeholder="(Mulitple Choice? Question Response? Filling the Blank?)">
 			</div>
 			<br>
 			<div class="input-group">
  				<span class="input-group-addon">Correct Answer</span>
-  				<input type="text" class="form-control" placeholder="Correct Answer">
+  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
 			</div>
 			<br>
  			 <div class="input-group">
  				<span class="input-group-addon">Tag(Optional)</span>
-  				<input type="text" class="form-control" placeholder="Question Tag">
+  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 			</div>
 			</div>
  			<br>

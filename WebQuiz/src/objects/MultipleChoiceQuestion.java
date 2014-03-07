@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 public class MultipleChoiceQuestion implements Question {
 	private String questionID;
 	private String question;
+	private String questionPrefix;
 	private String description;
 	private String creator_id;
 	private Question.Type type;
@@ -27,12 +28,13 @@ public class MultipleChoiceQuestion implements Question {
 	}
 	public boolean parseQuestionAndChoices(String questionString){
 		String[] stringArray = questionString.split("#");
+		question = questionString;
 		if(stringArray.length < 2){
-			question = questionString;
+			questionPrefix = questionString;
 			choices = null;
 			return false;
 		}else{
-			question = stringArray[0];
+			questionPrefix = stringArray[0];
 			choices = Arrays.copyOfRange(stringArray, 1, stringArray.length);
 			return true;
 		}
@@ -79,7 +81,7 @@ public class MultipleChoiceQuestion implements Question {
 	}
 
 	public String getHTML(boolean answer) {
-		String html =  " <div class=\"panel-body\">"+ question;
+		String html =  " <div class=\"panel-body\">"+ questionPrefix;
 
 		if(choices != null){
 			for (int i = 0; i < choices.length; i++){
