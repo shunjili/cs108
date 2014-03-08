@@ -3,6 +3,7 @@ package objects;
 import objects.Account.Type;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public interface Question {
 	public enum Type{QUESTION_RESPONSE, FILL_IN_BLANK, MULTIPLE_CHOICE, PIC_RESPONSE, BAD_TYPE};
@@ -25,4 +26,11 @@ public interface Question {
 	public Timestamp getTimestamp();
 	public String getTimestampString();
 	public String getHTML(boolean showAnswer);
+	
+	
+	public boolean isCorrect(ArrayList<String> userAnswers);
+	// for extension question types, userAnswer should be array list
+	// for required type, there is only one string in userAnswer.
+	public int getScore(ArrayList<String> userAnswers);
+	public String getResultView( ArrayList<String> userAnswers);
 }

@@ -223,7 +223,11 @@ public class QuizManager {
 		}
 					
 	}
-
+	/**
+	 * get quiz id according to its name and etc.
+	 * @param toGet
+	 * @return
+	 */
 	public static Object getQuizId(Quiz toGet) {
 		try {
 			try {
@@ -254,35 +258,35 @@ public class QuizManager {
 	
 	
 	//main method for testing
-//	public static void main(String[] args) {
-//		Quiz quiz1 = QuizManager.getQuizById("1");
-//		Quiz quiz2 = QuizManager.getQuizById("3");
-//		
-//		ArrayList<Question> questionList1 = new ArrayList<Question>();
-//		
-//		Question test1 = new MultipleChoiceQuestion("1", "Who of the following was consul of Rome during the end of the Second Punic War?#" +
-//				"Cato the Elder#Cato the Younger#Julius Caesar#Scipio Africanus?", "This is a question about the Roman Republic.",
-//				"sally", 10, new Timestamp(System.currentTimeMillis()));
-//		
-//		Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
-//				"This is a question about the Roman Republic.","sally", 50, new Timestamp(System.currentTimeMillis()));
-//		
-//		questionList1.add(test1);
-//		questionList1.add(test2);
-//		
-//		ArrayList<String> tagList1 = new ArrayList<String>();
-//		tagList1.add("Rome");
-//		tagList1.add("Ancient");
-//		tagList1.add("Classics");
-//		
-//		
-//		Quiz quiz3 = new Quiz("quiz3","this quiz is added by the manager", questionList1,
-//				"john", "History", tagList1, false, false, false, 0, 0, 0.0d,
-//				new Timestamp(System.currentTimeMillis()));
-//		
-//		boolean result = QuizManager.storeQuizQuestionTags(quiz3);
+	public static void main(String[] args) {
+		Quiz quiz1 = QuizManager.getQuizById("1");
+		Quiz quiz2 = QuizManager.getQuizById("3");
 	
-//	}
+		ArrayList<Question> questionList1 = new ArrayList<Question>();
+		
+		Question test1 = new MultipleChoiceQuestion("1", "Who of the following was consul of Rome during the end of the Second Punic War?#" +
+				"Cato the Elder#Cato the Younger#Julius Caesar#Scipio Africanus?", "This is a question about the Roman Republic.",
+				"sally", 10, new Timestamp(System.currentTimeMillis()));
+		
+		Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
+				"This is a question about the Roman Republic.","sally", 50, new Timestamp(System.currentTimeMillis()));
+		
+		questionList1.add(test1);
+		questionList1.add(test2);
+		
+		ArrayList<String> tagList1 = new ArrayList<String>();
+		tagList1.add("Rome");
+		tagList1.add("Ancient");
+		tagList1.add("Classics");
+		
+		
+		Quiz quiz3 = new Quiz("quiz3","this quiz is added by the manager", questionList1,
+				"john", "History", tagList1, false, false, false, 0, 0, 0.0d,
+				new Timestamp(System.currentTimeMillis()));
+		
+		boolean result = QuizManager.storeQuizQuestionTags(quiz3);
+	
+	}
 	
 
 }

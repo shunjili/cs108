@@ -58,5 +58,7 @@
 				</form>
 			</div>
 	</div>
-</body>
+	<div class="panel-body">Which Roman consul was defeated at the battle of Cannae?<div class="input-group"><span class="input-group-addon">Right Answer</span><span class="input-group-addon"></span></div><div class="input-group"><span class="input-group-addon">Your Answer</span><span class="input-group-addon">1.haha&nbsp;is wrong! Sorry!</b></span></div>
+	
+	</body>
 </html>

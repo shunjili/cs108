@@ -189,23 +189,68 @@ public class QuestionManager {
 	
 	
 // Main method to test QuestionManager
-//     public static void main(String[] args) {
+     public static void main(String[] args) {
 //             Question test1 = new MultipleChoiceQuestion("1", "Who of the following was consul of Rome during the end of the Second Punic War?;
 //                             "Cato the Elder;Cato the Younger;Julius Caesar;Scipio Africanus?", "This is a question about the Roman Republic.",
 //                             "sally", 10, new Timestamp(System.currentTimeMillis()));
-//             
-//             Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
-//                             "This is a question about the Roman Republic","sally", 50, new Timestamp(System.currentTimeMillis()));
-//             
+             
+             Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
+                             "This is a question about the Roman Republic","sally", 50, new Timestamp(System.currentTimeMillis()));
+             
 //             QuestionManager.storeNewQuestion(test1, "2", 1);
-//             QuestionManager.storeNewQuestion(test2, "2", 2);
-//             
-//             ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
-//             Question test3 = questionList.get(0);
-//             Question test4 = questionList.get(1);
-//
-//     }
+             QuestionManager.storeNewQuestion(test2, "2", 2);
+             QuestionManager.getAnswers("1");
+             
+             ArrayList<String> userAnswers = new ArrayList<String>();
+             userAnswers.add("haha");
+ 			 System.out.println(test2.getResultView(userAnswers ));
+             ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
+             Question test3 = questionList.get(0);
+             Question test4 = questionList.get(1);
+
+     }
 
 	
+	
+	
+	// for extension question types, userAnswer should be array list
+	// for required type, there is only one string in userAnswer.
+	public static ArrayList<String> getAnswers(String question_id){
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+		
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ANSWERS_TABLE
+					+ " WHERE " + QUESTION_ID_COL + " = " 
+					+ question_id +" ;";
+			//execute the query
+			
+			ResultSet rs = stmt.executeQuery(query);	
+			
+			//Get correct answers
+			ArrayList<String> answers = new ArrayList<String>();
+			while(rs.next()){
+				String ans = rs.getString("answer");
+				answers.add(ans);
+			}
+			
+			con.close();
+			//return answers
+			return answers;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }

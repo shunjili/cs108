@@ -76,4 +76,61 @@ public class QuestionResponseQuestion implements Question {
 	public String getQuestionID() {
 		return this.question_id;
 	}
+	
+	public boolean isCorrect(ArrayList<String> userAnswers){		
+		ArrayList<String> answers = new ArrayList<String>();
+		answers = QuestionManager.getAnswers(question_id);
+		//check answer might have multiple user answers 
+		int len = userAnswers.size();
+		boolean flag = true;
+		for(int i = 0; i < len; i++){
+			// if any of the solutions are not in the answer then it's false
+			if(!answers.contains(userAnswers.get(i).trim().toLowerCase())){
+				flag = false;
+				break;
+			}
+		}		
+		//return flag
+		return flag;	
+	}
+
+	public int getScore(ArrayList<String> userAnswers){
+		if(isCorrect(userAnswers)){
+			return score;
+		}
+		return 0;
+		
+	}
+	public String getResultView(ArrayList<String> userAnswers){
+		
+		ArrayList<String> answers = new ArrayList<String>();
+		answers = QuestionManager.getAnswers(question_id);
+		
+		String htmlContent = "<div class=\"panel-body\">" + question + "<div class=\"input-group\">" ;
+		htmlContent += "<span class=\"input-group-addon\">Right Answer</span>";
+		htmlContent += "<span class=\"input-group-addon\">";
+		for(int i = 0; i < answers.size(); i++){
+			htmlContent += Integer.toString(i + 1) + ".";
+			htmlContent += answers.get(i);
+			htmlContent += "&nbsp;";
+		}
+		htmlContent += "</span>";
+		htmlContent +="</div>";
+		htmlContent +="<div class=\"input-group\">";
+		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
+		for(int i = 0; i < userAnswers.size(); i++){
+			htmlContent += "<span class=\"input-group-addon\">" + Integer.toString(i + 1) + ".";
+			htmlContent += userAnswers.get(i);
+			htmlContent += "&nbsp;" ;
+		}	
+		if(isCorrect(userAnswers)){
+			htmlContent += "<b>is correct!</b></span>";
+		}else{
+			htmlContent += "is wrong! Sorry!</b></span>";
+		}
+		htmlContent +="</div>";
+		return htmlContent;
+		
+	}
+
 }
