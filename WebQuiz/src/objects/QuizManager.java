@@ -223,6 +223,34 @@ public class QuizManager {
 		}
 					
 	}
+
+	public static Object getQuizId(Quiz toGet) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE " + QUIZ_NAME_COL + "=\"" + toGet.getQuizName() + "\";");
+			rs.next();	
+			int quiz_id_int = rs.getInt(QUIZ_ID_COL);
+			String quiz_id_str = "" + quiz_id_int;
+			con.close();
+			return quiz_id_str;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	//main method for testing
