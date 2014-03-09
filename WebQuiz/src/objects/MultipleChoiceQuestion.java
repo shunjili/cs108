@@ -95,7 +95,12 @@ public class MultipleChoiceQuestion implements Question {
 		
 		html += "</div>";
 		if(answer){
-			html += String.format("<div class=\"panel-footer\">%s</div>", "This is a dummy answer");
+			ArrayList<String> answers = QuestionManager.getAnswers(questionID);
+			if(answers != null){
+				for(int i = 0; i < answers.size(); i++){
+					html += String.format("<div class=\"panel-footer\">%s</div>", answers.get(i));
+				}
+			}
 		}
 		return html;
 	}
