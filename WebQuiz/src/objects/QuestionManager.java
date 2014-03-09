@@ -122,7 +122,7 @@ public class QuestionManager {
 	 * @param toStore
 	 * @return true on successful write, false if writing to database was unsuccessful.
 	 */
-	public static boolean storeNewQuestion(Question toStore, String quiz_id, int index) {
+	public static int storeNewQuestion(Question toStore, String quiz_id, int index) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -171,10 +171,10 @@ public class QuestionManager {
 			result = stmt.executeUpdate(query);
 			
 			con.close();
-			return true;
+			return questionId;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 	
@@ -187,7 +187,7 @@ public class QuestionManager {
 	 * @param answer
 	 * @return
 	 */
-	public static boolean storeNewQuestion(Question toStore, String quiz_id, int index, String answer){
+	public static int storeNewQuestion(Question toStore, String quiz_id, int index, String answer){
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -241,10 +241,10 @@ public class QuestionManager {
 			result = stmt.executeUpdate(query);
 			
 			con.close();
-			return true;
+			return questionId;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 	
@@ -258,7 +258,7 @@ public class QuestionManager {
 	 * @param answer
 	 * @return
 	 */
-	public static boolean storeNewQuestionMultiple(Question toStore, String quiz_id, int index, String[] answers){
+	public static int storeNewQuestionMultiple(Question toStore, String quiz_id, int index, String[] answers){
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -315,10 +315,10 @@ public class QuestionManager {
 			result = stmt.executeUpdate(query);
 			
 			con.close();
-			return true;
+			return questionId;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 	
@@ -353,12 +353,21 @@ public class QuestionManager {
              
              String[] answers = {"Hannibal", "Hasdrubal","Mago"};
              
-             QuestionManager.storeNewQuestion(test3, "2", 2, "Tanit");
-             QuestionManager.getAnswers("1");
+             int returnID = QuestionManager.storeNewQuestion(test3, "2", 2, "Tanit");
+             test3.setID(returnID);
+             
+             returnID = QuestionManager.storeNewQuestionMultiple(test2, "2", 2, answers);
+             test2.setID(returnID);
+             
+             ArrayList<String> testAnswers = QuestionManager.getAnswers(test2.getQuestionID());
+             System.out.println(testAnswers.toString());
+             
+             testAnswers = QuestionManager.getAnswers(test3.getQuestionID());
+             System.out.println(testAnswers.toString());
              
              ArrayList<String> userAnswers = new ArrayList<String>();
              userAnswers.add("haha");
- 			 System.out.println(test2.getResultView(userAnswers ));
+ 			// System.out.println(test2.getResultView(userAnswers ));
              ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
              Question test4 = questionList.get(0);
              Question test5 = questionList.get(1);

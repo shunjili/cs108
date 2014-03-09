@@ -145,7 +145,7 @@ public class QuizManager {
 			
 			con.close();
 			for(int i = 0; i < toStore.getQuestions().size(); i++) {
-				if(!QuestionManager.storeNewQuestion(toStore.getQuestions().get(i), quiz_id_str, i))
+				if(QuestionManager.storeNewQuestion(toStore.getQuestions().get(i), quiz_id_str, i) < 0)
 					return false;
 			}
 			

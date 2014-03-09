@@ -48,6 +48,10 @@ public class MultipleChoiceQuestion implements Question {
 		return this.questionID;
 	}
 	
+	public void setID(int id) {
+		this.questionID = "" + id;
+	}
+	
 	public String getQuestion() {
 		return this.question;
 	}

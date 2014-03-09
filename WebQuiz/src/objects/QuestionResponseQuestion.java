@@ -77,6 +77,11 @@ public class QuestionResponseQuestion implements Question {
 		return this.question_id;
 	}
 	
+	@Override
+	public void setID(int id) {
+		this.question_id = "" + id;
+	}
+	
 	public boolean isCorrect(ArrayList<String> userAnswers){		
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(question_id);

@@ -27,7 +27,7 @@ public interface Question {
 	public Timestamp getTimestamp();
 	public String getTimestampString();
 	public String getHTML(boolean showAnswer);
-	
+	public void setID(int id);
 	
 	public boolean isCorrect(ArrayList<String> userAnswers);
 	// for extension question types, userAnswer should be array list
