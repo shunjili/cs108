@@ -89,7 +89,7 @@ public class MultipleChoiceQuestion implements Question {
 
 		if(choices != null){
 			for (int i = 0; i < choices.length; i++){
-				html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s ></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, choices[i]) ;
+				html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s value = %d></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, i, choices[i]) ;
 			}
 		}
 		

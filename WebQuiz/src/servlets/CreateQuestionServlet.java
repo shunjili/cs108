@@ -57,7 +57,8 @@ public class CreateQuestionServlet extends HttpServlet {
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, null, "1", 10, timeStamp);
-		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index) < 0){
+
+		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){
 			System.out.println("Success stored question");
 		}else{
 			System.out.println("Failed to store the questions");
