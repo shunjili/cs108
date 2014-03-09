@@ -40,6 +40,8 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		</div>
 	<div class="col-md-7">
 			<form action="EvaluateQuizServlet" method ="post">
+			<input type="hidden" name="quiz_id" value="<%=quiz_id %>">
+			
 		<%if (Questions != null){ %>
 			<%for (int i = 0; i < Questions.size(); i ++){ %>
 					<div class="panel panel-primary"> <div class="panel-heading">

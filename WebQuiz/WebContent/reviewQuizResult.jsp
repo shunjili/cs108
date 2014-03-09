@@ -6,7 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Review Quiz Result</title>
 </head>
+<%
+int score = (Integer) request.getSession().getAttribute("score");
+%>
 <body>
-Here is your quiz result:
+Here is your quiz result:<%=score %>
 </body>
 </html>
