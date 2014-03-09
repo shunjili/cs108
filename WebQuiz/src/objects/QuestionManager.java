@@ -22,6 +22,8 @@ public class QuestionManager {
 	public static final String SCORE_COL = "score";
 	public static final String TIMESTAMP_COL = "time_stamp";
 	
+	public static final String ANSWERS_QUESTION_ID_COL = "question_id";
+	public static final String ANSWER_COL = "answer";
 
 	public static Question.Type getTypeForString(String type) {
 		if (type.equals(Question.FILL_IN_BLANK_STR)) {
@@ -186,9 +188,140 @@ public class QuestionManager {
 	 * @return
 	 */
 	public static boolean storeNewQuestion(Question toStore, String quiz_id, int index, String answer){
-		//TODO to be implemented by Steven;
-		return false;
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "INSERT INTO " + MyDBInfo.QUESTIONS_TABLE
+					+ " (" + QUESTION_COL
+					+ "," + DESCRIPTION_COL
+					+ "," + TYPE_COL
+					+ "," + CREATOR_COL
+					+ "," + SCORE_COL
+					+ "," + TIMESTAMP_COL
+					+ ") VALUES("
+					+ "\"" + toStore.getQuestion() + "\""
+					+ ",\"" + toStore.getDescription() + "\""
+					+ ",\"" + getStringForType(toStore.getType()) + "\""
+					+ ",\"" + toStore.getCreatorID() + "\""
+					+ "," + toStore.getScore()
+					+ ",\'" + toStore.getTimestamp().toString() + "\');";
+
+			//execute the query
+			int result = stmt.executeUpdate(query);
+			
+			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID();");
+			
+			rs.next();
+			
+			int questionId = rs.getInt("LAST_INSERT_ID()");
+			
+			
+			//insert into the answers table
+			query = "INSERT INTO " + MyDBInfo.ANSWERS_TABLE + " VALUES ("
+					+ "\"" + questionId + "\",\"" + answer + "\");" ;
+			
+			result = stmt.executeUpdate(query);
+			
+			//now, add to the QuizQuestionTable
+			query = "INSERT INTO " + MyDBInfo.QUIZ_QUESTION_TABLE + " VALUES (\""
+					+ quiz_id + "\",\"" + questionId + "\"," + index + ");";
+			
+			//execute the query to add to QuizQuestionTable
+			result = stmt.executeUpdate(query);
+			
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
+	
+	
+	/**
+	 * Same as the above function except that it has an additional parameter to store the answer 
+	 * together with the question
+	 * @param toStore
+	 * @param quiz_id
+	 * @param index
+	 * @param answer
+	 * @return
+	 */
+	public static boolean storeNewQuestionMultiple(Question toStore, String quiz_id, int index, String[] answers){
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "INSERT INTO " + MyDBInfo.QUESTIONS_TABLE
+					+ " (" + QUESTION_COL
+					+ "," + DESCRIPTION_COL
+					+ "," + TYPE_COL
+					+ "," + CREATOR_COL
+					+ "," + SCORE_COL
+					+ "," + TIMESTAMP_COL
+					+ ") VALUES("
+					+ "\"" + toStore.getQuestion() + "\""
+					+ ",\"" + toStore.getDescription() + "\""
+					+ ",\"" + getStringForType(toStore.getType()) + "\""
+					+ ",\"" + toStore.getCreatorID() + "\""
+					+ "," + toStore.getScore()
+					+ ",\'" + toStore.getTimestamp().toString() + "\');";
+
+			//execute the query
+			int result = stmt.executeUpdate(query);
+			
+			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID();");
+			
+			rs.next();
+			
+			int questionId = rs.getInt("LAST_INSERT_ID()");
+			
+			
+			//insert into the answers table
+			for(String answer : answers) {
+				//insert into the answers table
+				query = "INSERT INTO " + MyDBInfo.ANSWERS_TABLE + " VALUES ("
+						+ "\"" + questionId + "\",\"" + answer + "\");" ;
+				
+				result = stmt.executeUpdate(query);
+			}
+			
+			//now, add to the QuizQuestionTable
+			query = "INSERT INTO " + MyDBInfo.QUIZ_QUESTION_TABLE + " VALUES (\""
+					+ quiz_id + "\",\"" + questionId + "\"," + index + ");";
+			
+			//execute the query to add to QuizQuestionTable
+			result = stmt.executeUpdate(query);
+			
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 
 	public static Question constructQuestion(Question.Type type, String question_id,
 			String question, String description, String creator_id, int score,
@@ -210,19 +343,25 @@ public class QuestionManager {
 //                             "Cato the Elder;Cato the Younger;Julius Caesar;Scipio Africanus?", "This is a question about the Roman Republic.",
 //                             "sally", 10, new Timestamp(System.currentTimeMillis()));
              
-             Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
-                             "This is a question about the Roman Republic","sally", 50, new Timestamp(System.currentTimeMillis()));
+             Question test2 = new QuestionResponseQuestion("2", "Name one of Hamical Barca's sons (first name only).",
+                             "This is a question about the Second Punic War.","sally", 50, new Timestamp(System.currentTimeMillis()));
+             
+             Question test3 = new QuestionResponseQuestion("2", "Carthage's principal dieties were Ba'al Hammon and what other god?",
+            		 "This is a question on Carthaginian culture.","sally", 50, new Timestamp(System.currentTimeMillis()));
              
 //             QuestionManager.storeNewQuestion(test1, "2", 1);
-             QuestionManager.storeNewQuestion(test2, "2", 2);
+             
+             String[] answers = {"Hannibal", "Hasdrubal","Mago"};
+             
+             QuestionManager.storeNewQuestion(test3, "2", 2, "Tanit");
              QuestionManager.getAnswers("1");
              
              ArrayList<String> userAnswers = new ArrayList<String>();
              userAnswers.add("haha");
  			 System.out.println(test2.getResultView(userAnswers ));
              ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
-             Question test3 = questionList.get(0);
-             Question test4 = questionList.get(1);
+             Question test4 = questionList.get(0);
+             Question test5 = questionList.get(1);
 
      }
 
