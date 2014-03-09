@@ -114,6 +114,7 @@ public class QuestionManager {
 		}
 	}
 	
+
 	/**
 	 * Writes the question passed in to the Questions table in the database.
 	 * @param toStore
@@ -173,6 +174,20 @@ public class QuestionManager {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	/**
+	 * Same as the above function except that it has an additional parameter to store the answer 
+	 * together with the question
+	 * @param toStore
+	 * @param quiz_id
+	 * @param index
+	 * @param answer
+	 * @return
+	 */
+	public static boolean storeNewQuestion(Question toStore, String quiz_id, int index, String answer){
+		//TODO to be implemented by Steven;
+		return false;
 	}
 
 	public static Question constructQuestion(Question.Type type, String question_id,

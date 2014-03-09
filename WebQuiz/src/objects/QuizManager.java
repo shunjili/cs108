@@ -255,7 +255,23 @@ public class QuizManager {
 			return null;
 		}
 	}
+	/**
+	 * @param max maximum number of recent created quiz to show
+	 * @return an array of recently created quiz;
+	 */
+	public static ArrayList<Quiz> getRecentQuiz(int max){
+		//TODO to be implemented by Steven
+		return null;
+	}
 	
+	/**
+	 * @param creatorID use username of the person with creates this list of quizzes
+	 * @return
+	 */
+	public static ArrayList<Quiz> getSelfCreatedQuiz(String creatorID){
+		//TODO to be implemented by Steven
+		return null;
+	}
 	
 	//main method for testing
 	public static void main(String[] args) {

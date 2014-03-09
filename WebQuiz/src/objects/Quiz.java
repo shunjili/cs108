@@ -10,7 +10,6 @@ public class Quiz {
 	// number_of_reviews, average_rating
 	
 	//public enum QuizCategory {};
-	
 	private String name;
 	private String description;
 	private ArrayList<Question> questions;
@@ -42,6 +41,20 @@ public class Quiz {
 		this.numReviews = numReviews;
 		this.rating = rating;
 		this.timestamp = timestamp;
+	}
+	
+	/**
+	 * @param admin if the person is able to view the quiz
+	 * @return a link tag to the quiz site
+	 */
+	public String getLinkHTML(boolean admin){
+		int id = (Integer) QuizManager.getQuizId(this);
+		String link = "/WebQuiz/quiz.jsp?id="+id;
+		if(admin){
+			link = "/WebQuiz/createQuestions.jsp?id="+id;
+		}
+		String html = "<a href = \"" + link + "\">" + name + "<a>";
+		return html;
 	}
 	
 	public String getQuizName() {
