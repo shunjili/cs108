@@ -44,6 +44,15 @@ public class CreateQuestionServlet extends HttpServlet {
 		String question = request.getParameter("question");
 		String answer = request.getParameter("answer");
 		String questionTypeString = request.getParameter("type");
+		String scoreString = request.getParameter("score");
+		int score = 0;
+		try {
+			score = Integer.parseInt(scoreString);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.print("The entered score is not a valid number string");
+			score = 0;
+		}
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
 				String choice = request.getParameter("choice"+i);
@@ -56,7 +65,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
-		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, null, "1", 10, timeStamp);
+		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, null, "1", score, timeStamp);
 
 		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){
 			System.out.println("Success stored question");

@@ -89,7 +89,7 @@ public class MultipleChoiceQuestion implements Question {
 
 		if(choices != null){
 			for (int i = 0; i < choices.length; i++){
-				html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s value = %d></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, i, choices[i]) ;
+				html +=String.format("<div class=\"input-group\"><span class=\"input-group-addon\"><input type=\"radio\" name = %s value = %d></span><label type=\"text\" class=\"form-control\">%s</label></div><br>", questionID, i+1, choices[i]) ;
 			}
 		}
 		
@@ -113,7 +113,8 @@ public class MultipleChoiceQuestion implements Question {
 		boolean flag = true;
 		for(int i = 0; i < len; i++){
 			// if any of the solutions are not in the answer then it's false
-			if(!answers.contains(userAnswers.get(i).trim().toLowerCase())){
+			if(!answers.contains(userAnswers.get(i).trim())){
+				System.out.println(userAnswers.get(i));
 				flag = false;
 				break;
 			}
@@ -150,7 +151,7 @@ public class MultipleChoiceQuestion implements Question {
 			htmlContent += "<span class=\"input-group-addon\">" + Integer.toString(i + 1) + ".";
 			htmlContent += userAnswers.get(i);
 			htmlContent += "&nbsp;" ;
-		}	
+		}
 		if(isCorrect(userAnswers)){
 			htmlContent += "<b>is correct!</b></span>";
 		}else{

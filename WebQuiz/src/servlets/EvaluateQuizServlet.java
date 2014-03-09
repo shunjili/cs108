@@ -42,7 +42,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		int score = 0;
-
+		HashMap<Question, String> questionAnswerHash = new HashMap<Question, String>();
 		if(questions != null){
 			for(int i =0 ; i < questions.size(); i++){
 				Question question = questions.get(i);
@@ -54,7 +54,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 					score += question.getScore(answers);
 				}
 			}
-			System.out.println("The total score is " + score);
+			//System.out.println("The total score is " + score);
 		}
 		request.getSession().setAttribute("score", score);
 		String returnURL = String.format("reviewQuizResult.jsp", quiz_id);

@@ -67,7 +67,12 @@ public class QuestionResponseQuestion implements Question {
 			"</div>"+
 			"</div>";
 		if(showAnswer){
-			html += String.format("<div class=\"panel-footer\">%s</div>", "This is a dummy answer");
+			ArrayList<String> answers = QuestionManager.getAnswers(question_id);
+			if(answers != null){
+				for(int i = 0; i < answers.size(); i++){
+					html += String.format("<div class=\"panel-footer\">%s</div>", answers.get(i));
+				}
+			}
 		}
 		return html;
 	}
@@ -90,7 +95,7 @@ public class QuestionResponseQuestion implements Question {
 		boolean flag = true;
 		for(int i = 0; i < len; i++){
 			// if any of the solutions are not in the answer then it's false
-			if(!answers.contains(userAnswers.get(i).trim().toLowerCase())){
+			if(!answers.contains(userAnswers.get(i).trim())){
 				flag = false;
 				break;
 			}
