@@ -13,6 +13,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-7">
 	<div class="panel panel-primary">
 		<div class="panel-heading">Create a New Quiz</div>
 			<div class="panel-body">
@@ -29,12 +32,15 @@
 		 			 <br>
 		 			 <div class="input-group">
 		 				<span class="input-group-addon">category</span>
-		 				<select name="category" class="form-control">
+		 				<span  class="form-control">
+		 					<select name="category">
   							<option value="Common Sense">Common Sense</option>
   							<option value="Life Style">Life Style</option>
   							<option value="Academic">Academic</option>
  							<option value="Sport">Sport</option>
 						</select>
+		 				</span>
+		 				
 					</div>
 		 			 <br>
 		 			 <div class="input-group">
@@ -59,6 +65,10 @@
 			</div>
 	</div>
 	<div class="panel-body">Which Roman consul was defeated at the battle of Cannae?<div class="input-group"><span class="input-group-addon">Right Answer</span><span class="input-group-addon"></span></div><div class="input-group"><span class="input-group-addon">Your Answer</span><span class="input-group-addon">1.haha&nbsp;is wrong! Sorry!</b></span></div>
+	
+	</div>
+	<div class="col-md-2">
+	</div>
 	
 	</body>
 </html>
