@@ -180,7 +180,8 @@ public class QuestionManager {
 			Timestamp timestamp) {
 		System.out.println(getStringForType(type));
 		switch (type) {
-			case FILL_IN_BLANK: return new FillInBlankQuestion(question_id, question, description, creator_id, score, timestamp);
+			case FILL_IN_BLANK: 
+				return new FillInBlankQuestion(question_id, question, description, creator_id, score, timestamp);
 			case MULTIPLE_CHOICE: return new MultipleChoiceQuestion(question_id, question, description, creator_id, score, timestamp);
 			case QUESTION_RESPONSE: return new QuestionResponseQuestion(question_id, question, description, creator_id, score, timestamp);
 			default: return null;

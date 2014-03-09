@@ -22,6 +22,10 @@ page import="objects.*, java.util.ArrayList"
 <%
 String quiz_id = request.getParameter("id");
 ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+int questionIndex = 0;
+if(Questions != null){
+	questionIndex = Questions.size();
+}
 %>
 <body>
 	<div class="page-header">
@@ -44,8 +48,6 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 	<div class="col-md-7">
 		
 		<%if (Questions != null){
-			int questionIndex = Questions.size();
-
 			%>
 			<%for (int i = 0; i < Questions.size(); i ++){ %>
 					<div class="panel panel-primary"> <div class="panel-heading">
@@ -54,8 +56,12 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		  			<%= Questions.get(i).getHTML(true) %>
 		  			</div>	
 			<%} %>
-		
-			<div class="panel panel-primary">
+ 			<br>
+
+		<%}else{ %>
+		<p>You do not have a quiz for this id or you dont have any questions in this quiz!</p>
+		<%} %>
+							<div class="panel panel-primary">
 			 <div class="panel-heading">Create a New Question</div>
 			 <div class="panel-body">
 			 <ul class="nav nav-tabs">
@@ -106,27 +112,20 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 
 			<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 			<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
-			<input type = "hidden" name = "type" value = "<%= Question.QUESTION_RESPONSE_STR %>">
+			<input type = "hidden" name = "type" value = "<%= Question.MULTIPLE_CHOICE_STR %>">
     		<div class="input-group">
  				<span class="input-group-addon">Question</span>
   				<input type="text"  name = "question" class="form-control" placeholder="Question">
 			</div>
 			<br>
+			<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 			<div class="input-group">
- 				<span class="input-group-addon">Choice 1</span>
-  				<input type="text"  name = "choice1" class="form-control" placeholder="choice1">
+ 				<span class="input-group-addon">Choice <%=i+1 %></span>
+  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder="choice1">
 			</div>
  			 <br>
- 			 <div class="input-group">
- 				<span class="input-group-addon">Choice 2</span>
-  				<input type="text"  name = "choice2" class="form-control" placeholder="choice2">
-			</div>
- 			 <br>
- 			 <div class="input-group">
- 				<span class="input-group-addon">Choice 3</span>
-  				<input type="text"  name = "choice3" class="form-control" placeholder="choice3">
-			</div>
- 			 <br>
+			<%} %>
+
  			 <div class="input-group">
  				<span class="input-group-addon">Score</span>
   				<input type="text"  name = "score" class="form-control" placeholder="score">
@@ -156,7 +155,7 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 
 			<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 			<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
-			<input type = "hidden" name = "type" value = "<%= Question.QUESTION_RESPONSE_STR %>">
+			<input type = "hidden" name = "type" value = "<%= Question.FILL_IN_BLANK_STR %>">
     		<div class="input-group">
  				<span class="input-group-addon">Question</span>
   				<input type="text"  name = "question" class="form-control" placeholder="Use #### to rerepsent blank to be filled in ">
@@ -183,18 +182,11 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 			</div>
 			<br>
 			<button type="submit" class="btn btn-default">Submit</button>
-			
 			 </form>
   </div>
 </div>
 </div>
- 			<br>
-			</div>
-			</div>
- 			
-		<%}else{ %>
-		<p>You do not have a quiz for this id or you dont have any questions in this quiz!</p>
-		<%} %>
+	</div>
 	</div>
 	
 </body>

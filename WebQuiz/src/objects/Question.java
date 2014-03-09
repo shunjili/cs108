@@ -12,6 +12,7 @@ public interface Question {
 	public static final String MULTIPLE_CHOICE_STR = "MULTIPLE_CHOICE";
 	public static final String PIC_RESPONSE_STR = "PIC_RESPONSE";
 	public static final String BAD_TYPE_STR = "BAD_TYPE";
+	public static final int MAX_NUM_CHOICES =4;
 	
 			
 			

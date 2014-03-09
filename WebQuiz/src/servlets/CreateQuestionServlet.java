@@ -44,7 +44,16 @@ public class CreateQuestionServlet extends HttpServlet {
 		String question = request.getParameter("question");
 		String answer = request.getParameter("answer");
 		String questionTypeString = request.getParameter("type");
+		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
+			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
+				String choice = request.getParameter("choice"+i);
+				if(choice != null){
+					question += "#"+choice;
+				}
+			}
+		}
 		Question.Type type = QuestionManager.getTypeForString(questionTypeString);
+		
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, null, "1", 10, timeStamp);
@@ -53,7 +62,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		}else{
 			System.out.println("Failed to store the questions");
 		}
-		String returnURL = String.format("createQuiz.jsp?id=%s", quiz_id);
+		String returnURL = String.format("createQuestions.jsp?id=%s", quiz_id);
 		request.getRequestDispatcher(returnURL).forward(request, response);
 		//TODO adding question to the data base
 		
