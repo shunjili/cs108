@@ -22,6 +22,8 @@ public class QuestionManager {
 	public static final String SCORE_COL = "score";
 	public static final String TIMESTAMP_COL = "time_stamp";
 	
+	public static final String INDEX_COL = "question_index";
+	
 	public static final String ANSWERS_QUESTION_ID_COL = "question_id";
 	public static final String ANSWER_COL = "answer";
 
@@ -359,6 +361,11 @@ public class QuestionManager {
              returnID = QuestionManager.storeNewQuestionMultiple(test2, "2", 2, answers);
              test2.setID(returnID);
              
+             returnID = QuestionManager.updateQuestion(test2, "2", answers);
+             test2.setID(returnID);
+             
+             deleteQuestion(test3.getQuestionID(), "2");
+             
              ArrayList<String> testAnswers = QuestionManager.getAnswers(test2.getQuestionID());
              System.out.println(testAnswers.toString());
              
@@ -417,14 +424,127 @@ public class QuestionManager {
 		}
 	}
 
+	/**
+	 * Deletes question with the specified question ID. Also removes question from the QuizQuestionsTable
+	 * and from the Answers table;
+	 * @param question_id
+	 * @param quiz_id
+	 * @return
+	 */
 	public static boolean deleteQuestion(String question_id, String quiz_id) {
-		// TODO to be implemented by Steven;
-		return false;
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+		
+			//prepare query
+			String query = "DELETE FROM " + MyDBInfo.QUIZ_QUESTION_TABLE + " WHERE "
+					+ QUESTION_ID_COL + "=" + question_id + ";";
+			//execute the query
+			int result= stmt.executeUpdate(query);	
+			
+			query = "DELETE FROM " + MyDBInfo.ANSWERS_TABLE + " WHERE "
+					+ ANSWERS_QUESTION_ID_COL + "=" + question_id + ";";
+			result = stmt.executeUpdate(query);
+			
+			query = "DELETE FROM " + MyDBInfo.QUESTIONS_TABLE + " WHERE "
+					+ QUESTION_ID_COL + "=" + question_id + ";";
+			
+			
+			con.close();
+			//return answers
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
-	public static boolean updateQuestion(Question toUpdate, String quiz_id, String[] answers) {
-		// TODO to be implemented by Steven;
-		return false;
+	public static boolean removeQuestionFromQuiz(String question_id, String quiz_id) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+		
+			//prepare query
+			String query = "DELETE FROM " + MyDBInfo.QUIZ_QUESTION_TABLE + " WHERE "
+					+ QUESTION_ID_COL + "=" + question_id + ";";
+			//execute the query
+			int result= stmt.executeUpdate(query);	
+			
+			query = "DELETE FROM " + MyDBInfo.ANSWERS_TABLE + " WHERE "
+					+ ANSWERS_QUESTION_ID_COL + "=" + question_id + ";";
+			result = stmt.executeUpdate(query);
+			
+			
+			con.close();
+			//return answers
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * Updates the question with the specified parameters. 
+	 * @param toUpdate
+	 * @param quiz_id
+	 * @param answers
+	 * @return
+	 */
+	public static int updateQuestion(Question toUpdate, String quiz_id, String[] answers) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+		
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_QUESTION_TABLE + " WHERE "
+					+ QUESTION_ID_COL + "=" + toUpdate.getQuestionID() + ";";
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			int index = 1;
+			while(rs.next()) {
+				index = rs.getInt(INDEX_COL);
+			}
+		
+			deleteQuestion(toUpdate.toString(), quiz_id);			
+			int result = storeNewQuestionMultiple(toUpdate, quiz_id, index, answers);
+			
+			
+			con.close();
+			//return answers
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
 
 }
