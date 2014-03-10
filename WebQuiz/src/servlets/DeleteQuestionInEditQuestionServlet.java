@@ -39,7 +39,7 @@ public class DeleteQuestionInEditQuestionServlet extends HttpServlet {
 
 		String quiz_id = request.getParameter("quiz_id");
 		String question_id = request.getParameter("question_id");
-		if(QuestionManager.deleteQuestion(question_id, quiz_id)){
+		if(QuestionManager.deleteQuestion(question_id, quiz_id) && QuestionManager.removeQuestionFromQuiz(question_id, quiz_id)){
 			System.out.println("Success delete question");
 		}else{
 			System.out.println("Failed to delte the questions");

@@ -59,7 +59,7 @@ public class UpdateQuestionInEditQuestionServlet extends HttpServlet {
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		
 		Question toStore = QuestionManager.constructQuestion(type, question_id, question, null, "1", 10, timeStamp);
-		if(QuestionManager.updateQuestion(toStore, quiz_id, ans)){
+		if(QuestionManager.updateQuestion(toStore, quiz_id, ans) < 0){
 			System.out.println("Success stored question");
 		}else{
 			System.out.println("Failed to store the questions");
