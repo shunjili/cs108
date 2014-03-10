@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
+<%@
+page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,9 +11,33 @@
 <title>Review Quiz Result</title>
 </head>
 <%
-int score = (Integer) request.getSession().getAttribute("score");
+int score = (Integer) session.getAttribute("score");
+HashMap<Question, ArrayList<String>> questionAnswerHash = (HashMap<Question, ArrayList<String>>) session.getAttribute(EvaluateQuizServlet.Hash_Str);
+ArrayList<Question> questions =(ArrayList<Question>) session.getAttribute(EvaluateQuizServlet.Questions_Str);
+boolean valid = questionAnswerHash != null && questions != null && questionAnswerHash.size() == questions.size();
 %>
 <body>
-Here is your quiz result:<%=score %>
+
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-7">
+		<div>
+		Here is your quiz result:<%=score %>
+		</div>
+		<%if(valid){ 
+			for(int i = 0; i < questions.size(); i++){
+				Question question = questions.get(i);
+				ArrayList<String> answers = questionAnswerHash.get(question);
+		%>
+			<div class="panel panel-primary"> 
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
+		    	</div>
+		    	<%= question.getResultView(answers) %>
+		    </div>
+		<%} }%>
+	</div>
+	<div class="col-md-2"></div>
+</div>
 </body>
 </html>

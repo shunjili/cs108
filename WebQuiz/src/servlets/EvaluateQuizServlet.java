@@ -2,12 +2,14 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import objects.Question;
 import objects.QuestionManager;
@@ -17,6 +19,9 @@ import objects.QuestionManager;
  */
 @WebServlet("/EvaluateQuizServlet")
 public class EvaluateQuizServlet extends HttpServlet {
+	public static final String Hash_Str = "questionAnswerHash";
+	public static final String Questions_Str = "questionList";
+
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -42,7 +47,8 @@ public class EvaluateQuizServlet extends HttpServlet {
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		int score = 0;
-		HashMap<Question, String> questionAnswerHash = new HashMap<Question, String>();
+		HashMap<Question, ArrayList<String>> questionAnswerHash = new HashMap<Question, ArrayList<String>>();
+		ArrayList<Question> questionList = new ArrayList<Question>();
 		if(questions != null){
 			for(int i =0 ; i < questions.size(); i++){
 				Question question = questions.get(i);
@@ -50,13 +56,18 @@ public class EvaluateQuizServlet extends HttpServlet {
 				ArrayList<String> answers= new ArrayList<String>();
 				answers.add(answer);
 				if(answer != null){
+					questionAnswerHash.put(question, answers);
+					questionList.add(question);
 					boolean correct = question.isCorrect(answers);
 					score += question.getScore(answers);
 				}
 			}
 			//System.out.println("The total score is " + score);
 		}
-		request.getSession().setAttribute("score", score);
+		HttpSession session = request.getSession();
+		session.setAttribute("score", score);
+		session.setAttribute(Hash_Str, questionAnswerHash);
+		session.setAttribute(Questions_Str, questionList);
 		String returnURL = String.format("reviewQuizResult.jsp", quiz_id);
 		request.getRequestDispatcher(returnURL).forward(request, response);
 	}
