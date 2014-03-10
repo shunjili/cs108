@@ -417,4 +417,14 @@ public class QuestionManager {
 		}
 	}
 
+	public static boolean deleteQuestion(String question_id, String quiz_id) {
+		// TODO to be implemented by Steven;
+		return false;
+	}
+	
+	public static boolean updateQuestion(Question toUpdate, String quiz_id, String[] answers) {
+		// TODO to be implemented by Steven;
+		return false;
+	}
+
 }
