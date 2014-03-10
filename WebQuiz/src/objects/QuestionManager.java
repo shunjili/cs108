@@ -457,7 +457,7 @@ public class QuestionManager {
 			
 			query = "DELETE FROM " + MyDBInfo.QUESTIONS_TABLE + " WHERE "
 					+ QUESTION_ID_COL + "=" + question_id + ";";
-			
+			result = stmt.executeUpdate(query);
 			
 			con.close();
 			//return answers
@@ -534,7 +534,7 @@ public class QuestionManager {
 				index = rs.getInt(INDEX_COL);
 			}
 		
-			deleteQuestion(toUpdate.toString(), quiz_id);			
+			deleteQuestion(toUpdate.getQuestionID(), quiz_id);			
 			int result = storeNewQuestionMultiple(toUpdate, quiz_id, index, answers);
 			
 			
