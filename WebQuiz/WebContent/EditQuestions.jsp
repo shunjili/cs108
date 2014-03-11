@@ -41,7 +41,19 @@ page import="objects.*, java.util.ArrayList"
 </script>
 
 <body>
-	<div class="col-md-7">		
+	<div class="page-header">
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-7">
+				<h1>
+					Edit Questions For Quiz <small> </small>
+				</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-7">		
 		<%if (Questions != null){%>
 			<%for (int j = 0; j < Questions.size(); j ++){ %>	
 				<div class="panel panel-primary">
@@ -53,7 +65,7 @@ page import="objects.*, java.util.ArrayList"
 			  		
 			  		<div id = <%="qu" + j%>>
 			  			<div class="panel panel-primary">
-							<div class="panel-heading">Create a New Question</div>
+						<div class="panel-heading">Edit the Question</div>
 						 	<div class="panel-body">
 						 		<ul class="nav nav-tabs">
 			  						<li class="active"><a href="#question_response" data-toggle="tab">Question Response</a></li>
@@ -273,5 +285,8 @@ page import="objects.*, java.util.ArrayList"
 				</div>
 			</div>
 		</div>
+			
+	</div>
+	
 	</body>
 </html>

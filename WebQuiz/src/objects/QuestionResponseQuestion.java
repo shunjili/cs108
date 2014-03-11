@@ -125,7 +125,7 @@ public class QuestionResponseQuestion implements Question {
 			htmlContent += "&nbsp;";
 		}
 		htmlContent += "</span>";
-		htmlContent +="</div>";
+		htmlContent +="</div><br>";
 		htmlContent +="<div class=\"input-group\">";
 		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
 		for(int i = 0; i < userAnswers.size(); i++){
@@ -138,7 +138,7 @@ public class QuestionResponseQuestion implements Question {
 		}else{
 			htmlContent += "is wrong! Sorry!</b></span>";
 		}
-		htmlContent +="</div>";
+		htmlContent +="</div></div>";
 		return htmlContent;
 		
 	}

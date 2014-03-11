@@ -135,21 +135,21 @@ public class MultipleChoiceQuestion implements Question {
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(questionID);
 		
-		String htmlContent = "<div class=\"panel-body\">" + question + "<div class=\"input-group\">" ;
+		String htmlContent = "<div class=\"panel-body\">" + questionPrefix + "<div class=\"input-group\">" ;
 		htmlContent += "<span class=\"input-group-addon\">Right Answer</span>";
 		htmlContent += "<span class=\"input-group-addon\">";
 		for(int i = 0; i < answers.size(); i++){
 			htmlContent += Integer.toString(i + 1) + ".";
-			htmlContent += answers.get(i);
+			htmlContent += choices[Integer.parseInt(answers.get(i))-1];
 			htmlContent += "&nbsp;";
 		}
 		htmlContent += "</span>";
-		htmlContent +="</div>";
+		htmlContent +="</div><br>";
 		htmlContent +="<div class=\"input-group\">";
 		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
 		for(int i = 0; i < userAnswers.size(); i++){
 			htmlContent += "<span class=\"input-group-addon\">" + Integer.toString(i + 1) + ".";
-			htmlContent += userAnswers.get(i);
+			htmlContent += choices[Integer.parseInt(userAnswers.get(i))-1];
 			htmlContent += "&nbsp;" ;
 		}
 		if(isCorrect(userAnswers)){
