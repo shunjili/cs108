@@ -157,7 +157,7 @@ public class MultipleChoiceQuestion implements Question {
 		}else{
 			htmlContent += "is wrong! Sorry!</b></span>";
 		}
-		htmlContent +="</div>";
+		htmlContent +="</div></div>";
 		return htmlContent;
 		
 	}
