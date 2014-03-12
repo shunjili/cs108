@@ -28,6 +28,7 @@ page import="objects.*, java.util.ArrayList"%>
 <%
 	} else {
 		ArrayList<String> announcements = AnnouncementManager.getRecentAnnouncements(10);
+		ArrayList<Quiz> recentQuizzes = QuizManager.getRecentQuiz(5);
 %>
 <body>
 	<div class="page-header">
@@ -53,12 +54,20 @@ page import="objects.*, java.util.ArrayList"%>
 			<% for (int i = 0; i < announcements.size(); i++) {%>
 			<p> <%= announcements.get(i) %></p>
 			<%} %>
-			<h3>List of Popular Quiz</h3>
-			<h3>List of Recently Created Quiz</h3>
-			<h3>List of Taken Quiz</h3>
+			<h3>List of Popular Quizzes</h3>
+			<h3>List of Recently Created Quizzes</h3>
+			<h3>List of Taken Quizzes</h3>
+				<ul>
+					<%for(Quiz quiz : recentQuizzes) { %>
+						<li>
+							<a href=<%="quiz.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
+						</li>
+						<%} %>
+				</ul>
 			<h3>List of their recent quiz creating activities</h3>
 
 		</div>
+		<h3>Additional Options:</h3>
 		<div class="col-md-2">
 			<ul>
 				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>

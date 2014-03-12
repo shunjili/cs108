@@ -49,6 +49,7 @@ public class QuizManager {
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
+			int quizQueryId = 0;
 			String quizName = "";
 			String creator = "";
 			String description = "";
@@ -65,6 +66,7 @@ public class QuizManager {
 
 			while(rs.next()) {
 				readEntry = true;
+				quizQueryId = rs.getInt(QUIZ_ID_COL);
 				quizName = rs.getString(QUIZ_NAME_COL);
 				creator = rs.getString(CREATOR_COL);
 				description = rs.getString(DESCRIPTION_COL);
@@ -79,10 +81,13 @@ public class QuizManager {
 			}
 			con.close();
 			if(readEntry) {
+				if(Integer.parseInt(quiz_id) != quizQueryId)
+					return null;
+				
 				ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id);
 				ArrayList<String> tags = getTagsForQuiz(quiz_id);
 				return new Quiz(quizName, description, questionList, creator, category, tags,
-						correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp);
+						correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quizQueryId);
 			} else {
 				return null;
 			}
@@ -383,7 +388,7 @@ public class QuizManager {
 	
 	
 	private static Quiz parseQuiz(ResultSet rs) throws SQLException {
-		String quiz_id = "";
+		int quiz_id = 0;
 		String quizName = "";
 		String creator = "";
 		String description = "";
@@ -400,7 +405,7 @@ public class QuizManager {
 
 		while(rs.next()) {
 			readEntry = true;
-			quiz_id += rs.getInt(QUIZ_ID_COL);
+			quiz_id = rs.getInt(QUIZ_ID_COL);
 			quizName = rs.getString(QUIZ_NAME_COL);
 			creator = rs.getString(CREATOR_COL);
 			description = rs.getString(DESCRIPTION_COL);
@@ -415,10 +420,10 @@ public class QuizManager {
 			break;
 		}
 		if(readEntry) {
-			ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id);
-			ArrayList<String> tags = getTagsForQuiz(quiz_id);
+			ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id + "");
+			ArrayList<String> tags = getTagsForQuiz(quiz_id + "");
 			return new Quiz(quizName, description, questionList, creator, category, tags,
-					correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp);
+					correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quiz_id);
 		} else {
 			return null;
 		}

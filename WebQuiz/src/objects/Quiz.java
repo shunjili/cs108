@@ -21,13 +21,14 @@ public class Quiz {
 	private boolean randomOrder;
 	private int timesTaken;
 	private int numReviews;
+	private int quiz_id;
 	private double rating;
 	private Timestamp timestamp;
 	
 	public Quiz(String name, String description, ArrayList<Question> questions, 
 			String creator, String category, ArrayList<String> tags,
 			boolean correctImmediately, boolean onePage, boolean randomOrder,
-			int timesTaken, int numReviews, double rating, Timestamp timestamp) {
+			int timesTaken, int numReviews, double rating, Timestamp timestamp, int quiz_id) {
 		this.name = name;
 		this.description = description;
 		this.questions = questions;
@@ -41,6 +42,7 @@ public class Quiz {
 		this.numReviews = numReviews;
 		this.rating = rating;
 		this.timestamp = timestamp;
+		this.quiz_id = quiz_id;
 	}
 	
 	/**
@@ -55,6 +57,14 @@ public class Quiz {
 		}
 		String html = "<a href = \"" + link + "\">" + name + "<a>";
 		return html;
+	}
+	
+	public int getQuizID() {
+		return this.quiz_id;
+	}
+	
+	public void setQuizID(int newId) {
+		this.quiz_id = newId;
 	}
 	
 	public String getQuizName() {

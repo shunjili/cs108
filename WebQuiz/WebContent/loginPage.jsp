@@ -30,7 +30,7 @@
 	<p>&nbsp;</p>
 	<form method="POST" action = "HandleLoginServlet">
 		<p align = "center">Enter Username:<input type="text" name="username" placeholder="Username"/></p>
-		<p align = "center">Enter Password:<input type="text" name="password" placeholder="Password"/></p>
+		<p align = "center">Enter Password:<input type="password" name="password" placeholder="Password"/></p>
 		<p align = "center"><input type="submit" value="login" class="btn btn-primary"/></p>
 		<p align = "center"><input name="remember" type="checkbox" id="rememberUser"> Remember me</p>
 	</form>
