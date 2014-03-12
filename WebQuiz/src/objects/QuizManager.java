@@ -506,10 +506,10 @@ public class QuizManager {
 	}
 	
 	
-	public ArrayList<QuizAttempt> getTopAttempts(String quiz_id, int max) {
-		// TODO
-		return null;
-	}
+//	public ArrayList<QuizAttempt> getTopAttempts(String quiz_id, int max) {
+//		// TODO
+//		return null;
+//	}
 	
 	
 	//main method for testing

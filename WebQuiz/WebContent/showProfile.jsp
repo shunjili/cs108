@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="objects.*"%>
+<%@page import="objects.*,java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -58,15 +58,34 @@
 %>
 
 <h2>Friends</h2>
-<ul>
 	<%
-		for(Account friend : AccountManager.getFriendsForUser(shownUsername)){
+		ArrayList<Account> friends = AccountManager.getFriendsForUser(shownUsername);
+		if (friends == null) {
+	%>
+			
+	<%
+		} else if (friends.size() == 0) {
+	%>
+	<p><%=shownDisplayName %> has no friends yet.</p>
+	<%
+		} else {
+	%>
+	<ul>
+	<%
+		for(Account friend : friends){
 	%>
 			<li><a href="showProfile.jsp?username=<%=friend.getUsername()%>"><%=friend.getDisplayName() %></a> (<%=friend.getUsername()%>) - <%=friend.getTypeString()%></li>
 	<%
 		}
 	%>
-</ul>
+	</ul>
+	<%}
+		if (shownAccount.equals(loggedAccount)) {
+	%>
+	<h4><a href="accountIndex.jsp">Find Friends</a></h4>
+	<%
+		}
+	%>
 <h4><a href="ViewMyAccount.jsp">Homepage</a></h4>
 
 </body>
