@@ -53,7 +53,7 @@ ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		 	<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 		<%}else{ %>
-		<p>You do not have a quiz for this id or you dont have any questions in this quiz!</p>
+		<p>You do not have a quiz for this id or you don't have any questions in this quiz!</p>
 		<%} %>
 	</div>
 	
