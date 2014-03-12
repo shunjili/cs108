@@ -118,6 +118,10 @@ public class Quiz {
 		return this.creator;
 	}
 	
+	public Account getQuizCreatorAccount() {
+		return AccountManager.getAccountByUsername(this.creator);
+	}
+	
 	public String getQuizCategory() {
 		return this.category;
 	}

@@ -47,7 +47,7 @@ public class CreateAnnouncementServlet extends HttpServlet {
 			announcement = new Announcement(thisAccount.getUsername(), announcementText);
 			boolean announcementIsMade = AnnouncementManager.makeAnnouncement(announcement);
 			if(announcementIsMade) {
-				request.getRequestDispatcher("announcementMade.html").forward(request, response);
+				request.getRequestDispatcher("/WebQuiz/ViewMyAccount.jsp").forward(request, response);
 			} else {
 				request.getRequestDispatcher("announcementFailed.html").forward(request, response);
 			}
