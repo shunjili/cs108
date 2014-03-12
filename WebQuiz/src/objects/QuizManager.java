@@ -260,8 +260,40 @@ public class QuizManager {
 	 * @return an array of recently created quiz;
 	 */
 	public static ArrayList<Quiz> getRecentQuiz(int max){
-		//TODO to be implemented by Steven
-		return null;
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " ORDER BY "
+					+ TIMESTAMP_COL + " DESC LIMIT " + max + " ;";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			//put all the results into an arrayList
+			ArrayList<Quiz> returnList = new ArrayList<Quiz>();
+			Quiz currentQuiz = parseQuiz(rs);
+			while(currentQuiz != null) {
+				returnList.add(currentQuiz);
+				currentQuiz = parseQuiz(rs);
+			}
+			
+			return returnList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -269,12 +301,134 @@ public class QuizManager {
 	 * @return
 	 */
 	public static ArrayList<Quiz> getSelfCreatedQuiz(String creatorID){
-		//TODO to be implemented by Steven
-		return null;
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					 + CREATOR_COL + "=\"" + creatorID +"\" ORDER BY "
+					+ TIMESTAMP_COL + " DESC;";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			//put all the results into an arrayList
+			ArrayList<Quiz> returnList = new ArrayList<Quiz>();
+			Quiz currentQuiz = parseQuiz(rs);
+			while(currentQuiz != null) {
+				returnList.add(currentQuiz);
+				currentQuiz = parseQuiz(rs);
+			}
+			
+			return returnList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
+	
+	/**
+	 * @param creatorID use username of the person with creates this list of quizzes.
+	 * Returns the most recent quizzes, with at most parameter max being returned.
+	 * @return
+	 */
+	public static ArrayList<Quiz> getSelfCreatedQuiz(String creatorID, int max){
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					 + CREATOR_COL + "=\"" + creatorID +"\" ORDER BY "
+					+ TIMESTAMP_COL + " DESC LIMIT " + max + ";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			//put all the results into an arrayList
+			ArrayList<Quiz> returnList = new ArrayList<Quiz>();
+			Quiz currentQuiz = parseQuiz(rs);
+			while(currentQuiz != null) {
+				returnList.add(currentQuiz);
+				currentQuiz = parseQuiz(rs);
+			}
+			
+			return returnList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	private static Quiz parseQuiz(ResultSet rs) throws SQLException {
+		String quiz_id = "";
+		String quizName = "";
+		String creator = "";
+		String description = "";
+		Timestamp timestamp = null;;
+		String category = "";
+		boolean correctImmediately = false;
+		boolean onePage = false;
+		boolean randomOrder = false;
+		int numberOfTimesTaken = -1;
+		int numberOfReviews = -1;
+		double averageRating = -1.0d;
+
+		boolean readEntry = false;
+
+		while(rs.next()) {
+			readEntry = true;
+			quiz_id += rs.getInt(QUIZ_ID_COL);
+			quizName = rs.getString(QUIZ_NAME_COL);
+			creator = rs.getString(CREATOR_COL);
+			description = rs.getString(DESCRIPTION_COL);
+			timestamp = rs.getTimestamp(TIMESTAMP_COL);
+			category = rs.getString(CATEGORY_COL);
+			correctImmediately = (rs.getInt(CORRECT_IMMEDIATELY_COL) != 0);
+			numberOfTimesTaken = rs.getInt(NUMBER_OF_TIMES_TAKEN_COL);
+			numberOfReviews = rs.getInt(NUMBER_OF_REVIEWS_COL);
+			onePage = (rs.getInt(ONE_PAGE_COL) != 0);
+			randomOrder = (rs.getInt(RANDOM_ORDER_COL) != 0);
+			averageRating = rs.getDouble(AVERAGE_RATING_COL);
+			break;
+		}
+		if(readEntry) {
+			ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id);
+			ArrayList<String> tags = getTagsForQuiz(quiz_id);
+			return new Quiz(quizName, description, questionList, creator, category, tags,
+					correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp);
+		} else {
+			return null;
+		}
+	}
+	
 	
 	//main method for testing
 	public static void main(String[] args) {
+		
+		/*
 		Quiz quiz1 = QuizManager.getQuizById("1");
 		Quiz quiz2 = QuizManager.getQuizById("3");
 	
@@ -301,7 +455,9 @@ public class QuizManager {
 				new Timestamp(System.currentTimeMillis()));
 		
 		boolean result = QuizManager.storeQuizQuestionTags(quiz3);
-	
+		*/
+		ArrayList<Quiz> resultList = QuizManager.getSelfCreatedQuiz("test", 5);
+		System.out.println(resultList.size());
 	}
 	
 

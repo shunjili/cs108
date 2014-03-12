@@ -125,11 +125,14 @@ CREATE TABLE QuizTagTable (
 	FOREIGN KEY (quiz_id) REFERENCES Quizzes(quiz_id)
 );
 
-CREATE TABLE HighScoreTable (
+CREATE TABLE QuizAttempts (
 	quiz_id CHAR(64),
-	history_id INT,
+	username CHAR(64),
+	score INT,
+	start_time TIMESTAMP,
+	duration LONG,
 	FOREIGN KEY (quiz_id) REFERENCES Quizzes(quiz_id),
-	FOREIGN KEY (history_id) REFERENCES HistoryTable(history_id)
+	FOREIGN KEY (username) REFERENCES Accounts(username)
 );
 
 CREATE TABLE QuizReview (

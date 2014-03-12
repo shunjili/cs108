@@ -328,7 +328,7 @@ public class QuestionManager {
 	public static Question constructQuestion(Question.Type type, String question_id,
 			String question, String description, String creator_id, int score,
 			Timestamp timestamp) {
-		System.out.println(getStringForType(type));
+		//System.out.println(getStringForType(type));
 		switch (type) {
 			case FILL_IN_BLANK: 
 				return new FillInBlankQuestion(question_id, question, description, creator_id, score, timestamp);
