@@ -12,7 +12,7 @@ page import="objects.*, java.util.ArrayList"%>
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<title>Insert title here</title>
+<title>Homepage</title>
 </head>
 <%
 		Account thisAccount = (Account) session
@@ -36,7 +36,7 @@ page import="objects.*, java.util.ArrayList"%>
 			<div class="col-md-3"></div>
 			<div class="col-md-7">
 				<h1>
-					View My Account Info <small>Welcome</small>
+					Welcome <small>Homepage</small>
 				</h1>
 			</div>
 		</div>
@@ -72,6 +72,7 @@ page import="objects.*, java.util.ArrayList"%>
 			<ul>
 				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
 				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
+				<li><a href="/WebQuiz/quizIndex.jsp">Quizzes</a></li>
 				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
 				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
 				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</a></li>
