@@ -56,15 +56,14 @@ public class EvaluateQuizServlet extends HttpServlet {
 				Question question = questions.get(i);
 				String answer = request.getParameter(question.getQuestionID());
 				ArrayList<String> answers= new ArrayList<String>();
+				if(answer == null) answer = "You did not answer this question";
 				answers.add(answer);
-				if(answer != null){
-					questionAnswerHash.put(question, answers);
-					questionList.add(question);
-					if(question.isCorrect(answers)){
-						score += question.getScore();
-
-					}
+				questionAnswerHash.put(question, answers);
+				questionList.add(question);
+				if(question.isCorrect(answers)){
+					score += question.getScore();
 				}
+				
 			}
 			//System.out.println("The total score is " + score);
 		}
