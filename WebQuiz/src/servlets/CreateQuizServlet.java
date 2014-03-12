@@ -65,7 +65,7 @@ public class CreateQuizServlet extends HttpServlet {
 		double rating = 0;
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		
-		Quiz toStore = new Quiz(name, description, Questions, creator, category, tags,correctImmediately, onePage, randomOrder, timesTaken, numReviews, rating, timeStamp, 0);
+		Quiz toStore = new Quiz(name, description, Questions, creator, category, tags,correctImmediately, onePage, randomOrder, timesTaken, numReviews, rating, timeStamp);
 		
 		if(QuizManager.storeQuizQuestionTags(toStore)){
 			System.out.println("Success stored Quiz");

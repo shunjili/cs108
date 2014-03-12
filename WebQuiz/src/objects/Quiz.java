@@ -45,6 +45,27 @@ public class Quiz {
 		this.quiz_id = quiz_id;
 	}
 	
+	public Quiz(String name, String description, ArrayList<Question> questions, 
+			String creator, String category, ArrayList<String> tags,
+			boolean correctImmediately, boolean onePage, boolean randomOrder,
+			int timesTaken, int numReviews, double rating, Timestamp timestamp) {
+		this.name = name;
+		this.description = description;
+		this.questions = questions;
+		this.creator = creator;
+		this.category = category;
+		this.tags = tags;
+		this.correctImmediately = correctImmediately;
+		this.onePage = onePage;
+		this.randomOrder = randomOrder;
+		this.timesTaken = timesTaken;
+		this.numReviews = numReviews;
+		this.rating = rating;
+		this.timestamp = timestamp;
+		this.quiz_id = 0;
+	}
+	
+	
 	/**
 	 * @param admin if the person is able to view the quiz
 	 * @return a link tag to the quiz site
