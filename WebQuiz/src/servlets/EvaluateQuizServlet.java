@@ -43,7 +43,9 @@ public class EvaluateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// TODO increament quiz taken count
+		
+		
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		int score = 0;
@@ -58,8 +60,10 @@ public class EvaluateQuizServlet extends HttpServlet {
 				if(answer != null){
 					questionAnswerHash.put(question, answers);
 					questionList.add(question);
-					boolean correct = question.isCorrect(answers);
-					score += question.getScore(answers);
+					if(question.isCorrect(answers)){
+						score += question.getScore();
+
+					}
 				}
 			}
 			//System.out.println("The total score is " + score);
