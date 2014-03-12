@@ -27,7 +27,13 @@ public class QuizManager {
 	public static final String TAG_QUIZ_ID_COL = "quiz_id";
 	public static final String TAG_TAG_COL = "tag";
 
-
+	
+	private static final String ATTEMPT_SCORE_COL = "score";
+	private static final String ATTEMPT_QUIZ_ID_COL = "quiz_id";
+	private static final String ATTEMPT_USERNAME_COL = "username";
+	private static final String ATTEMPT_START_COL = "start_time";
+	private static final String ATTEMPT_DURATION_COL = "duration";
+	
 	public static Quiz getQuizById(String quiz_id) {
 		try {
 			try {
@@ -427,6 +433,12 @@ public class QuizManager {
 		} else {
 			return null;
 		}
+	}
+	
+	
+	public ArrayList<QuizAttempt> getTopAttempts(String quiz_id, int max) {
+		// TODO
+		return null;
 	}
 	
 	
