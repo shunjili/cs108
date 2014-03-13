@@ -60,7 +60,7 @@ page import="objects.*,java.util.ArrayList, servlets.*"%>
 						<p></p>
 						<form action="DeleteMessageServlet" method="post">
 						<input type="hidden" name="msgID" value="<%= msg.getId() %>">
-						<button type="submit" class="btn btn-sm">Delete Message</button>
+						<button type="submit" class="btn btn-default">Delete Message</button>
 						</form>
 						</li>
 					<%

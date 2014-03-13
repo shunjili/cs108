@@ -115,6 +115,16 @@ if (loggedAccount == null) {
 					<p>You and <%=shownDisplayName %> are friends</p>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="sendMessage.jsp" method="get">
+					<input type="hidden" name="toUsername" value="<%=shownUsername %>">
+					<p>Send <%=shownDisplayName %> a message  
+					<button type="submit" class="btn btn-default">Send Message</button></p>
+				</form>
+				</div>
+			</div>
 <%
 			
 		} else if (requestShownToLogged) {
@@ -156,20 +166,6 @@ if (loggedAccount == null) {
 <%
 		}
 		ArrayList<Account> friends = AccountManager.getFriendsForUser(shownUsername);
-		if (!equal) {
-%>
-			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-7">
-				<form action="sendMessage.jsp" method="get">
-					<input type="hidden" name="toUsername" value="<%=shownUsername %>">
-					<p>Send <%=shownDisplayName %> a message  
-					<button type="submit" class="btn btn-default">Send Message</button></p>
-				</form>
-				</div>
-			</div>
-<%
-		}
 %>
 		<div class="row">
 			<div class="col-md-1"></div>

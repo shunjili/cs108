@@ -65,7 +65,13 @@ page import="objects.*,java.util.ArrayList"%>
 						}%>
 						
 						<p></p>
-						<button type="submit" class="btn btn-sm">Confirm Friend Request</button>
+						<button type="submit" class="btn btn-default">Confirm Friend Request</button>
+						</form>
+						<p></p>
+						<form action="RemoveFriendRequestServlet" method="post">
+						<input type="hidden" name="requester" value="<%=requester.getUsername() %>">
+						<input type="hidden" name="requested" value="<%=thisAccount.getUsername() %>">
+						<button type="submit" class="btn btn-default">Ignore Friend Request</button>
 						</form>
 						</li>
 					<%
