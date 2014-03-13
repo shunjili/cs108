@@ -76,9 +76,10 @@ public class EvaluateQuizServlet extends HttpServlet {
 		if(startingTime != null){
 			// the duration is in minutes
 			Timestamp now = new Timestamp(new Date().getTime());
-			long duration = (now.getTime()- startingTime.getTime())/60000000;
-			System.out.println("test duration is " + duration);
+			long duration = (now.getTime()- startingTime.getTime())/60000;
+			//System.out.println("test duration is " + duration);
 			session.setAttribute(Duration_str, duration);
+			session.setAttribute(StartingTime_Str, null);
 		}
 		session.setAttribute("score", score);
 		session.setAttribute(Hash_Str, questionAnswerHash);

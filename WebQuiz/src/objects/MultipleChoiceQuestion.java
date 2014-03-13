@@ -139,7 +139,7 @@ public class MultipleChoiceQuestion implements Question {
 		htmlContent += "<span class=\"input-group-addon\">Right Answer</span>";
 		htmlContent += "<span class=\"input-group-addon\">";
 		for(int i = 0; i < answers.size(); i++){
-			htmlContent += Integer.toString(i + 1) + ".";
+//			htmlContent += Integer.toString(i + 1) + ".";
 			htmlContent += choices[Integer.parseInt(answers.get(i))-1];
 			htmlContent += "&nbsp;";
 		}
@@ -148,7 +148,7 @@ public class MultipleChoiceQuestion implements Question {
 		htmlContent +="<div class=\"input-group\">";
 		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
 		for(int i = 0; i < userAnswers.size(); i++){
-			htmlContent += "<span class=\"input-group-addon\">" + Integer.toString(i + 1) + ".";
+			htmlContent += "<span class=\"input-group-addon\">";
 			htmlContent += choices[Integer.parseInt(userAnswers.get(i))-1];
 			htmlContent += "&nbsp;" ;
 		}

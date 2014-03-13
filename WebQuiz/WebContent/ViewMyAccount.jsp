@@ -60,7 +60,7 @@ page import="objects.*, java.util.ArrayList"%>
 				<ul>
 					<%for(Quiz quiz : recentQuizzes) { %>
 						<li>
-							<a href=<%="quiz.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
+							<a href=<%="QuizInfo.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
 						</li>
 						<%} %>
 				</ul>
