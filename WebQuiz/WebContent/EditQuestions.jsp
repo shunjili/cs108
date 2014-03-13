@@ -41,6 +41,7 @@ page import="objects.*, java.util.ArrayList"
 </script>
 
 <body>
+<%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-3"></div>

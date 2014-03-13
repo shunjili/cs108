@@ -36,7 +36,7 @@ public class SendMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String receiver = request.getParameter("toField");
+		String receiver = request.getParameter("toUsername");
 		String messageText = request.getParameter("messageField");
 
 		Account thisAccount = (Account) request.getSession().getAttribute("loggedAccount");

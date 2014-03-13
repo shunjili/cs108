@@ -30,6 +30,8 @@ page import="objects.*,java.util.ArrayList"%>
 	} else {
 		ArrayList<FriendRequest> friendRequests = AccountManager.getFriendReqeustsForUser(thisAccount.getUsername());
 %>
+<%@include file="navbar.html" %>
+
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -67,14 +69,13 @@ page import="objects.*,java.util.ArrayList"%>
 					%>
 				</ul>
 			</div>
-			<p><a href="ViewMyAccount.jsp">Homepage</a></p>
 		</div>
 	</div>
 	<%} else { %>
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="col-md-5">
-			<p>You do not have any friends yet.</p>
+			<p>You do not have any friend requests.</p>
 			<p><a href="accountIndex.jsp">Find Friends</a></p>
 		</div>
 	</div>

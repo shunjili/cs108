@@ -4,153 +4,225 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%
-	String shownUsername = request.getParameter("username");
-	Account shownAccount = AccountManager.getAccountByUsername(shownUsername);
-	String shownDisplayName = shownAccount.getDisplayName();
-	Account loggedAccount = (Account)session.getAttribute("loggedAccount");
-	String loggedUsername = loggedAccount.getUsername();
-	String loggedDisplayName = loggedAccount.getDisplayName();
-%>
-<title><%=shownDisplayName%></title>
 </head>
 <body>
-<h1>
-<%=shownDisplayName%>
-</h1>
-<p>(<%=shownUsername%>)<p>
 <%
-	//if not friends, and account is private
-	if(!shownAccount.equals(loggedAccount) && !AccountManager.areFriends(loggedUsername, shownUsername)
-			&& shownAccount.isPrivate()) {
+String shownUsername = request.getParameter("username");
+Account shownAccount = AccountManager.getAccountByUsername(shownUsername);
+Account loggedAccount = (Account)session.getAttribute("loggedAccount");
+if (loggedAccount == null) {
 %>
-<p><%=shownAccount.getDisplayName() %> has a private account, become a friend to see details</p>
-<%
-	if(AccountManager.requestIsPending(loggedUsername, shownUsername)) {
-%>
-	<p>Your friend request is pending.</p>
-<%
-	} else {
-%>
-	<form action="SendFriendRequestServlet" method="get">
-		<input type="hidden" name="requester" value="<%=loggedUsername%>">
-		<input type="hidden" name="requested" value="<%=shownUsername%>">
-		<button type="submit">Send Friend Request</button>
-	</form>
-<%
-	}
-%>
-
+	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
 <%	
-	} else {
+} else if (shownAccount == null) {
 %>
-
+	<p>Error getting account for username <%=shownUsername %></p>
+	<p>Return to <a href="loginPage.jsp">homepage</a></p>
+<%		
+} else {
+	String shownDisplayName = shownAccount.getDisplayName();
+	String loggedUsername = loggedAccount.getUsername();
+	String loggedDisplayName = loggedAccount.getDisplayName();
+	boolean equal = shownAccount.equals(loggedAccount);
+	boolean areFriends = AccountManager.areFriends(loggedUsername, shownUsername);
+	boolean showPrivate = shownAccount.isPrivate() && !equal && !areFriends
+						&& (loggedAccount.getType() != Account.Type.ADMIN);
+	boolean requestShownToLogged = AccountManager.requestIsPending(shownUsername, loggedUsername);
+	boolean requestLoggedToShown = AccountManager.requestIsPending(loggedUsername, shownUsername);
+%>
+<%@include file="navbar.html" %>
+<div class="page-header">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
+			<h1>
+				<%=shownDisplayName %> <small>(<%=shownUsername %>)</small>
+			</h1>
+		</div>
+	</div>
+</div>
 <%
-	if (!shownAccount.equals(loggedAccount)) {
-		if (!AccountManager.areFriends(loggedUsername, shownUsername)) {
-			if (AccountManager.requestIsPending(loggedUsername, shownUsername)) {
+	if (showPrivate) {
 %>
-				<h3>Friend Request Pending</h3>
-<%
-	} else {
-		String loggedUsername = loggedAccount.getUsername();
-		String loggedDisplayName = loggedAccount.getDisplayName();
-%>
-	<div class="page-header">
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-7">
-				<h1>
-					<%=shownDisplayName%>
-					<small>(<%=shownUsername%>)</small>
-				</h1>
+				<p><%=shownDisplayName %> has a private account. Become friends to see more details</p>
 			</div>
 		</div>
-	</div>
 <%
-		if (shownAccount.equals(loggedAccount)) {
+		if (requestShownToLogged) {
 %>
 			<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-7">This is your profile</div>
-			</div>
-<%		
-		} else {
-			if (AccountManager.areFriends(shownUsername, loggedUsername)) {
-%>
-				<div class="row">
 				<div class="col-md-1"></div>
-				<div class="col-md-7">You and <%=shownDisplayName %> are friends</div>
-				</div>
-<%
-			} else if (AccountManager.requestIsPending(loggedUsername, shownUsername)) {
-%>
-				<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-7">Friend Request Pending</div>
-				</div>
-<%				
-			} else if (AccountManager.requestIsPending(shownUsername, loggedUsername)) {
-%>				
+				<div class="col-md-7">
 				<form action="ConfirmFriendRequestServlet" method="post">
-					<p><%= shownDisplayName %> has requested to be your friend
+					<p><%= shownDisplayName %> has requested to be your friend  
 					<input type="hidden" name="requester" value="<%= shownUsername %>">
 					<input type="hidden" name="requested" value="<%= loggedUsername %>">
-					<button type="submit">Confirm Friend Request</button></p>
+					<button type="submit" class="btn btn-default">Confirm Friend Request</button></p>
 				</form>
-<%			
-			} else {
+				</div>
+			</div>
+<%
+		} else if (requestLoggedToShown) {
 %>
-				<form action="SendFriendRequestServlet" method="get">
-					<input type="hidden" name="requester" value="<%= loggedUsername %>">
-					<input type="hidden" name="requested" value="<%= shownUsername %>">
-					<button type="submit">Send Friend Request</button>
-				</form>
-<%			
-			}
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<p>Friend Request Pending</p>
+				</div>
+			</div>
+<%
 		} else {
 %>
-			<h3>You and <%=shownDisplayName %> are friends</h3>
-<%	
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="SendFriendRequestServlet" method="get">
+					<p>Request to be <%=shownDisplayName %>'s friend  
+					<input type="hidden" name="requester" value="<%=loggedUsername%>">
+					<input type="hidden" name="requested" value="<%=shownUsername%>">
+					<button type="submit" class="btn btn-default">Send Friend Request</button></p>
+				</form>
+				</div>
+			</div>
+<%
 		}
 	} else {
+		if (equal) {
 %>
-		<h3>This is your profile</h3>
-<%	
-	}
-%>
-
-<h2>Friends</h2>
-	<%
-		ArrayList<Account> friends = AccountManager.getFriendsForUser(shownUsername);
-		if (friends == null) {
-	%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<p>This is your profile</p>
+				</div>
+			</div>
+<%
 			
-	<%
-		} else if (friends.size() == 0) {
-	%>
-	<p><%=shownDisplayName %> has no friends yet.</p>
-	<%
+		} else if (areFriends) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<p>You and <%=shownDisplayName %> are friends</p>
+				</div>
+			</div>
+<%
+			
+		} else if (requestShownToLogged) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="ConfirmFriendRequestServlet" method="post">
+					<p><%= shownDisplayName %> has requested to be your friend  
+					<input type="hidden" name="requester" value="<%= shownUsername %>">
+					<input type="hidden" name="requested" value="<%= loggedUsername %>">
+					<button type="submit" class="btn btn-default">Confirm Friend Request</button></p>
+				</form>
+				</div>
+			</div>
+<%
+		} else if (requestLoggedToShown) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<p>Friend Request Pending</p>
+				</div>
+			</div>
+<%
 		} else {
-	%>
-	<ul>
-	<%
-		for(Account friend : friends){
-	%>
-			<li><a href="showProfile.jsp?username=<%=friend.getUsername()%>"><%=friend.getDisplayName() %></a> (<%=friend.getUsername()%>) - <%=friend.getTypeString()%></li>
-	<%
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="SendFriendRequestServlet" method="get">
+					<p>Request to be <%=shownDisplayName %>'s friend  
+					<input type="hidden" name="requester" value="<%=loggedUsername%>">
+					<input type="hidden" name="requested" value="<%=shownUsername%>">
+					<button type="submit" class="btn btn-default">Send Friend Request</button></p>
+				</form>
+				</div>
+			</div>
+<%
 		}
-	%>
-	</ul>
-	<%}
-		if (shownAccount.equals(loggedAccount)) {
-	%>
-	<h4><a href="accountIndex.jsp">Find Friends</a></h4>
-	<%
+		ArrayList<Account> friends = AccountManager.getFriendsForUser(shownUsername);
+		if (!equal) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="sendMessage.jsp" method="get">
+					<input type="hidden" name="toUsername" value="<%=shownUsername %>">
+					<p>Send <%=shownDisplayName %> a message  
+					<button type="submit" class="btn btn-default">Send Message</button></p>
+				</form>
+				</div>
+			</div>
+<%
 		}
-	%>
-<h4><a href="ViewMyAccount.jsp">Homepage</a></h4>
+%>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<div class="panel panel-primary">
+					<!-- <div class="panel-heading">Friends:</div> -->
+<%
+		if (friends == null) {
+%>
+					<div class="panel-heading">Friends</div>
+						<div class="panel-body">Error getting friends for <%=shownDisplayName %></div>
+<%
+		} else if (friends.size() > 0) {
+%>
+					<div class="panel-heading">Friends <span class="badge"><%=friends.size()%></span></div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Username</th>
+								<th>Type</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								for (Account friend : friends) {
+							%>
+							<tr>
+								<td><a
+									href="showProfile.jsp?username=<%=friend.getUsername()%>"><%=friend.getDisplayName()%></a></td>
+								<td><%=friend.getUsername()%></td>
+								<td><%=friend.getTypeString()%></td>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+					</table>
+<%
+		} else {
+%>
+					<div class="panel-heading">Friends <span class="badge" align="right"><%=friends.size() %></span></div>
+						<div class="panel-body"><%=shownDisplayName %> does not have any friends yet</div>
+<%			
+		}
+%>
+				</div>
+			</div>
+		</div>	
+<%
+	}
+}
+%>
 
 </body>
 </html>

@@ -26,6 +26,7 @@ if(startingTime == null){
 }
 %>
 <body>
+<%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-3"></div>

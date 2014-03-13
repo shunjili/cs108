@@ -29,6 +29,7 @@ System.out.println(questions.size());
 System.out.println(valid);
 %>
 <body>
+<%@include file="navbar.html" %>
 <div class="page-header">
 		<div class="row">
 			<div class="col-md-3"></div>

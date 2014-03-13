@@ -30,6 +30,7 @@ page import="objects.*, java.util.ArrayList"%>
 		ArrayList<String> announcements = AnnouncementManager.getRecentAnnouncements(10);
 		ArrayList<Quiz> recentQuizzes = QuizManager.getRecentQuiz(5);
 %>
+<%@include file="navbar.html" %>
 <body>
 	<div class="page-header">
 		<div class="row">
