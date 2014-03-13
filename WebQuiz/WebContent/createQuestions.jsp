@@ -30,7 +30,11 @@ if(Questions != null){
 <body>
 	<div class="page-header">
 		<div class="row">
-			<div class="col-md-3"></div>
+			<div class="col-md-3">
+				<div class="list-group">
+				<a href="/WebQuiz/ViewMyAccount.jsp" class="list-group-item">Home</a>	
+				</div>
+			</div>
 			<div class="col-md-7">
 				<h1>
 					View the Quiz <small> Good Luck!</small>
