@@ -90,7 +90,7 @@ CREATE TABLE Questions (
 );
 
 CREATE TABLE Answers (
-	question_id CHAR(64),
+	question_id INT,
 	answer VARCHAR(128),
 	FOREIGN KEY (question_id) REFERENCES Questions(question_id)
 );
@@ -112,21 +112,21 @@ CREATE TABLE Quizzes (
 );
 
 CREATE TABLE QuizQuestionTable (
-	quiz_id CHAR(64),
-	question_id CHAR(64),
+	quiz_id INT,
+	question_id INT,
 	question_index INT,
 	FOREIGN KEY (quiz_id) REFERENCES Quizzes(quiz_id),
 	FOREIGN KEY (question_id) REFERENCES Questions(question_id)
 );
 
 CREATE TABLE QuizTagTable (
-	quiz_id CHAR(64),
+	quiz_id INT,
 	tag VARCHAR(64),
 	FOREIGN KEY (quiz_id) REFERENCES Quizzes(quiz_id)
 );
 
 CREATE TABLE QuizAttempts (
-	quiz_id CHAR(64),
+	quiz_id INT,
 	username CHAR(64),
 	score INT,
 	start_time TIMESTAMP,
@@ -136,7 +136,7 @@ CREATE TABLE QuizAttempts (
 );
 
 CREATE TABLE QuizReview (
-	quiz_id CHAR(64),
+	quiz_id INT,
 	username CHAR(64),
 	comment VARCHAR(128),
 	rating INT,
@@ -175,3 +175,8 @@ INSERT INTO Quizzes (quiz_id,quiz_name, creator, description, time_stamp, catego
 INSERT INTO QuizQuestionTable VALUES
 	(1, 1, 0),
 	(1, 3, 1);
+
+
+INSERT INTO QuizAttempts VALUES
+	(1,"john",20,NOW(),30),
+	(1,"sally",20,NOW(),20);

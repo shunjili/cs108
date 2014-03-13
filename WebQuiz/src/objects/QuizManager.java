@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+
 public class QuizManager {
 
 	public static final String QUIZ_ID_COL = "quiz_id";
@@ -293,7 +294,7 @@ public class QuizManager {
 
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.QUIZ_TAG_TABLE + " VALUES ("
-					+ "\"" + quiz_id + "\",\"" + tag + "\");";
+					+ quiz_id + ",\"" + tag + "\");";
 			
 			int result = stmt.executeUpdate(query);
 			con.close();
@@ -505,12 +506,99 @@ public class QuizManager {
 		}
 	}
 	
-	
+	/**
+	 * Gets the top max attempts for the specified quiz. They are ordered first by score, then
+	 * by duration.
+	 * @param quiz_id
+	 * @param max
+	 * @return
+	 */
 	public ArrayList<QuizAttempt> getTopAttempts(String quiz_id, int max) {
-		// TODO
-		return null;
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE "
+					 + ATTEMPT_QUIZ_ID_COL + "=" + quiz_id +" ORDER BY "
+					+ ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_DURATION_COL + "ASC LIMIT " + max + ";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
+			int quiz_id_int;
+			String username;
+			int score;
+			Timestamp start_time;
+			long duration;
+			QuizAttempt newAttempt = parseAttempt(rs);
+			while(newAttempt != null) {
+				resultList.add(newAttempt);
+				newAttempt = parseAttempt(rs);
+			}
+			return resultList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
+	public boolean recordAttempt(String quiz_id, QuizAttempt attempt) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "INSERT INTO " + MyDBInfo.ATTEMPTS_TABLE + " VALUES ("
+					+ attempt.getQuizID() + ",\"" + attempt.getUsername() + "\","
+					+ attempt.getScore() + "," + attempt.getStartTime().toString() + ","
+					+ attempt.getDuration() + ");";
+			
+			int result = stmt.executeUpdate(query);
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	public QuizAttempt parseAttempt(ResultSet rs) throws SQLException {
+		int quiz_id_int;
+		String username;
+		int score;
+		Timestamp start_time;
+		long duration;
+		while(rs.next()) {
+			quiz_id_int = rs.getInt(ATTEMPT_QUIZ_ID_COL);
+			username = rs.getString(ATTEMPT_USERNAME_COL);
+			score = rs.getInt(ATTEMPT_SCORE_COL);
+			start_time = rs.getTimestamp(ATTEMPT_START_COL);
+			duration = rs.getLong(ATTEMPT_DURATION_COL);
+			return new QuizAttempt(quiz_id_int, username, score, start_time, duration);
+		}
+		return null;
+
+	}
 	
 	//main method for testing
 	public static void main(String[] args) {

@@ -74,7 +74,7 @@ public class QuestionManager {
 			String query = "SELECT * FROM " + MyDBInfo.QUIZ_QUESTION_TABLE +
 					" INNER JOIN " + MyDBInfo.QUESTIONS_TABLE +
 					" ON Questions.question_id = QuizQuestionTable.question_id " +
-					"WHERE quiz_id = \"" + quiz_id + "\" ORDER BY question_index;";
+					"WHERE quiz_id =" + quiz_id + " ORDER BY question_index;";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
@@ -101,7 +101,8 @@ public class QuestionManager {
 				
 				Question q = constructQuestion(type, question_id_str, question, description, creator_id,
 						score, timestamp);
-				questions.add(q);
+				if(q != null)
+					questions.add(q);
 			}
 
 			// closes the connection
@@ -231,7 +232,7 @@ public class QuestionManager {
 			
 			//insert into the answers table
 			query = "INSERT INTO " + MyDBInfo.ANSWERS_TABLE + " VALUES ("
-					+ "\"" + questionId + "\",\"" + answer + "\");" ;
+					+ "" + questionId + ",\"" + answer + "\");" ;
 			
 			result = stmt.executeUpdate(query);
 			
@@ -304,14 +305,14 @@ public class QuestionManager {
 			for(String answer : answers) {
 				//insert into the answers table
 				query = "INSERT INTO " + MyDBInfo.ANSWERS_TABLE + " VALUES ("
-						+ "\"" + questionId + "\",\"" + answer + "\");" ;
+						+ "" + questionId + ",\"" + answer + "\");" ;
 				
 				result = stmt.executeUpdate(query);
 			}
 			
 			//now, add to the QuizQuestionTable
-			query = "INSERT INTO " + MyDBInfo.QUIZ_QUESTION_TABLE + " VALUES (\""
-					+ quiz_id + "\",\"" + questionId + "\"," + index + ");";
+			query = "INSERT INTO " + MyDBInfo.QUIZ_QUESTION_TABLE + " VALUES ("
+					+ quiz_id + "," + questionId + "," + index + ");";
 			
 			//execute the query to add to QuizQuestionTable
 			result = stmt.executeUpdate(query);
