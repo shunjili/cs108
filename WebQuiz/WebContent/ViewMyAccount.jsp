@@ -44,46 +44,74 @@ page import="objects.*, java.util.ArrayList"%>
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="col-md-2">
-			<div>
-				<%=thisAccount.getDisplayName()%>
+			<div class="well">
+				<div>
+					<%=thisAccount.getDisplayName()%>
+				</div>
+				<p>Some Basic Information</p>
 			</div>
-			<p>Some Basic Information</p>
 		</div>
-		<div class="col-md-7">
-			<h3>Announcements</h3>
-			<% for (int i = 0; i < announcements.size(); i++) {%>
-			<p> <%= announcements.get(i) %></p>
-			<%} %>
-			<h3>List of Popular Quizzes</h3>
-			<h3>List of Recently Created Quizzes</h3>
-			<h3>List of Taken Quizzes</h3>
-				<ul>
-					<%for(Quiz quiz : recentQuizzes) { %>
-						<li>
-							<a href=<%="quiz.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
-						</li>
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				 <div class="panel-heading">Announcements</div>
+				 <div class="panel-body">
+				 	<% for (int i = 0; i < announcements.size(); i++) {%>
+						<p> <%= announcements.get(i) %></p>
+					<%} %>
+				 </div>
+			</div>
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of Popular Quizzes</div>
+				 <div class="panel-body">
+
+				 </div>	
+			</div>
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of Recently Created Quizzes</div>
+				 <div class="panel-body">
+					<ul>
+						<%for(Quiz quiz : recentQuizzes) { %>
+							<li>
+								<a href=<%="QuizInfo.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
+							</li>
 						<%} %>
-				</ul>
-			<h3>List of their recent quiz creating activities</h3>
+					</ul>
+				 </div>	
+			</div>
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of Taken Quizzes</div>
+				 <div class="panel-body">
+
+				 </div>	
+			</div>	
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of their recent quiz creating activities</div>
+				 <div class="panel-body">
+
+				 </div>	
+			</div>				
 
 		</div>
-		<h3>Additional Options:</h3>
+	
 		<div class="col-md-2">
-			<ul>
-				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
-				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
-				<li><a href="/WebQuiz/quizIndex.jsp">Quizzes</a></li>
-				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
-				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
-				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</a></li>
-				<li>
-					<div>Your friends' recent activities</div>
-				</li>
-				<li><a href = "/WebQuiz/FriendRequests.jsp">Friend Requests: 
-				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a></li>
+			<h5>Additional Options:</h5>
+				<div class="list-group">
+					<a href="/WebQuiz/loginPage.jsp" class="list-group-item">Login Page</a>
+					<a href="/WebQuiz/accountIndex.jsp" class="list-group-item">Account Index</a>
+					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
+					<a href="/WebQuiz/messages.jsp" class="list-group-item"> Messages in inbox: <%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a>
+					<a href = "/WebQuiz/makeAnnouncement.jsp" class="list-group-item">Create Announcement</a>
 				
-			</ul>
+					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item">Friend Requests: 
+				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a>
+				</div>
+				<h5>Your friends' recent activities</h5>
+				<div class="list-group">
+					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item">Friend Requests: 
+				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a>
+				</div>
 		</div>
+		<div class="col-md-1"></div>
 </body>
 <%
 	}

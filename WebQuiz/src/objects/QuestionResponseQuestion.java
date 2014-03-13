@@ -115,12 +115,11 @@ public class QuestionResponseQuestion implements Question {
 		
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(question_id);
-		
 		String htmlContent = "<div class=\"panel-body\">" + question + "<div class=\"input-group\">" ;
 		htmlContent += "<span class=\"input-group-addon\">Right Answer</span>";
 		htmlContent += "<span class=\"input-group-addon\">";
 		for(int i = 0; i < answers.size(); i++){
-			htmlContent += Integer.toString(i + 1) + ".";
+//			htmlContent += Integer.toString(i + 1) + ".";
 			htmlContent += answers.get(i);
 			htmlContent += "&nbsp;";
 		}
@@ -129,7 +128,7 @@ public class QuestionResponseQuestion implements Question {
 		htmlContent +="<div class=\"input-group\">";
 		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
 		for(int i = 0; i < userAnswers.size(); i++){
-			htmlContent += "<span class=\"input-group-addon\">" + Integer.toString(i + 1) + ".";
+			htmlContent += "<span class=\"input-group-addon\">" ;
 			htmlContent += userAnswers.get(i);
 			htmlContent += "&nbsp;" ;
 		}	

@@ -40,11 +40,11 @@ public class CreateQuestionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO getting the information from the form post and create a question
 		
-		String quiz_id = request.getParameter("quiz_id");
-		String question = request.getParameter("question");
-		String answer = request.getParameter("answer");
-		String questionTypeString = request.getParameter("type");
-		String scoreString = request.getParameter("score");
+		String quiz_id = request.getParameter("quiz_id").replace("\"", "\\\"");
+		String question = request.getParameter("question").replace("\"", "\\\"");
+		String answer = request.getParameter("answer").replace("\"", "\\\"");
+		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
+		String scoreString = request.getParameter("score").replace("\"", "\\\"");
 		int score = 0;
 		try {
 			score = Integer.parseInt(scoreString);
