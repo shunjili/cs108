@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import objects.Account;
 import objects.Question;
 import objects.QuestionManager;
 import objects.QuizAttempt;
@@ -126,12 +127,13 @@ public class EvaluateOneQuizQuestionServlet extends HttpServlet {
 			}
 			
 			//(int quiz_id, String username, int score, Timestamp start_time, long duration)
-			//String user = (String) session.getAttribute("loggedAccount");
+			Account user = ((Account) session.getAttribute("loggedAccount"));
 			//String user = "foo";
-			//System.out.println(user);
-			//QuizAttempt tempAttempt = new QuizAttempt(Integer.parseInt(quiz_id), user, tempScore, startingTime, duration );
-			//if(!QuizManager.storeAttempt(tempAttempt))
-			//	System.out.print("store err");
+			//System.out.println(user.getUsername());
+			//System.out.println(quiz_id);
+			QuizAttempt tempAttempt = new QuizAttempt(Integer.parseInt(quiz_id), user.getUsername(), tempScore, startingTime, duration );
+			if(!QuizManager.storeAttempt(tempAttempt))
+				System.out.print("store err");
 
 			session.setAttribute(Score_Str, tempScore);
 			session.setAttribute(EvaluateQuizServlet.Hash_Str, questionAnswerHash);
