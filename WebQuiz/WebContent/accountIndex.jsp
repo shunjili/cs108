@@ -28,6 +28,7 @@
 	<%
 	} else {
 	%>
+<%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -67,7 +68,6 @@
 					</tbody>
 				</table>
 			</div>
-			<p><a href="ViewMyAccount.jsp">Homepage</a></p>
 		</div>
 	</div>
 	<%

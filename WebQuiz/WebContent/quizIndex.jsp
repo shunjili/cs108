@@ -28,6 +28,7 @@
 	<%
 	} else {
 	%>
+<%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-1"></div>

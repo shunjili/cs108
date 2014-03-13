@@ -37,6 +37,7 @@ if (loggedAccount == null) {
 	boolean requestShownToLogged = AccountManager.requestIsPending(shownUsername, loggedUsername);
 	boolean requestLoggedToShown = AccountManager.requestIsPending(loggedUsername, shownUsername);
 %>
+<%@include file="navbar.html" %>
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-1"></div>
@@ -202,7 +203,6 @@ if (loggedAccount == null) {
 		}
 %>
 				</div>
-				<p><a href="ViewMyAccount.jsp">Homepage</a></p>
 			</div>
 		</div>	
 <%
