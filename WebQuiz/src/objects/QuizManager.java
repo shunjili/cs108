@@ -176,6 +176,48 @@ public class QuizManager {
 		}
 	}
 	
+	public static boolean addReviewForQuiz(String quiz_id, int newRating) {
+		Quiz quiz = getQuizById(quiz_id);
+		double rating = quiz.getQuizRating();
+		int numReviews = quiz.getNumReviews();
+		double newAvgRating = ((rating * numReviews) + newRating) / (numReviews + 1);
+		numReviews++;
+		
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query to update average rating
+			String query = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + AVERAGE_RATING_COL + "="
+					+ newAvgRating + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
+
+			//execute the query
+			stmt.executeQuery(query);
+			
+			//prepare query to update number of reviews
+			query = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + NUMBER_OF_REVIEWS_COL + "="
+					+ numReviews + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
+			
+			//execute the query
+			stmt.executeQuery(query);
+
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	/**
 	 * Adds the quiz, AND it's Questions and Tags to the database.
 	 * @param toStore
