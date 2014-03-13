@@ -94,21 +94,22 @@ page import="objects.*, java.util.ArrayList"%>
 		</div>
 	
 		<div class="col-md-2">
-			<h3>Additional Options:</h3>
-			<ul>
-				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
-				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
-				<li><a href="/WebQuiz/quizIndex.jsp">Quizzes</a></li>
-				<li><a href="/WebQuiz/messages.jsp"> Messages in inbox: 
-				<%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a></li>
-				<li><a href = "/WebQuiz/makeAnnouncement.jsp">Create Announcement</a></li>
-				<li>
-					<div>Your friends' recent activities</div>
-				</li>
-				<li><a href = "/WebQuiz/FriendRequests.jsp">Friend Requests: 
-				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a></li>
+			<h5>Additional Options:</h5>
+				<div class="list-group">
+					<a href="/WebQuiz/loginPage.jsp" class="list-group-item">Login Page</a>
+					<a href="/WebQuiz/accountIndex.jsp" class="list-group-item">Account Index</a>
+					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
+					<a href="/WebQuiz/messages.jsp" class="list-group-item"> Messages in inbox: <%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a>
+					<a href = "/WebQuiz/makeAnnouncement.jsp" class="list-group-item">Create Announcement</a>
 				
-			</ul>
+					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item">Friend Requests: 
+				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a>
+				</div>
+				<h5>Your friends' recent activities</h5>
+				<div class="list-group">
+					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item">Friend Requests: 
+				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a>
+				</div>
 		</div>
 		<div class="col-md-1"></div>
 </body>
