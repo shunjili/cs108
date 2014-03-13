@@ -26,6 +26,7 @@ ArrayList<Question> questions =(ArrayList<Question>) session.getAttribute(Evalua
 boolean valid = questionAnswerHash != null && questions != null && questionAnswerHash.size() == questions.size();
 %>
 <body>
+<%@include file="navbar.html" %>
 <div class="page-header">
 		<div class="row">
 			<div class="col-md-3"></div>

@@ -156,6 +156,19 @@ if (loggedAccount == null) {
 <%
 		}
 		ArrayList<Account> friends = AccountManager.getFriendsForUser(shownUsername);
+		if (!equal) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="sendMessage.jsp?to=<%=shownUsername %>" method="get">
+					<p>Send <%=shownDisplayName %> a message  
+					<button type="submit" class="btn btn-default">Send Message</button></p>
+				</form>
+				</div>
+			</div>
+<%
+		}
 %>
 		<div class="row">
 			<div class="col-md-1"></div>
