@@ -145,8 +145,7 @@ public class MultipleChoiceQuestion implements Question {
 //			htmlContent += Integer.toString(i + 1) + ".";
 			htmlContent += choices[Integer.parseInt(answers.get(i))-1];
 			htmlContent += "&nbsp;";
-		}
-		
+		}		
 		htmlContent += "</td><td>";
 
 		if(userAnswers == null){
@@ -157,6 +156,7 @@ public class MultipleChoiceQuestion implements Question {
 				htmlContent += userAnswers.get(i);
 				htmlContent += "&nbsp;";
 			}	
+
 		}
 		htmlContent += "</td></tr></tbody></table>";
 		htmlContent +="</div></div>";
