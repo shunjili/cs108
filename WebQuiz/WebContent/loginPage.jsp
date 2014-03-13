@@ -21,6 +21,30 @@
 
 </head>
 <body>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <form action="HandleLoginServlet" method="post" class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" name="username" class="form-control" placeholder="Username">
+          <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default">Login</button>
+      </form>
+      <form action="CreateAccount.html" method="get" class="navbar-form navbar-left">
+      	<button type="submit" class="btn btn-default">Create Account</button>
+      </form>
+    </div>
+   </div>
+</nav>
+
 <div class="page-header">
 	<div class="row">
 		<h1 align = "center">
@@ -28,39 +52,22 @@
 		</h1>
 	</div>
 </div>
-<div>
-	<img src="images/quiz2.jpg" width="347" height="310" style="float:left"/>
-	<p>&nbsp;</p>
-	<form method="POST" action = "HandleLoginServlet">
-		<p align = "center">Enter Username:<input type="text" name="username" placeholder="Username"/></p>
-		<p align = "center">Enter Password:<input type="password" name="password" placeholder="Password"/></p>
-		<p align = "center"><input type="submit" value="login" class="btn btn-primary"/></p>
-		<p align = "center"><input name="remember" type="checkbox" id="rememberUser"> Remember me</p>
-	</form>
-	<h2 align = "center"><a href="CreateAccount.html">Sign up</a></h2>
-</div>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-	<div>
-		<div align = "right">
-			  <p>Quick Links</p>
-			  <a href="http://www.stanford.edu/">Stanford University</a><br>
-			  <a href="http://www.stanford.edu/class/cs108/">CS 108</a><br>
-			  
-  		</div>
-  		 <p align = "center">About us
-			    · <a href=#>Shuhui</a>
-			    · <a href=#>Steven</a>
-			    · <a href=#>Shunji</a>
-			    · <a href=#>JB</a>
-			    </p>
-  		 <p align = "center">Copyright © 2014 WebQuiz , all rights reserved</p>
-	</div>
+ <div class="panel-body" align="center">
+ 	<img src="images/quiz2.jpg" width="347" height="310"/>
+ 		<p></p>
+ 		<p>Quick Links: 
+	  <a href="http://www.stanford.edu/">Stanford University</a> · 
+	  <a href="http://www.stanford.edu/class/cs108/">CS 108</a></p>
+	<p></p>
+  	<p align = "center">About us
+	    · <a href=#>Shuhui</a>
+	    · <a href=#>Steven</a>
+	    · <a href=#>Shunji</a>
+	    · <a href=#>JB</a>
+	</p>
+	<p align = "center">Copyright © 2014 WebQuiz , all rights reserved</p>
+ </div>
 	
 	
 </body>

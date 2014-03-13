@@ -125,7 +125,6 @@ public class QuizManager {
 			//prepare query
 			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
 					+ QUIZ_ID_COL + "=" + quiz_id + ";";
-
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -199,17 +198,16 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query to update average rating
-			String update = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + AVERAGE_RATING_COL + "="
+			String update = "UPDATE " + MyDBInfo.QUIZ_TABLE + " SET " + AVERAGE_RATING_COL + "="
 					+ newAvgRating + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
 
 			//execute the query
 			stmt.executeUpdate(update);
 			
 			//prepare query to update number of reviews
-			update = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + NUMBER_OF_REVIEWS_COL + "="
+			update = "UPDATE " + MyDBInfo.QUIZ_TABLE + " SET " + NUMBER_OF_REVIEWS_COL + "="
 					+ numReviews + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
-			
-			//execute the query
+ 			//execute the query
 			stmt.executeUpdate(update);
 
 			con.close();
