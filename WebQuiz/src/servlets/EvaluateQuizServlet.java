@@ -18,7 +18,6 @@ import objects.Question;
 import objects.QuestionManager;
 import objects.QuizAttempt;
 import objects.QuizManager;
-
 /**
  * Servlet implementation class EvaluateQuizServlet
  */
@@ -51,7 +50,11 @@ public class EvaluateQuizServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO increament quiz taken count
-		
+		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+		if (loggedAccount == null) {
+			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+			return;
+		}
 				
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
@@ -63,7 +66,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 				Question question = questions.get(i);
 				String answer = request.getParameter(question.getQuestionID());
 				ArrayList<String> answers= new ArrayList<String>();
-				if(answer == null) answer = "You did not answer this question";
+				if(answer == null | answer.isEmpty()) answer = "You did not answer this question";
 				answers.add(answer);
 				questionAnswerHash.put(question, answers);
 				questionList.add(question);
@@ -83,6 +86,14 @@ public class EvaluateQuizServlet extends HttpServlet {
 			duration = (now.getTime()- startingTime.getTime())/60000;
 			//System.out.println("test duration is " + duration);
 			session.setAttribute(Duration_str, duration);
+			//store the quiz attempt before reseting the start time
+			QuizAttempt attempt = new QuizAttempt(Integer.parseInt(quiz_id), loggedAccount.getUsername(),score, startingTime, duration);
+			if(QuizManager.storeAttempt(attempt)){
+				System.out.println("attempt stored correctly");
+			}else{
+				System.out.println("attempt failed to be stored");
+
+			}
 			session.setAttribute(StartingTime_Str, null);
 		}
 		

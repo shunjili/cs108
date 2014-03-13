@@ -60,6 +60,14 @@ public class CreateQuestionServlet extends HttpServlet {
 					question += "#"+choice;
 				}
 			}
+			try {
+				int choiceNumber = Integer.parseInt(answer);
+			} catch (NumberFormatException e) {
+				// Just in case the user entered a invalid answer choice for the MCQ, we just set the first choice as the correct answer
+				answer = "1";
+				e.printStackTrace();
+			}
+			
 		}
 		Question.Type type = QuestionManager.getTypeForString(questionTypeString);
 		
