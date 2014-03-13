@@ -38,6 +38,9 @@ public class SendMessageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String receiver = request.getParameter("toUsername");
 		String messageText = request.getParameter("messageField");
+		if (messageText == null) {
+			messageText = "";
+		}
 
 		Account thisAccount = (Account) request.getSession().getAttribute("loggedAccount");
 		

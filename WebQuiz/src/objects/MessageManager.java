@@ -81,7 +81,7 @@ public class MessageManager {
 
 			//prepare query
 			String query = "SELECT * FROM " + MyDBInfo.MESSAGES_TABLE + " WHERE " + RECEIVER_COL + "=\""
-					+ username + "\" ORDER BY " + TIMESTAMP_COL + ";";
+					+ username + "\" ORDER BY " + TIMESTAMP_COL + " DESC;";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
