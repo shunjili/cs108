@@ -62,7 +62,25 @@ boolean valid = questionAnswerHash != null && questions != null && questionAnswe
 		    	</div>
 		    	<%= question.getResultView(answers) %>
 		    </div>
-		<%} }%>
+		<%}%>
+			<div class="panel panel-info"> 
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Please Rate the Quiz</h3>
+		    	</div>
+		    	<div class="panel-body">
+		    	On the scale of 1 to 5, what do you think represents the quality of this quiz?
+			    	<div class="btn-group">
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=1"> <button type="button" class="btn btn-default">1</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=2"> <button type="button" class="btn btn-default">2</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=3"> <button type="button" class="btn btn-default">3</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=4"> <button type="button" class="btn btn-default">4</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=5"> <button type="button" class="btn btn-default">5</button></a>
+			    		
+					</div>	
+		    	</div>
+    	
+	    	</div>
+		<%}%>
 	</div>
 	<div class="col-md-2"></div>
 </div>
