@@ -112,40 +112,35 @@ public class QuestionResponseQuestion implements Question {
 		
 	}
 	public String getResultView(ArrayList<String> userAnswers){
-		
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(question_id);
-		String htmlContent = "<div class=\"panel-body\">" + question + "<div class=\"input-group\">" ;
-		htmlContent += "<span class=\"input-group-addon\">Correct Answer</span>";
-		htmlContent += "<span class=\"input-group-addon\">";
+		
+		String htmlContent = "<div class=\"panel-body\">" + question + "</div>";
+		htmlContent += "<table class=\"table\">";
+		
+		htmlContent += "<thead><tr><th>Correct Answer</th><th>Your Answer</th></tr></thead>";
+		htmlContent += "<tbody><tr><td>";
+
 		for(int i = 0; i < answers.size(); i++){
 //			htmlContent += Integer.toString(i + 1) + ".";
 			htmlContent += answers.get(i);
 			htmlContent += "&nbsp;";
 		}
-		htmlContent += "</span>";
-		htmlContent +="</div><br>";
-		htmlContent +="<div class=\"input-group\">";
-		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
+		
+		htmlContent += "</td><td>";
+
 		if(userAnswers == null){
-			htmlContent += "<span class=\"input-group-addon\">" ;
-			htmlContent += "no answers which ";
-			htmlContent += "&nbsp;" ; 
+			htmlContent += "";
+			htmlContent += "&nbsp;"; 
 		}else{
-			for(int i = 0; i < userAnswers.size(); i++){
-				htmlContent += "<span class=\"input-group-addon\">" ;
+			for(int i = 0; i < userAnswers.size(); i++){;
 				htmlContent += userAnswers.get(i);
-				htmlContent += "&nbsp;" ;
+				htmlContent += "&nbsp;";
 			}	
 		}
-		if(isCorrect(userAnswers)){
-			htmlContent += "<b>is correct!</b></span>";
-		}else{
-			htmlContent += "is wrong.</b></span>";
-		}
+		htmlContent += "</td></tr></tbody></table>";
 		htmlContent +="</div></div>";
 		return htmlContent;
-		
 	}
 
 }
