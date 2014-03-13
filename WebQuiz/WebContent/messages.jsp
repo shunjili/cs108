@@ -58,6 +58,11 @@ page import="objects.*,java.util.ArrayList, servlets.*"%>
 						<p class="list-group-item-text"><%= msg.getTimeString() %></p>
 						<p class="list-group-item-text"><%= msg.getMessage() %></p>
 						<p></p>
+						<form action="sendMessage.jsp" method="get">
+						<input type="hidden" name="toUsername" value="<%=sender.getUsername() %>">
+						<button type="submit" class="btn btn-default">Reply</button>
+						</form>
+						<p></p>
 						<form action="DeleteMessageServlet" method="post">
 						<input type="hidden" name="msgID" value="<%= msg.getId() %>">
 						<button type="submit" class="btn btn-default">Delete Message</button>
