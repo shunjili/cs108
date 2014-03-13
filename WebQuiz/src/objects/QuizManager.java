@@ -513,7 +513,7 @@ public class QuizManager {
 	 * @param max
 	 * @return
 	 */
-	public ArrayList<QuizAttempt> getTopAttempts(String quiz_id, int max) {
+	public static ArrayList<QuizAttempt> getTopAttempts(String quiz_id, int max) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -528,10 +528,11 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE "
-					 + ATTEMPT_QUIZ_ID_COL + "=" + quiz_id +" ORDER BY "
-					+ ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_DURATION_COL + "ASC LIMIT " + max + ";";
-			
+			String query = "SELECT A.* FROM " + MyDBInfo.ATTEMPTS_TABLE + " A LEFT OUTER JOIN " + MyDBInfo.ATTEMPTS_TABLE
+					+ " B ON (A." + ATTEMPT_USERNAME_COL + "= B." + ATTEMPT_USERNAME_COL + " AND A." + ATTEMPT_SCORE_COL + " < B." + ATTEMPT_SCORE_COL
+					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL ORDER BY " + ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
+
+					
 			ResultSet rs = stmt.executeQuery(query);
 			
 			ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
@@ -552,7 +553,7 @@ public class QuizManager {
 		}
 	}
 	
-	public boolean recordAttempt(String quiz_id, QuizAttempt attempt) {
+	public static boolean storeAttempt(QuizAttempt attempt) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -569,7 +570,7 @@ public class QuizManager {
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.ATTEMPTS_TABLE + " VALUES ("
 					+ attempt.getQuizID() + ",\"" + attempt.getUsername() + "\","
-					+ attempt.getScore() + "," + attempt.getStartTime().toString() + ","
+					+ attempt.getScore() + ",'" + attempt.getStartTime().toString() + "',"
 					+ attempt.getDuration() + ");";
 			
 			int result = stmt.executeUpdate(query);
@@ -582,7 +583,7 @@ public class QuizManager {
 	}
 	
 	
-	public QuizAttempt parseAttempt(ResultSet rs) throws SQLException {
+	public static QuizAttempt parseAttempt(ResultSet rs) throws SQLException {
 		int quiz_id_int;
 		String username;
 		int score;
@@ -631,8 +632,9 @@ public class QuizManager {
 		
 		boolean result = QuizManager.storeQuizQuestionTags(quiz3);
 		*/
-		ArrayList<Quiz> resultList = QuizManager.getSelfCreatedQuiz("test", 5);
-		System.out.println(resultList.size());
+		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
+		QuizManager.storeAttempt(testAttempt);
+		ArrayList<QuizAttempt> topAttempts = QuizManager.getTopAttempts("1", 3);
 	}
 	
 
