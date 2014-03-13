@@ -15,7 +15,7 @@ page import="objects.*, java.util.ArrayList"%>
 <title>Homepage</title>
 </head>
 <%
-		Account thisAccount = (Account) session
+	Account thisAccount = (Account) session
 				.getAttribute("loggedAccount");
 
 	if(thisAccount == null) {
@@ -49,6 +49,10 @@ page import="objects.*, java.util.ArrayList"%>
 					<%=thisAccount.getDisplayName()%>
 				</div>
 				<p>Some Basic Information</p>
+			</div>
+			<div class="list-group">
+				<a href="/WebQuiz/showProfile.jsp?username=<%=thisAccount.getUsername()%>" class="list-group-item">View My Profile</a>	
+				<a href="/WebQuiz/CreateQuiz.jsp" class="list-group-item">Create a Quiz</a>
 			</div>
 		</div>
 		<div class="col-md-6">
