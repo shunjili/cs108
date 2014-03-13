@@ -93,6 +93,6 @@ System.out.println(valid);
 	session.setAttribute(EvaluateQuizServlet.Hash_Str,null);
 	session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str,null);
 
-%>>
+%>
 </body>
 </html>

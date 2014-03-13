@@ -81,7 +81,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 			session.setAttribute(Duration_str, duration);
 			session.setAttribute(StartingTime_Str, null);
 		}
-		session.setAttribute("score", score);
+		session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str, score);
 		session.setAttribute(Hash_Str, questionAnswerHash);
 		session.setAttribute(Questions_Str, questionList);
 		String returnURL = String.format("reviewQuizResult.jsp", quiz_id);
