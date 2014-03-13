@@ -160,14 +160,16 @@ if (loggedAccount == null) {
 			<div class="col-md-1"></div>
 			<div class="col-md-7">
 				<div class="panel panel-primary">
-					<div class="panel-heading">Friends:</div>
+					<!-- <div class="panel-heading">Friends:</div> -->
 <%
 		if (friends == null) {
 %>
+					<div class="panel-heading">Friends</div>
 						<div class="panel-body">Error getting friends for <%=shownDisplayName %></div>
 <%
 		} else if (friends.size() > 0) {
 %>
+					<div class="panel-heading">Friends <span class="badge"><%=friends.size()%></span></div>
 					<table class="table">
 						<thead>
 							<tr>
@@ -194,6 +196,7 @@ if (loggedAccount == null) {
 <%
 		} else {
 %>
+					<div class="panel-heading">Friends <span class="badge" align="right"><%=friends.size() %></span></div>
 						<div class="panel-body"><%=shownDisplayName %> does not have any friends yet</div>
 <%			
 		}
