@@ -135,7 +135,7 @@ public class MultipleChoiceQuestion implements Question {
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(questionID);
 		
-		String htmlContent = "<div class=\"panel-body\">" + questionPrefix + "</div>";
+		String htmlContent = "<div class=\"panel-body\">" + questionPrefix;
 		htmlContent += "<table class=\"table\">";
 		
 		htmlContent += "<thead><tr><th>Correct Answer</th><th>Your Answer</th></tr></thead>";
@@ -159,7 +159,7 @@ public class MultipleChoiceQuestion implements Question {
 
 		}
 		htmlContent += "</td></tr></tbody></table>";
-		htmlContent +="</div></div>";
+		htmlContent +="</div>";
 		return htmlContent;
 		
 	}

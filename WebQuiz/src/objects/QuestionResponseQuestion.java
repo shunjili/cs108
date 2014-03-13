@@ -115,7 +115,7 @@ public class QuestionResponseQuestion implements Question {
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(question_id);
 		
-		String htmlContent = "<div class=\"panel-body\">" + question + "</div>";
+		String htmlContent = "<div class=\"panel-body\">" + question;
 		htmlContent += "<table class=\"table\">";
 		
 		htmlContent += "<thead><tr><th>Correct Answer</th><th>Your Answer</th></tr></thead>";
@@ -139,7 +139,7 @@ public class QuestionResponseQuestion implements Question {
 			}	
 		}
 		htmlContent += "</td></tr></tbody></table>";
-		htmlContent +="</div></div>";
+		htmlContent +="</div>";
 		return htmlContent;
 	}
 
