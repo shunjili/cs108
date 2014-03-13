@@ -116,7 +116,7 @@ public class QuestionResponseQuestion implements Question {
 		ArrayList<String> answers = new ArrayList<String>();
 		answers = QuestionManager.getAnswers(question_id);
 		String htmlContent = "<div class=\"panel-body\">" + question + "<div class=\"input-group\">" ;
-		htmlContent += "<span class=\"input-group-addon\">Right Answer</span>";
+		htmlContent += "<span class=\"input-group-addon\">Correct Answer</span>";
 		htmlContent += "<span class=\"input-group-addon\">";
 		for(int i = 0; i < answers.size(); i++){
 //			htmlContent += Integer.toString(i + 1) + ".";
@@ -135,7 +135,7 @@ public class QuestionResponseQuestion implements Question {
 		if(isCorrect(userAnswers)){
 			htmlContent += "<b>is correct!</b></span>";
 		}else{
-			htmlContent += "is wrong! Sorry!</b></span>";
+			htmlContent += "is wrong.</b></span>";
 		}
 		htmlContent +="</div></div>";
 		return htmlContent;

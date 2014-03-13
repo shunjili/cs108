@@ -53,7 +53,7 @@ boolean valid = questionAnswerHash != null && questions != null && questionAnswe
 				if(correct){
 					 panelClass = "success";
 				}else{
-					panelClass = "warning";
+					panelClass = "danger";
 				}
 		%>
 			<div class="panel panel-<%=panelClass%>"> 

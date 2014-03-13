@@ -37,7 +37,7 @@
 			<div class="col-md-7">
 				<h1>
 					<%=shownDisplayName%>
-					<small>(shownUsername)</small>
+					<small>(<%=shownUsername%>)</small>
 				</h1>
 			</div>
 		</div>
