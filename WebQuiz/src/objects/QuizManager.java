@@ -537,11 +537,6 @@ public class QuizManager {
 			ResultSet rs = stmt.executeQuery(query);
 			
 			ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
-			int quiz_id_int;
-			String username;
-			int score;
-			Timestamp start_time;
-			long duration;
 			QuizAttempt newAttempt = parseAttempt(rs);
 			while(newAttempt != null) {
 				resultList.add(newAttempt);
@@ -552,6 +547,41 @@ public class QuizManager {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static ArrayList<QuizAttempt> getLastAttemptsForUser(String quiz_id, String username, int max) {
+			try {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+
+				//set up DB connection
+				Connection con = DriverManager.getConnection
+						( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+				Statement stmt = con.createStatement();
+				stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+				//prepare query
+				String query = "SELECT * FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE " + ATTEMPT_QUIZ_ID_COL + "="
+						+ quiz_id + " AND " + ATTEMPT_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ATTEMPT_START_COL
+						+ " LIMIT " + max + ";";
+
+						
+				ResultSet rs = stmt.executeQuery(query);
+				
+				ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
+				QuizAttempt newAttempt = parseAttempt(rs);
+				while(newAttempt != null) {
+					resultList.add(newAttempt);
+					newAttempt = parseAttempt(rs);
+				}
+				return resultList;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
 	}
 	
 	public static boolean storeAttempt(QuizAttempt attempt) {
