@@ -39,10 +39,11 @@ CREATE TABLE UsersToAchievements (
 );
 
 CREATE TABLE Achievements (
-	achievement_id VARCHAR(64),
+	username CHAR(64),
+	type CHAR(64),
 	description VARCHAR(128),
 	time_stamp TIMESTAMP,
-	PRIMARY KEY(achievement_id)
+	FOREIGN KEY (username) REFERENCES Accounts(username)	
 );
 
 CREATE TABLE FriendsTable (
