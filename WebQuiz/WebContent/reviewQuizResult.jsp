@@ -19,11 +19,14 @@ page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
 <title>Review Quiz Result</title>
 </head>
 <%
-int score = (Integer) session.getAttribute("score");
+int score = (Integer) session.getAttribute(EvaluateOneQuizQuestionServlet.Score_Str);
 Long duration = (Long) session.getAttribute(EvaluateQuizServlet.Duration_str);
 HashMap<Question, ArrayList<String>> questionAnswerHash = (HashMap<Question, ArrayList<String>>) session.getAttribute(EvaluateQuizServlet.Hash_Str);
 ArrayList<Question> questions =(ArrayList<Question>) session.getAttribute(EvaluateQuizServlet.Questions_Str);
 boolean valid = questionAnswerHash != null && questions != null && questionAnswerHash.size() == questions.size();
+System.out.println(questionAnswerHash.size());
+System.out.println(questions.size());
+System.out.println(valid);
 %>
 <body>
 <%@include file="navbar.html" %>
@@ -85,5 +88,11 @@ boolean valid = questionAnswerHash != null && questions != null && questionAnswe
 	</div>
 	<div class="col-md-2"></div>
 </div>
+<%
+	session.setAttribute(EvaluateQuizServlet.Questions_Str,null);
+	session.setAttribute(EvaluateQuizServlet.Hash_Str,null);
+	session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str,null);
+
+%>>
 </body>
 </html>
