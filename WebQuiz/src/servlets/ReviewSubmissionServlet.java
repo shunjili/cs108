@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import objects.QuizManager;
+
 /**
  * Servlet implementation class ReviewSubmissionServlet
  */
@@ -29,7 +31,12 @@ public class ReviewSubmissionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO implemented rating submission mechanism
 		int rating = Integer.parseInt(request.getParameter("rating"));
-		
+		String quiz_id = request.getParameter("quiz_id");
+		if(QuizManager.addReviewForQuiz(quiz_id, rating)){
+			System.out.println("rating stored successfully");
+		}else{
+			System.out.println("rating failed to be stored");
+		}
 		request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
 	}
 
