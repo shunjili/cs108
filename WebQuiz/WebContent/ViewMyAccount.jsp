@@ -44,31 +44,57 @@ page import="objects.*, java.util.ArrayList"%>
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="col-md-2">
-			<div>
-				<%=thisAccount.getDisplayName()%>
+			<div class="well">
+				<div>
+					<%=thisAccount.getDisplayName()%>
+				</div>
+				<p>Some Basic Information</p>
 			</div>
-			<p>Some Basic Information</p>
 		</div>
-		<div class="col-md-7">
-			<h3>Announcements</h3>
-			<% for (int i = 0; i < announcements.size(); i++) {%>
-			<p> <%= announcements.get(i) %></p>
-			<%} %>
-			<h3>List of Popular Quizzes</h3>
-			<h3>List of Recently Created Quizzes</h3>
-			<h3>List of Taken Quizzes</h3>
-				<ul>
-					<%for(Quiz quiz : recentQuizzes) { %>
-						<li>
-							<a href=<%="QuizInfo.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
-						</li>
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				 <div class="panel-heading">Announcements</div>
+				 <div class="panel-body">
+				 	<% for (int i = 0; i < announcements.size(); i++) {%>
+						<p> <%= announcements.get(i) %></p>
+					<%} %>
+				 </div>
+			</div>
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of Popular Quizzes</div>
+				 <div class="panel-body">
+
+				 </div>	
+			</div>
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of Recently Created Quizzes</div>
+				 <div class="panel-body">
+					<ul>
+						<%for(Quiz quiz : recentQuizzes) { %>
+							<li>
+								<a href=<%="QuizInfo.jsp?id=" + quiz.getQuizID() %>><%=quiz.getQuizName() %></a>
+							</li>
 						<%} %>
-				</ul>
-			<h3>List of their recent quiz creating activities</h3>
+					</ul>
+				 </div>	
+			</div>
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of Taken Quizzes</div>
+				 <div class="panel-body">
+
+				 </div>	
+			</div>	
+			<div class="panel panel-primary">
+				 <div class="panel-heading">List of their recent quiz creating activities</div>
+				 <div class="panel-body">
+
+				 </div>	
+			</div>				
 
 		</div>
-		<h3>Additional Options:</h3>
+	
 		<div class="col-md-2">
+			<h3>Additional Options:</h3>
 			<ul>
 				<li><a href="/WebQuiz/loginPage.jsp">Login Page</a></li>
 				<li><a href="/WebQuiz/accountIndex.jsp">Account Index</a></li>
@@ -84,6 +110,7 @@ page import="objects.*, java.util.ArrayList"%>
 				
 			</ul>
 		</div>
+		<div class="col-md-1"></div>
 </body>
 <%
 	}
