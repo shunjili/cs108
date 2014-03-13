@@ -21,15 +21,12 @@
 
 </head>
 <body>
-<div class="page-header">
-	<div class="row">
-		<h1 align = "center">
-			Welcome to Quizville
-		</h1>
-	</div>
-</div>
+<h1>Welcome to Quizville</h1>
 <div>
 	<img src="images/quiz2.jpg" width="347" height="310" style="float:left"/>
+	<h2 align = "center">
+		Take Quiz Anywhere
+	</h2>
 	<p>&nbsp;</p>
 	<form method="POST" action = "HandleLoginServlet">
 		<p align = "center">Enter Username:<input type="text" name="username" placeholder="Username"/></p>

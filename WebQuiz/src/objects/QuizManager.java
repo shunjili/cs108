@@ -197,18 +197,18 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query to update average rating
-			String query = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + AVERAGE_RATING_COL + "="
+			String update = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + AVERAGE_RATING_COL + "="
 					+ newAvgRating + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
 
 			//execute the query
-			stmt.executeQuery(query);
+			stmt.executeUpdate(update);
 			
 			//prepare query to update number of reviews
-			query = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + NUMBER_OF_REVIEWS_COL + "="
+			update = "UPDATE " + MyDBInfo.QUIZ_TABLE + "SET " + NUMBER_OF_REVIEWS_COL + "="
 					+ numReviews + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
 			
 			//execute the query
-			stmt.executeQuery(query);
+			stmt.executeUpdate(update);
 
 			con.close();
 			return true;

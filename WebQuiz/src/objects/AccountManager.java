@@ -539,12 +539,12 @@ public class AccountManager {
 
 			// prepare query
 			// Remove (username1, username2) and (username2, username1) from friends table
-			String query = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+			String update = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
 					+ "=\"" + username1 + "\" AND " + FRIENDS_COL2 + "=\"" + username2 + "\";";
-			stmt.executeUpdate(query);
-			query = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+			stmt.executeUpdate(update);
+			update = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
 					+ "=\"" + username2 + "\" AND " + FRIENDS_COL2 + "=\"" + username1 + "\";";
-			stmt.executeUpdate(query);
+			stmt.executeUpdate(update);
 
 			con.close();
 			return true;
@@ -702,13 +702,13 @@ public class AccountManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			// prepare query to remove friend request from table
-			String query = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
+			String update = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
 					+ "=\"" + requester + "\" AND " + REQUESTED_COL + "=\"" + requested + "\";";
-			stmt.executeUpdate(query);
+			stmt.executeUpdate(update);
 			
-			query = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
+			update = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
 					+ "=\"" + requested + "\" AND " + REQUESTED_COL + "=\"" + requester + "\";";
-			stmt.executeUpdate(query);
+			stmt.executeUpdate(update);
 
 			con.close();
 			return true;
