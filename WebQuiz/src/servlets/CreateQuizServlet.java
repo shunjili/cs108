@@ -40,12 +40,17 @@ public class CreateQuizServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+		if (loggedAccount == null) {
+			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+			return;
+		}
 		System.out.println("Success stored Quiz");
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
 		ArrayList<Question> Questions = new ArrayList<Question>();
 		//String creator = ((Account) (request.getSession().getAttribute("loggedAccount"))).getUsername();
-		String creator = "test";
+		String creator = loggedAccount.getUsername();
 		String category = request.getParameter("category");
 		
 		ArrayList<String> tags = new ArrayList<String>();
@@ -66,13 +71,15 @@ public class CreateQuizServlet extends HttpServlet {
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		
 		Quiz toStore = new Quiz(name, description, Questions, creator, category, tags,correctImmediately, onePage, randomOrder, timesTaken, numReviews, rating, timeStamp);
+		int quiz_id = QuizManager.storeQuizQuestionTags(toStore);
+		toStore.setQuizID(quiz_id);
 		
-		if(QuizManager.storeQuizQuestionTags(toStore)){
+		if(quiz_id != -1){
 			System.out.println("Success stored Quiz");
-		}else{
+		} else {
 			System.out.println("Failed to store the Quiz");
 		}
-		String returnURL = String.format("createQuestions.jsp?id=%s", QuizManager.getQuizId(toStore));
+		String returnURL = "createQuestions.jsp?id=" + toStore.getQuizID();
 		request.getRequestDispatcher(returnURL).forward(request, response);
 	}
 

@@ -47,20 +47,7 @@ if(Questions != null){
 		</div>
 	<div class="col-md-7">
 		
-		<%if (Questions != null){
-			%>
-			<%for (int i = 0; i < Questions.size(); i ++){ %>
-					<div class="panel panel-primary"> <div class="panel-heading">
-		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
-		  			</div>
-		  			<%= Questions.get(i).getHTML(true) %>
-		  			</div>	
-			<%} %>
- 			<br>
-
-		<%}else{ %>
-		<p>You do not have a quiz for this id or you dont have any questions in this quiz!</p>
-		<%} %>
+		
 							<div class="panel panel-primary">
 			 <div class="panel-heading">Create a New Question</div>
 			 <div class="panel-body">
@@ -103,7 +90,7 @@ if(Questions != null){
   				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 			</div>
 			<br>
-			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="submit" class="btn btn-default">Add Question</button>
 			
 			 </form>
   </div>
@@ -146,7 +133,7 @@ if(Questions != null){
   				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 			</div>
 			<br>
-			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="submit" class="btn btn-default">Add Question</button>
 			
 			 </form>
   </div>
@@ -181,13 +168,27 @@ if(Questions != null){
   				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 			</div>
 			<br>
-			<button type="submit" class="btn btn-default">Submit</button>
-			 </form>
+			<button type="submit" class="btn btn-default">Add Question</button>
+	</form>
   </div>
 </div>
 </div>
 	</div>
+	<%if (Questions != null){
+			%>
+			<%for (int i = 0; i < Questions.size(); i ++){ %>
+					<div class="panel panel-primary"> <div class="panel-heading">
+		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
+		  			</div>
+		  			<%= Questions.get(i).getHTML(true) %>
+		  			</div>	
+			<%} %>
+ 			<br>
+
+		<%}%>
 	</div>
+	
+
 	
 </body>
 </html>

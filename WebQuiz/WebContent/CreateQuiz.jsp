@@ -10,10 +10,20 @@
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<title>Insert title here</title>
+<title>Create Quiz</title>
 </head>
 <body>
-	<div class="col-md-3">
+	<div class="page-header">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<h1>
+					Create Quiz
+				</h1>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-1">
 	</div>
 	<div class="col-md-7">
 	<div class="panel panel-primary">
@@ -60,14 +70,9 @@
 		  				</span>
 					</div>
 					<br>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-default">Start Adding Questions</button>
 				</form>
 			</div>
-	</div>
-	<div class="panel-body">Which Roman consul was defeated at the battle of Cannae?<div class="input-group"><span class="input-group-addon">Right Answer</span><span class="input-group-addon"></span></div><div class="input-group"><span class="input-group-addon">Your Answer</span><span class="input-group-addon">1.haha&nbsp;is wrong! Sorry!</b></span></div>
-	
-	</div>
-	<div class="col-md-2">
 	</div>
 	
 	</body>

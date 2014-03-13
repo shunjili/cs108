@@ -179,7 +179,7 @@ public class QuizManager {
 	 * @param toStore
 	 * @return
 	 */
-	public static boolean storeQuizQuestionTags(Quiz toStore) {
+	public static int storeQuizQuestionTags(Quiz toStore) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -227,18 +227,18 @@ public class QuizManager {
 			con.close();
 			for(int i = 0; i < toStore.getQuestions().size(); i++) {
 				if(QuestionManager.storeNewQuestion(toStore.getQuestions().get(i), quiz_id_str, i) < 0)
-					return false;
+					return -1;
 			}
 			
 			for(String tag : toStore.getQuizTags()) {
 				if(!addTagToQuiz(quiz_id_str, tag))
-					return false;
+					return -1;
 			}
-			return true;
+			return quiz_id_int;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
 	}
 
