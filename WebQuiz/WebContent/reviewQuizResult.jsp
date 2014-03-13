@@ -20,6 +20,7 @@ page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
 </head>
 <%
 int score = (Integer) session.getAttribute(EvaluateOneQuizQuestionServlet.Score_Str);
+String quiz_id = request.getParameter("quiz_id");
 Long duration = (Long) session.getAttribute(EvaluateQuizServlet.Duration_str);
 HashMap<Question, ArrayList<String>> questionAnswerHash = (HashMap<Question, ArrayList<String>>) session.getAttribute(EvaluateQuizServlet.Hash_Str);
 ArrayList<Question> questions =(ArrayList<Question>) session.getAttribute(EvaluateQuizServlet.Questions_Str);
@@ -74,11 +75,11 @@ System.out.println(valid);
 		    	<div class="panel-body">
 		    	On the scale of 1 to 5, what do you think represents the quality of this quiz?
 			    	<div class="btn-group">
-			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=1"> <button type="button" class="btn btn-default">1</button></a>
-			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=2"> <button type="button" class="btn btn-default">2</button></a>
-			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=3"> <button type="button" class="btn btn-default">3</button></a>
-			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=4"> <button type="button" class="btn btn-default">4</button></a>
-			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=5"> <button type="button" class="btn btn-default">5</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionServlet?rating=1&quiz_id=<%=quiz_id%>"> <button type="button" class="btn btn-default">1</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionServlet?rating=2&quiz_id=<%=quiz_id%>"> <button type="button" class="btn btn-default">2</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionServlet?rating=3&quiz_id=<%=quiz_id%>"> <button type="button" class="btn btn-default">3</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionServlet?rating=4&quiz_id=<%=quiz_id%>"> <button type="button" class="btn btn-default">4</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionServlet?rating=5&quiz_id=<%=quiz_id%>"> <button type="button" class="btn btn-default">5</button></a>
 			    		
 					</div>	
 		    	</div>
