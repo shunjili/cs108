@@ -127,11 +127,17 @@ public class QuestionResponseQuestion implements Question {
 		htmlContent +="</div><br>";
 		htmlContent +="<div class=\"input-group\">";
 		htmlContent +="<span class=\"input-group-addon\">Your Answer</span>";
-		for(int i = 0; i < userAnswers.size(); i++){
+		if(userAnswers == null){
 			htmlContent += "<span class=\"input-group-addon\">" ;
-			htmlContent += userAnswers.get(i);
-			htmlContent += "&nbsp;" ;
-		}	
+			htmlContent += "no answers which ";
+			htmlContent += "&nbsp;" ; 
+		}else{
+			for(int i = 0; i < userAnswers.size(); i++){
+				htmlContent += "<span class=\"input-group-addon\">" ;
+				htmlContent += userAnswers.get(i);
+				htmlContent += "&nbsp;" ;
+			}	
+		}
 		if(isCorrect(userAnswers)){
 			htmlContent += "<b>is correct!</b></span>";
 		}else{
