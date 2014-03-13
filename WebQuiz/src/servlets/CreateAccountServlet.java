@@ -48,7 +48,7 @@ public class CreateAccountServlet extends HttpServlet {
 		if(!password1.equals(password2)) {
 			//if not, set success = false, and forward to the result page immediately
 			request.setAttribute("success", success);
-			request.getRequestDispatcher("CreateAccountResult.jsp").forward(request, response);
+			request.getRequestDispatcher("CreateAccountUnsuccessful.html").forward(request, response);
 			return;
 		}
 
