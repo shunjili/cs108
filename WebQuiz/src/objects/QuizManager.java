@@ -28,14 +28,16 @@ public class QuizManager {
 	public static final String TAG_QUIZ_ID_COL = "quiz_id";
 	public static final String TAG_TAG_COL = "tag";
 
-	
-	
-
 	private static final String ATTEMPT_SCORE_COL = "score";
 	private static final String ATTEMPT_QUIZ_ID_COL = "quiz_id";
 	private static final String ATTEMPT_USERNAME_COL = "username";
 	private static final String ATTEMPT_START_COL = "start_time";
 	private static final String ATTEMPT_DURATION_COL = "duration";
+	
+	private static final String ACHIEVEMENTS_USERNAME_COL = "username";
+	private static final String ACHIEVEMENTS_TYPE_COL = "type";
+	private static final String ACHIEVEMENTS_DESCRIPTION_COL = "description";
+	private static final String ACHIEVEMENTS_TIMESTAMP_COL = "time_stamp";
 
 
 		public static ArrayList<Quiz> getAllQuizzes() {
@@ -674,6 +676,87 @@ public class QuizManager {
 
 	}
 	
+	
+	public static boolean storeAchievement(Achievement achieve) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+			
+			String query = "INSERT INTO " + MyDBInfo.ACHIEVEMENTS_TABLE + " VALUES ("
+					+ "\"" + achieve.getUsername() + "\",\"" + achieve.getTypeStr() + "\",\""
+					+ achieve.getDescription() + "\",\'" + achieve.getTimestamp().toString() + "\');";
+			
+			int result = stmt.executeUpdate(query);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static ArrayList<Achievement> getAchievementsForUser(String username, int max) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+			
+			String query = "SELECT * FROM " + MyDBInfo.ACHIEVEMENTS_TABLE + " WHERE "
+					+ ACHIEVEMENTS_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ACHIEVEMENTS_TIMESTAMP_COL
+					+ " DESC LIMIT " + max + ";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<Achievement> resultList = new ArrayList<Achievement>();
+			
+			for(int i = 0; i < max; i++) {
+				Achievement newAchievement = parseAchievement(rs);
+				if(newAchievement == null)
+					break;
+				else
+					resultList.add(newAchievement);
+			}
+			return resultList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+					
+	}
+	
+	private static Achievement parseAchievement(ResultSet rs) throws SQLException {
+		String username;
+		Achievement.Type type;
+		String description;
+		Timestamp time_stamp;
+		while(rs.next()) {
+			username = rs.getString(ACHIEVEMENTS_USERNAME_COL);
+			type = Achievement.getTypeForString(rs.getString(ACHIEVEMENTS_TYPE_COL));
+			description = rs.getString(ACHIEVEMENTS_DESCRIPTION_COL);
+			time_stamp = rs.getTimestamp(ACHIEVEMENTS_TIMESTAMP_COL);
+			return new Achievement(username, type, description, time_stamp);
+		}
+		return null;
+	}
+	
 	//main method for testing
 	public static void main(String[] args) {
 		
@@ -709,6 +792,14 @@ public class QuizManager {
 		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
 		QuizManager.storeAttempt(testAttempt);
 		ArrayList<QuizAttempt> topAttempts = QuizManager.getLastAttemptsForUser("1", "john", 5);
+		
+		Achievement A1 = new Achievement("john", Achievement.Type.PRACTICE, "foo", new Timestamp(System.currentTimeMillis()));
+		Achievement A2 = new Achievement("john", Achievement.Type.ONE_CREATED, "bar", new Timestamp(System.currentTimeMillis() + 2000));
+		QuizManager.storeAchievement(A1);
+		QuizManager.storeAchievement(A2);
+		
+		ArrayList<Achievement> achieveList = QuizManager.getAchievementsForUser("john", 5);
+		
 	}
 	
 

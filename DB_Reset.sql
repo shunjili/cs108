@@ -179,3 +179,7 @@ INSERT INTO QuizQuestionTable VALUES
 INSERT INTO QuizAttempts VALUES
 	(1,"john",20,NOW(),30),
 	(1,"sally",20,NOW(),20);
+
+INSERT INTO Achievements VALUES
+	("john","PRACTICE","foo",NOW()),
+	("john","ONE_CREATED","bar",NOW());
