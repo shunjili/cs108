@@ -24,6 +24,7 @@ public class AccountManager {
 	private static final String PASSHASH_COL = "passhash";
 	private static final String SALT_COL = "salt";
 	private static final String TYPE_COL = "type";
+	private static final String ISPRIVATE_COL = "isPrivate";
 	private static final String FRIENDS_COL1 = "user";
 	private static final String FRIENDS_COL2 = "friends_name";
 	private static final String REQUESTER_COL = "requester";
@@ -76,6 +77,7 @@ public class AccountManager {
 			String passhash;
 			String salt;
 			String typeString;
+			boolean isPrivate;
 
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
@@ -86,11 +88,12 @@ public class AccountManager {
 				passhash = rs.getString(PASSHASH_COL);
 				salt = rs.getString(SALT_COL);
 				typeString = rs.getString(TYPE_COL);
+				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
 
 				//check if password is correct
 				if(isPasswordCorrect(password, passhash, salt)) {
 					//if so, create and return the account
-					Account resultAcct = new Account(username, displayname, Account.stringToType(typeString));
+					Account resultAcct = new Account(username, displayname, Account.stringToType(typeString), isPrivate);
 					return resultAcct;
 				}
 			}
@@ -130,7 +133,7 @@ public class AccountManager {
 			String passhash;
 			String salt;
 			String typeString;
-
+			boolean isPrivate;
 			
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
@@ -141,8 +144,9 @@ public class AccountManager {
 				passhash = rs.getString(PASSHASH_COL);
 				salt = rs.getString(SALT_COL);
 				typeString = rs.getString(TYPE_COL);
+				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
 
-				accountList.add(new Account(username, displayname, Account.stringToType(typeString)));
+				accountList.add(new Account(username, displayname, Account.stringToType(typeString), isPrivate));
 			}
 
 			//if we reach this point, there was no account found, or the password was incorrect
@@ -190,7 +194,8 @@ public class AccountManager {
 			String passhash;
 			String salt;
 			String typeString;
-
+			boolean isPrivate;
+			
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
 			while(rs.next()) {
@@ -200,10 +205,11 @@ public class AccountManager {
 				passhash = rs.getString(PASSHASH_COL);
 				salt = rs.getString(SALT_COL);
 				typeString = rs.getString(TYPE_COL);
+				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
 
 				//check if password is correct
 
-				Account resultAcct = new Account(username, displayname, Account.stringToType(typeString));
+				Account resultAcct = new Account(username, displayname, Account.stringToType(typeString), isPrivate);
 				con.close();
 				return resultAcct;
 
@@ -276,11 +282,13 @@ public class AccountManager {
 			String username = newAccount.getUsername();
 			String typeStr = newAccount.getTypeString();
 			String displayname = newAccount.getDisplayName();
+			int isPrivateInt = 0;
+			if(!newAccount.isPrivate()) isPrivateInt = 1;
 
 			//build the insert statement
 			query = "INSERT INTO " + MyDBInfo.ACCOUNTS_TABLE + " VALUES "
 					+ "(\"" + username + "\",\"" + displayname + "\",\"" + passhash + "\",\"" + salt
-					+ "\",\"" + typeStr + "\");";
+					+ "\",\"" + typeStr + "\"," + isPrivateInt + ");";
 
 			//execute the update
 			stmt.executeUpdate(query);
@@ -576,15 +584,17 @@ public class AccountManager {
 			String friendName;
 			String displayname;
 			String typeString;
+			boolean isPrivate;
 			
 			while (rs.next()) {
 				friendName = rs.getString(FRIENDS_COL2);
 				displayname = rs.getString(DISPLAYNAME_COL);
 				typeString = rs.getString(TYPE_COL);
-
+				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
+				
 				//check if password is correct
 
-				Account friend = new Account(friendName, displayname, Account.stringToType(typeString));
+				Account friend = new Account(friendName, displayname, Account.stringToType(typeString), isPrivate);
 				friends.add(friend);
 			}
 			
@@ -694,6 +704,10 @@ public class AccountManager {
 			// prepare query to remove friend request from table
 			String query = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
 					+ "=\"" + requester + "\" AND " + REQUESTED_COL + "=\"" + requested + "\";";
+			stmt.executeUpdate(query);
+			
+			query = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
+					+ "=\"" + requested + "\" AND " + REQUESTED_COL + "=\"" + requester + "\";";
 			stmt.executeUpdate(query);
 
 			con.close();

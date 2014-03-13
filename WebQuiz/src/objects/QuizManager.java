@@ -604,7 +604,7 @@ public class QuizManager {
 	//main method for testing
 	public static void main(String[] args) {
 		
-		/*
+		
 		Quiz quiz1 = QuizManager.getQuizById("1");
 		Quiz quiz2 = QuizManager.getQuizById("3");
 	
@@ -630,8 +630,9 @@ public class QuizManager {
 				"john", "History", tagList1, false, false, false, 0, 0, 0.0d,
 				new Timestamp(System.currentTimeMillis()));
 		
-		boolean result = QuizManager.storeQuizQuestionTags(quiz3);
-		*/
+		int result = QuizManager.storeQuizQuestionTags(quiz3);
+		quiz3.setQuizID(result);
+		
 		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
 		QuizManager.storeAttempt(testAttempt);
 		ArrayList<QuizAttempt> topAttempts = QuizManager.getTopAttempts("1", 3);

@@ -21,6 +21,32 @@
 </h1>
 <p>(<%=shownUsername%>)<p>
 <%
+	//if not friends, and account is private
+	if(!shownAccount.equals(loggedAccount) && !AccountManager.areFriends(loggedUsername, shownUsername)
+			&& shownAccount.isPrivate()) {
+%>
+<p><%=shownAccount.getDisplayName() %> has a private account, become a friend to see details</p>
+<%
+	if(AccountManager.requestIsPending(loggedUsername, shownUsername)) {
+%>
+	<p>Your friend request is pending.</p>
+<%
+	} else {
+%>
+	<form action="SendFriendRequestServlet" method="get">
+		<input type="hidden" name="requester" value="<%=loggedUsername%>">
+		<input type="hidden" name="requested" value="<%=shownUsername%>">
+		<button type="submit">Send Friend Request</button>
+	</form>
+<%
+	}
+%>
+
+<%	
+	} else {
+%>
+
+<%
 	if (!shownAccount.equals(loggedAccount)) {
 		if (!AccountManager.areFriends(loggedUsername, shownUsername)) {
 			if (AccountManager.requestIsPending(loggedUsername, shownUsername)) {
@@ -86,6 +112,7 @@
 	<%
 		}
 	%>
+	<%} %>
 <h4><a href="ViewMyAccount.jsp">Homepage</a></h4>
 
 </body>
