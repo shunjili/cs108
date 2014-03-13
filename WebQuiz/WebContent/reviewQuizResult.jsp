@@ -92,7 +92,8 @@ System.out.println(valid);
 	session.setAttribute(EvaluateQuizServlet.Questions_Str,null);
 	session.setAttribute(EvaluateQuizServlet.Hash_Str,null);
 	session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str,null);
+	session.setAttribute("quiz_id",null);
 
-%>>
+%>
 </body>
 </html>

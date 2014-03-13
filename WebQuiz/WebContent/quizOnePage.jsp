@@ -4,8 +4,13 @@
 page import="objects.*, java.util.ArrayList, javax.servlet.http.HttpSession, java.sql.Timestamp, java.util.Date, java.util.HashMap, servlets.*"
 %>
 <%
-String quiz_id = request.getParameter("id");
+
 session = request.getSession();
+String quiz_id = (String)session.getAttribute("quiz_id");
+if(quiz_id == null){
+	quiz_id = request.getParameter("id");
+	session.setAttribute("quiz_id",quiz_id);
+}
 ArrayList<Question> Questions = (ArrayList<Question>) session.getAttribute(EvaluateOneQuizQuestionServlet.CurQuestion_Str);
 if(Questions == null || Questions.size() <= 0){
 	Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
@@ -32,6 +37,7 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@include file="navbar.html" %>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

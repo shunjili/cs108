@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import objects.Account;
 import objects.Question;
 import objects.QuestionManager;
+import objects.QuizAttempt;
+import objects.QuizManager;
 import servlets.*;
 
 /**
@@ -113,15 +116,25 @@ public class EvaluateOneQuizQuestionServlet extends HttpServlet {
 			
 			
 			Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);
+			long duration = 0;
 			if(startingTime != null){
 				// the duration is in minutes
 				Timestamp now = new Timestamp(new Date().getTime());
-				long duration = (now.getTime()- startingTime.getTime())/60000;
+				duration = (now.getTime()- startingTime.getTime())/60000;
 				//System.out.println("test duration is " + duration);
 				session.setAttribute(EvaluateQuizServlet.Duration_str, duration);
 				session.setAttribute(EvaluateQuizServlet.StartingTime_Str, null);
 			}
 			
+			//(int quiz_id, String username, int score, Timestamp start_time, long duration)
+			Account user = ((Account) session.getAttribute("loggedAccount"));
+			//String user = "foo";
+			//System.out.println(user.getUsername());
+			//System.out.println(quiz_id);
+			QuizAttempt tempAttempt = new QuizAttempt(Integer.parseInt(quiz_id), user.getUsername(), tempScore, startingTime, duration );
+			if(!QuizManager.storeAttempt(tempAttempt))
+				System.out.print("store err");
+
 			session.setAttribute(Score_Str, tempScore);
 			session.setAttribute(EvaluateQuizServlet.Hash_Str, questionAnswerHash);
 			session.setAttribute(EvaluateQuizServlet.Questions_Str, questionList);
