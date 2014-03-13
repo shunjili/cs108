@@ -53,7 +53,8 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + ";";
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " ORDER BY "
+					+ TIMESTAMP_COL + " DESC;";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);

@@ -20,6 +20,7 @@ page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
 </head>
 <%
 int score = (Integer) session.getAttribute("score");
+Long duration = (Long) session.getAttribute(EvaluateQuizServlet.Duration_str);
 HashMap<Question, ArrayList<String>> questionAnswerHash = (HashMap<Question, ArrayList<String>>) session.getAttribute(EvaluateQuizServlet.Hash_Str);
 ArrayList<Question> questions =(ArrayList<Question>) session.getAttribute(EvaluateQuizServlet.Questions_Str);
 boolean valid = questionAnswerHash != null && questions != null && questionAnswerHash.size() == questions.size();
@@ -30,7 +31,11 @@ boolean valid = questionAnswerHash != null && questions != null && questionAnswe
 			<div class="col-md-3"></div>
 			<div class="col-md-7">
 				<h1>
-					Review Quiz Results <small> You got <%=score %> points!</small>
+					Review Quiz Results <small> You got <%=score %> points! 
+					<%if(duration != null ){ %>
+						Duration: <%=duration %> minutes
+					<%}%>
+					 </small>
 				</h1>
 			</div>
 		</div>
@@ -43,14 +48,39 @@ boolean valid = questionAnswerHash != null && questions != null && questionAnswe
 			for(int i = 0; i < questions.size(); i++){
 				Question question = questions.get(i);
 				ArrayList<String> answers = questionAnswerHash.get(question);
+				boolean correct = question.isCorrect(answers);
+				String panelClass;
+				if(correct){
+					 panelClass = "success";
+				}else{
+					panelClass = "danger";
+				}
 		%>
-			<div class="panel panel-primary"> 
+			<div class="panel panel-<%=panelClass%>"> 
 				<div class="panel-heading">
 		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
 		    	</div>
 		    	<%= question.getResultView(answers) %>
 		    </div>
-		<%} }%>
+		<%}%>
+			<div class="panel panel-info"> 
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Please Rate the Quiz</h3>
+		    	</div>
+		    	<div class="panel-body">
+		    	On the scale of 1 to 5, what do you think represents the quality of this quiz?
+			    	<div class="btn-group">
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=1"> <button type="button" class="btn btn-default">1</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=2"> <button type="button" class="btn btn-default">2</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=3"> <button type="button" class="btn btn-default">3</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=4"> <button type="button" class="btn btn-default">4</button></a>
+			    		<a href="/WebQuiz/ReviewSubmissionSerlvet?rating=5"> <button type="button" class="btn btn-default">5</button></a>
+			    		
+					</div>	
+		    	</div>
+    	
+	    	</div>
+		<%}%>
 	</div>
 	<div class="col-md-2"></div>
 </div>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@
-page import="objects.*, java.util.ArrayList"
+page import="objects.*, java.util.ArrayList,java.sql.Timestamp, servlets.*, java.util.Date;"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,6 +19,11 @@ page import="objects.*, java.util.ArrayList"
 <%
 String quiz_id = request.getParameter("id");
 ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);
+if(startingTime == null){
+	startingTime = new Timestamp( new Date().getTime());
+	session.setAttribute(EvaluateQuizServlet.StartingTime_Str, startingTime);
+}
 %>
 <body>
 	<div class="page-header">

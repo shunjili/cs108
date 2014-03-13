@@ -53,6 +53,44 @@
 %>
 				<h3>Friend Request Pending</h3>
 <%
+	} else {
+		String loggedUsername = loggedAccount.getUsername();
+		String loggedDisplayName = loggedAccount.getDisplayName();
+%>
+	<div class="page-header">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-7">
+				<h1>
+					<%=shownDisplayName%>
+					<small>(<%=shownUsername%>)</small>
+				</h1>
+			</div>
+		</div>
+	</div>
+<%
+		if (shownAccount.equals(loggedAccount)) {
+%>
+			<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-7">This is your profile</div>
+			</div>
+<%		
+		} else {
+			if (AccountManager.areFriends(shownUsername, loggedUsername)) {
+%>
+				<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">You and <%=shownDisplayName %> are friends</div>
+				</div>
+<%
+			} else if (AccountManager.requestIsPending(loggedUsername, shownUsername)) {
+%>
+				<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">Friend Request Pending</div>
+				</div>
+<%				
 			} else if (AccountManager.requestIsPending(shownUsername, loggedUsername)) {
 %>				
 				<form action="ConfirmFriendRequestServlet" method="post">
@@ -112,7 +150,6 @@
 	<%
 		}
 	%>
-	<%} %>
 <h4><a href="ViewMyAccount.jsp">Homepage</a></h4>
 
 </body>

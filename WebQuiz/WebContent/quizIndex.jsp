@@ -42,7 +42,7 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-7">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Accounts:</div>
+				<div class="panel-heading">Quizzes:</div>
 				<table class="table">
 					<thead>
 						<tr>
