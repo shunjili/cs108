@@ -39,13 +39,12 @@
 					<form action="SendFriendRequestServlet" method="post">
 						<input type="hidden" name="requester" value="<%=requester %>">
 						<input type="hidden" name="requested" value="<%=requested %>">
-						<textarea cols="60" rows="5" class="form-control" placeholder="Send a Message"></textarea>
+						<textarea name="message" cols="60" rows="5" class="form-control" placeholder="Send a Message"></textarea>
 						<button type="submit" class="btn btn-default">Send</button>
 					</form>
 				</div>
 			</div>
 			<p><a href="showProfile.jsp?username=<%=friendAccount.getUsername()%>">Back to <%=friendAccount.getDisplayName() %>'s profile</a></p>
-			<p><a href="ViewMyAccount.jsp">Homepage</a></p>
 		</div>
 </div>
 </body>

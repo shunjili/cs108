@@ -4,8 +4,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Send a Message</title>
+<title>Send Message</title>
 </head>
 <%
 	Account thisAccount = (Account) session
@@ -13,21 +19,41 @@
 	if(thisAccount == null) {
 %>
 <body>
-	<h2>
-		Please <a href="loginPage.jsp">login</a> to send a message.
-	</h2>
+	<p>Please <a href="loginPage.jsp">login</a> to send a message.<p>
 </body>
 <%
 	} else {
+		String toUsername = request.getParameter("toUsername");
+		Account toAccount = AccountManager.getAccountByUsername(toUsername);
 %>
 <body>
-	<p>Welcome, <%=thisAccount.getDisplayName()%>. Send a message:</p>
-	<form method="POST" action="SendMessageServlet">
-	<p>To:<input type="text" name="toField" /></p>
-	<p>Message:</p>
-	<textarea cols="60" rows="5" name="messageField">Type your message here.</textarea>
-	<input type="submit" value="Send"/>
-	</form>
+<%@include file="navbar.html" %>
+<div class="page-header">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
+			<h1>
+				Send Message
+			</h1>
+		</div>
+	</div>
+</div>
+<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Send a message to <%=toAccount.getDisplayName() %></div>
+				<div class="panel-body">
+					<form action="SendMessageServlet" method="post">
+						<input type="hidden" name="toUsername" value="<%=toUsername %>">
+						<textarea name="messageField" cols="60" rows="5" class="form-control" placeholder="Type your message here"></textarea>
+						<button type="submit" class="btn btn-default">Send</button>
+					</form>
+				</div>
+			</div>
+			<p><a href="showProfile.jsp?username=<%=toAccount.getUsername()%>">Back to <%=toAccount.getDisplayName() %>'s profile</a></p>
+		</div>
+</div>
 </body>
 <%
 	}
