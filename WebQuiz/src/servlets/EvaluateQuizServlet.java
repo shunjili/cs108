@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,8 @@ import objects.QuestionManager;
 public class EvaluateQuizServlet extends HttpServlet {
 	public static final String Hash_Str = "questionAnswerHash";
 	public static final String Questions_Str = "questionList";
+	public static final String StartingTime_Str = "startingTime";
+	public static final String Duration_str = "duration";
 
 	private static final long serialVersionUID = 1L;
        
@@ -45,7 +49,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO increament quiz taken count
 		
-		
+				
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		int score = 0;
@@ -68,6 +72,14 @@ public class EvaluateQuizServlet extends HttpServlet {
 			//System.out.println("The total score is " + score);
 		}
 		HttpSession session = request.getSession();
+		Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);
+		if(startingTime != null){
+			// the duration is in minutes
+			Timestamp now = new Timestamp(new Date().getTime());
+			long duration = (now.getTime()- startingTime.getTime())/60000000;
+			System.out.println("test duration is " + duration);
+			session.setAttribute(Duration_str, duration);
+		}
 		session.setAttribute("score", score);
 		session.setAttribute(Hash_Str, questionAnswerHash);
 		session.setAttribute(Questions_Str, questionList);

@@ -20,6 +20,7 @@ page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
 </head>
 <%
 int score = (Integer) session.getAttribute("score");
+long duration = (Long) session.getAttribute(EvaluateQuizServlet.Duration_str);
 HashMap<Question, ArrayList<String>> questionAnswerHash = (HashMap<Question, ArrayList<String>>) session.getAttribute(EvaluateQuizServlet.Hash_Str);
 ArrayList<Question> questions =(ArrayList<Question>) session.getAttribute(EvaluateQuizServlet.Questions_Str);
 boolean valid = questionAnswerHash != null && questions != null && questionAnswerHash.size() == questions.size();
@@ -30,7 +31,7 @@ boolean valid = questionAnswerHash != null && questions != null && questionAnswe
 			<div class="col-md-3"></div>
 			<div class="col-md-7">
 				<h1>
-					Review Quiz Results <small> You got <%=score %> points!</small>
+					Review Quiz Results <small> You got <%=score %> points! Duration: <%=duration %> minutes</small>
 				</h1>
 			</div>
 		</div>
