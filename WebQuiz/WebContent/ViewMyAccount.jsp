@@ -136,9 +136,9 @@ page import="objects.*, java.util.ArrayList"%>
 				<div class="list-group">
 					<a href="/WebQuiz/accountIndex.jsp" class="list-group-item">Account Index</a>
 					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
-					<a href="/WebQuiz/messages.jsp" class="list-group-item"> Messages in inbox: <%= MessageManager.getReceived(thisAccount.getUsername()).size()%></a>
-					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item">Friend Requests: 
-				<%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></a>
+					<a href="/WebQuiz/messages.jsp" class="list-group-item"> <span class="badge"><%= MessageManager.getReceived(thisAccount.getUsername()).size()%></span>Messages</a>
+					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item"> 
+				<span class="badge"><%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></span>Friend Requests</a>
 					<a href = "/WebQuiz/makeAnnouncement.jsp" class="list-group-item">Create Announcement</a>
 					<a href="/WebQuiz/loginPage.jsp" class="list-group-item">Logout</a>
 				</div>
