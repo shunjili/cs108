@@ -29,15 +29,6 @@ CREATE TABLE Accounts (
 	PRIMARY KEY(username)
 );
 
-CREATE TABLE UsersToAchievements (
-	username CHAR(64),
-	achievement_id VARCHAR(64),
-	description VARCHAR(128),
-	time_stamp TIMESTAMP,
-	FOREIGN KEY (username) REFERENCES Accounts(username),
-	FOREIGN KEY (achievement_id) REFERENCES Achievements(achievement_id)
-);
-
 CREATE TABLE Achievements (
 	username CHAR(64),
 	type CHAR(64),
