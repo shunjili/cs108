@@ -566,7 +566,7 @@ public class QuizManager {
 				//prepare query
 				String query = "SELECT * FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE " + ATTEMPT_QUIZ_ID_COL + "="
 						+ quiz_id + " AND " + ATTEMPT_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ATTEMPT_START_COL
-						+ " LIMIT " + max + ";";
+						+ " DESC LIMIT " + max + ";";
 
 						
 				ResultSet rs = stmt.executeQuery(query);
@@ -666,7 +666,7 @@ public class QuizManager {
 		
 		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
 		QuizManager.storeAttempt(testAttempt);
-		ArrayList<QuizAttempt> topAttempts = QuizManager.getTopAttempts("1", 3);
+		ArrayList<QuizAttempt> topAttempts = QuizManager.getLastAttemptsForUser("1", "john", 5);
 	}
 	
 
