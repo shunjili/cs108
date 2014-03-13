@@ -47,6 +47,7 @@
 					<form action="SendMessageServlet" method="post">
 						<input type="hidden" name="toUsername" value="<%=toUsername %>">
 						<textarea name="messageField" cols="60" rows="5" class="form-control" placeholder="Type your message here"></textarea>
+						<p></p>
 						<button type="submit" class="btn btn-default">Send</button>
 					</form>
 				</div>

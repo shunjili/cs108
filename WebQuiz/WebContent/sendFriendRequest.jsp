@@ -40,6 +40,7 @@
 						<input type="hidden" name="requester" value="<%=requester %>">
 						<input type="hidden" name="requested" value="<%=requested %>">
 						<textarea name="message" cols="60" rows="5" class="form-control" placeholder="Send a Message"></textarea>
+						<p></p>
 						<button type="submit" class="btn btn-default">Send</button>
 					</form>
 				</div>
