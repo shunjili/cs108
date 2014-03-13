@@ -22,9 +22,7 @@ page import="objects.*,java.util.ArrayList"%>
 	if(thisAccount == null) {
 %>
 <body>
-	<h2>
-		Please <a href="loginPage.jsp">login</a> to view your messages.
-	</h2>
+	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
 </body>
 <%
 	} else {
@@ -53,15 +51,21 @@ page import="objects.*,java.util.ArrayList"%>
 				<ul class="list-group">
 					
 					<%for (FriendRequest r : friendRequests) {
-						Account requester = AccountManager.getAccountByUsername(r.getRequester());%>
+						Account requester = AccountManager.getAccountByUsername(r.getRequester());
+						String message = r.getMessage();%>
 						<li class="list-group-item">
 						<form action="ConfirmFriendRequestServlet" method="post">
 						<input type="hidden" name="requester" value="<%= requester.getUsername() %>">
 						<input type="hidden" name="requested" value="<%= thisAccount.getUsername() %>">
 						<h4 class="list-group-item-heading"><%= requester.getDisplayName() %></h4>
-						<p class="list-group-item-text"><%= r.getMessage() %></p>
+						<%if (!message.equals("null")) {
+						%>
+							<p class="list-group-item-text"><%= message %></p>
+						<%
+						}%>
+						
 						<p></p>
-						<button type="submit" class="btn btn-default">Confirm Friend Request</button>
+						<button type="submit" class="btn btn-sm">Confirm Friend Request</button>
 						</form>
 						</li>
 					<%
@@ -72,13 +76,18 @@ page import="objects.*,java.util.ArrayList"%>
 		</div>
 	</div>
 	<%} else { %>
-	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-5">
-			<p>You do not have any friend requests.</p>
-			<p><a href="accountIndex.jsp">Find Friends</a></p>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-5">
+				<div class="panel panel-primary">
+					<div class="panel-heading">The following people have requested to be friends</div>
+					<div class="panel-body">
+						<p>You do not have any friend requests.</p>
+					</div>
+				</div>
+				<p><a href="accountIndex.jsp">Find Friends</a></p>
+			</div>
 		</div>
-	</div>
 	<%} %>
 <%
 	}
