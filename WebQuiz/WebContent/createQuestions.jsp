@@ -79,11 +79,6 @@ if(Questions != null){
   				<input type="text"  name = "score" class="form-control" placeholder="score">
 			</div>
  			 <br>
- 			 <div class="input-group">
- 				<span class="input-group-addon">Description</span>
-  				<input type="text"  name = "description" class="form-control" placeholder="description">
-			</div>
- 			 <br>
 			<div class="input-group">
  				<span class="input-group-addon">Correct Answer</span>
   				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
@@ -122,14 +117,9 @@ if(Questions != null){
   				<input type="text"  name = "score" class="form-control" placeholder="score">
 			</div>
  			 <br>
- 			 <div class="input-group">
- 				<span class="input-group-addon">Description</span>
-  				<input type="text"  name = "description" class="form-control" placeholder="description">
-			</div>
- 			 <br>
 			<div class="input-group">
  				<span class="input-group-addon">Correct Answer</span>
-  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+  				<input type="text" name = "answer" class="form-control" placeholder="Please Enter 1, 2, 3, 4?">
 			</div>
 			<br>
  			 <div class="input-group">
@@ -155,11 +145,6 @@ if(Questions != null){
  			 <div class="input-group">
  				<span class="input-group-addon">Score</span>
   				<input type="text"  name = "score" class="form-control" placeholder="score">
-			</div>
- 			 <br>
- 			 <div class="input-group">
- 				<span class="input-group-addon">Description</span>
-  				<input type="text"  name = "description" class="form-control" placeholder="description">
 			</div>
  			 <br>
 			<div class="input-group">

@@ -56,7 +56,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 			return;
 		}
 				
-		int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
+		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 		int score = 0;
 		HashMap<Question, ArrayList<String>> questionAnswerHash = new HashMap<Question, ArrayList<String>>();
@@ -86,8 +86,14 @@ public class EvaluateQuizServlet extends HttpServlet {
 			duration = (now.getTime()- startingTime.getTime())/60000;
 			//System.out.println("test duration is " + duration);
 			session.setAttribute(Duration_str, duration);
-			//store the quiz attemp before reseting the start time
-			QuizAttempt attempt = new QuizAttempt(quiz_id, loggedAccount.getUsername(),score, startingTime, duration);
+			//store the quiz attempt before reseting the start time
+			QuizAttempt attempt = new QuizAttempt(Integer.parseInt(quiz_id), loggedAccount.getUsername(),score, startingTime, duration);
+			if(QuizManager.storeAttempt(attempt)){
+				System.out.println("attempt stored correctly");
+			}else{
+				System.out.println("attempt failed to be stored");
+
+			}
 			session.setAttribute(StartingTime_Str, null);
 		}
 		
