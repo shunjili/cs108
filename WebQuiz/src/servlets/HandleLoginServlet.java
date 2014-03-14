@@ -44,11 +44,16 @@ public class HandleLoginServlet extends HttpServlet {
 		//get the loggedAccount. If it's null, we'll know something was wrong. This
 		//is checked in the LoginResult.jsp file.
 		Account loggedAccount = AccountManager.getAccountLogin(username, password);
-		request.setAttribute("loggedAccount", loggedAccount);
-		HttpSession session = request.getSession();
-		session.setAttribute("loggedAccount", loggedAccount);
-		request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
-//		request.getRequestDispatcher("LoginResult.jsp").forward(request, response);	
+		if (loggedAccount == null) {
+			request.getRequestDispatcher("loginUnsuccessful.jsp").forward(request, response);
+			return;
+		} else {
+			request.setAttribute("loggedAccount", loggedAccount);
+			HttpSession session = request.getSession();
+			session.setAttribute("loggedAccount", loggedAccount);
+			request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
+			return;
+		}
 	}
 
 }
