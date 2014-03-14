@@ -22,7 +22,7 @@ if (loggedAccount == null) {
 	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
 }
 String quiz_id = request.getParameter("id");
-
+String msg = request.getParameter("message");
 //ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 ArrayList<Question> Questions = QuizManager.getQuizById(quiz_id).getQuestions();
 Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);

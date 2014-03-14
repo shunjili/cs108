@@ -41,15 +41,32 @@ public class UpdateQuestionInEditQuestionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 		String quiz_id = request.getParameter("quiz_id");
-		String question = request.getParameter("question");
+		String question = HtmlEscape.escape(request.getParameter("question"));
 		String question_id = request.getParameter("question_id");
-		String answer = request.getParameter("answer");
+		String answer = HtmlEscape.escape(request.getParameter("answer"));
 		String[] ans = answer.split("#");
 		String questionTypeString = request.getParameter("type");
-		String description = request.getParameter("description");
+		String description = HtmlEscape.escape(request.getParameter("description"));
+		String scoreString = HtmlEscape.escape(request.getParameter("score"));
+		int score = 0;
+		
+		if (question == null || question.equals("")||answer == null || answer.equals("")) {
+			request.getRequestDispatcher("createQuestions.jsp?id="+quiz_id+"&message=invalid input!").forward(request, response);
+			return;
+		}
+		
+		try {
+			score = Integer.parseInt(scoreString);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.print("The entered score is not a valid number string");
+			score = 0;
+		}
+		
+		
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
-				String choice = request.getParameter("choice"+i);
+				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
 				if(choice != null){
 					question += "#"+choice;
 				}
@@ -60,7 +77,7 @@ public class UpdateQuestionInEditQuestionServlet extends HttpServlet {
 		Question.Type type = QuestionManager.getTypeForString(questionTypeString);
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		
-		Question toStore = QuestionManager.constructQuestion(type, question_id, question, description, loggedAccount.getUsername(), 10, timeStamp);
+		Question toStore = QuestionManager.constructQuestion(type, question_id, question, description, loggedAccount.getUsername(), score, timeStamp);
 		if(QuestionManager.updateQuestion(toStore, quiz_id, ans) >= 0){
 			System.out.println("Success stored question");
 		}else{

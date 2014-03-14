@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import objects.Account;
+import objects.HtmlEscape;
 import objects.Question;
 import objects.QuestionManager;
 import objects.QuizAttempt;
@@ -71,8 +72,16 @@ public class PracticeModeServlet extends HttpServlet {
 				Question question = questions.get(i);
 				String answer = request.getParameter(question.getQuestionID());
 				ArrayList<String> answers= new ArrayList<String>();
-				if(answer == null || answer.isEmpty()) answer = "You did not answer this question";
-				answers.add(answer);
+				if(answer == null || answer.isEmpty()){ 
+					answer = null;
+					answers.add(answer);
+				}else{
+					String[] ans = (HtmlEscape.escape(answer)).split("##");	
+					for(int j = 0; j < ans.length;j++){
+						answers.add(ans[j]);
+					}
+				}
+				//answers.add(answer);
 				questionAnswerHash.put(question, answers);
 				questionList.add(question);
 				if(question.isCorrect(answers)){

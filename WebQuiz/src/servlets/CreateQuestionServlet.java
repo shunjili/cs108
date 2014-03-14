@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import objects.Account;
+import objects.HtmlEscape;
 import objects.Question;
 import objects.QuestionManager;
 
@@ -42,11 +43,11 @@ public class CreateQuestionServlet extends HttpServlet {
 		// TODO getting the information from the form post and create a question
 		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 		String quiz_id = request.getParameter("quiz_id").replace("\"", "\\\"");
-		String question = request.getParameter("question").replace("\"", "\\\"");
-		String answer = request.getParameter("answer").replace("\"", "\\\"");
+		String question = HtmlEscape.escape(request.getParameter("question"));
+		String answer = HtmlEscape.escape(request.getParameter("answer"));
 		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
-		String scoreString = request.getParameter("score").replace("\"", "\\\"");
-		String description = request.getParameter("description");
+		String scoreString = HtmlEscape.escape(request.getParameter("score"));
+		String description = HtmlEscape.escape(request.getParameter("description"));
 		int score = 0;
 		
 		if (question == null || question.equals("")||answer == null || answer.equals("")) {
@@ -63,7 +64,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		}
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
-				String choice = request.getParameter("choice"+i);
+				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
 				if(choice != null){
 					question += "#"+choice;
 				}
