@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to Quizzville</title>
+<title>Welcome to Quizville</title>
 
 <link rel="shortcut icon" href="images/ico.jpg" /> 
 <link rel="stylesheet"
