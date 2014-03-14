@@ -120,7 +120,7 @@ public class QuizManager {
 		}
 	}
 	
-	public static boolean clearQuizAttempts(String quiz_id) {
+	public static boolean clearQuizHistory(String quiz_id) {
 			try {
 				try {
 					Class.forName("com.mysql.jdbc.Driver");
@@ -136,6 +136,10 @@ public class QuizManager {
 				
 				String query = "DELETE FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE "
 						+ QUIZ_ID_COL + "=\"" + quiz_id + "\";";
+				stmt.executeUpdate(query);
+				
+				query = "UPDATE " + MyDBInfo.QUIZ_TABLE + " SET " + NUMBER_OF_TIMES_TAKEN_COL + "=0, "
+						+ NUMBER_OF_REVIEWS_COL + "=0, " + AVERAGE_RATING_COL + "=0 WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
 				stmt.executeUpdate(query);
 				
 				con.close();
@@ -1527,7 +1531,9 @@ public class QuizManager {
 	//main method for testing
 	public static void main(String[] args) {
 		
-		ArrayList<Quiz> tagSearch = QuizManager.getQuizzesWithTag("an");
+		QuizManager.clearQuizHistory("3");
+		
+		//ArrayList<Quiz> tagSearch = QuizManager.getQuizzesWithTag("an");
 		
 		/*ArrayList<Quiz> attemptedQuizzes = QuizManager.getQuizzesTaken("john");
 
