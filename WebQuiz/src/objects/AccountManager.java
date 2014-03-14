@@ -290,7 +290,7 @@ public class AccountManager {
 			String displayname = newAccount.getDisplayName();
 			int isPrivateInt = 0;
 			int isActiveInt = 0;
-			if(!newAccount.isPrivate()) isPrivateInt = 1;
+			if(newAccount.isPrivate()) isPrivateInt = 1;
 			if(newAccount.isActive()) isActiveInt = 1;
 
 			//build the insert statement
