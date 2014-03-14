@@ -66,7 +66,7 @@
 								href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
 							<td><%=acct.getUsername()%></td>
 							<td><%=attempt.getScore()%></td>
-							<td><%=attempt.getDuration() %></td>
+							<td><%=attempt.getDuration() %> seconds</td>
 							<td><%=attempt.getStartTimeStr() %></td>
 						</tr>
 						<%

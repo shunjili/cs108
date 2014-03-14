@@ -339,7 +339,7 @@ if (loggedAccount == null) {
 									<td><a
 										href="QuizInfo.jsp?username=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
 									<td><%=attempt.getScore()%></td>
-									<td><%=attempt.getDuration() %></td>
+									<td><%=attempt.getDuration() %> seconds</td>
 									<td><%=attempt.getStartTimeStr() %></td>
 								</tr>
 								<%
