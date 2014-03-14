@@ -216,14 +216,17 @@ page import="objects.*, java.util.ArrayList"%>
 				 </div>	
 			</div>	
 			<div class="panel panel-primary">
-				 <div class="panel-heading">List of their recent quiz creating activities</div>
+				 <div class="panel-heading">List of recent quiz creation activity</div>
 				 <div class="panel-body">
 					<ul class="list-group">
 						 <%ArrayList<Quiz> createList = QuizManager.getMostPopularQuizzes(4);
 						 	if(!createList.isEmpty()){
 						 		for(Quiz quiz:createList){
+						 			Account creator = quiz.getQuizCreatorAccount();
 						 %>
-						 		 <li class="list-group-item">You created <%=quiz.getLinkHTML(false) %> at <%=quiz.getQuizTimestampString() %></li>
+						 		 <li class="list-group-item">
+						 		 <a href=showProfile.jsp?username=<%=creator.getUsername()%>><%=creator.getDisplayName() %></a>
+						 		  created <%=quiz.getLinkHTML(false) %> at <%=quiz.getQuizTimestampString() %></li>
 						 <%} }%>
 				 	</ul>
 				 </div>	
