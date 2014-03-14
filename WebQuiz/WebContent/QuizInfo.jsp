@@ -34,10 +34,13 @@ ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
 String tagsString = "";
 int numTags = tags.size();
 for (int i = 0; i < numTags; i++) {
-	if (i == numTags - 1) {
-		tagsString += tags.get(i);
-	} else {
-		tagsString += tags.get(i) + ", ";
+	String tag = tags.get(i);
+	if (!tag.equals("")) {
+		if (i == numTags - 1) {
+			tagsString += tags.get(i);
+		} else {
+			tagsString += tags.get(i) + ", ";
+		}
 	}
 }
 %>
@@ -67,6 +70,51 @@ for (int i = 0; i < numTags; i++) {
 					    <li class="list-group-item">Number of Questions: <%=numQuestions %></li>
 					    <li class="list-group-item">Total Score: <%=totalScore %></li>
 					    <li class="list-group-item">Tags: <%=tagsString %></li>
+					    <li class="list-group-item">
+<%
+						ArrayList<QuizAttempt> attempts = QuizManager.getTopAttempts(quiz_id, 5);
+%>
+						High Scores: 
+<%
+						if (attempts.size() > 0) {
+%>
+					    	<br>
+					    	<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Username</th>
+										<th>Score</th>
+										<th>Duration</th>
+										<th>Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (QuizAttempt attempt : attempts) {
+											Account acct = AccountManager.getAccountByUsername(attempt.getUsername());
+									%>
+									<tr>
+										<td><a
+											href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
+										<td><%=acct.getUsername()%></td>
+										<td><%=attempt.getScore()%></td>
+										<td><%=attempt.getDuration() %> seconds</td>
+										<td><%=attempt.getStartTimeStr() %></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+<%
+						} else {
+%>
+						There are no stored quiz attempts for this quiz
+<%
+						}
+%>
+					    </li>
 					  	<li class="list-group-item">
 					  		<%if(!currentQuiz.isOnePage()){ %>
 					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
