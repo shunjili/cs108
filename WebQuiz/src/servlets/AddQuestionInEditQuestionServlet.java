@@ -43,7 +43,7 @@ public class AddQuestionInEditQuestionServlet extends HttpServlet {
 		String quiz_id = request.getParameter("quiz_id");
 		String question = HtmlEscape.escape(request.getParameter("question"));
 		String answer = HtmlEscape.escape(request.getParameter("answer"));
-		
+		String[] ans = answer.split("#");
 //		String question = (request.getParameter("question"));
 //		String answer = (request.getParameter("answer"));	
 		
@@ -82,7 +82,7 @@ public class AddQuestionInEditQuestionServlet extends HttpServlet {
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, description, loggedAccount.getUsername(), score, timeStamp);
-		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) < 0){
+		if(QuestionManager.storeNewQuestionMultiple(toStore, quiz_id, index, ans) > 0){
 			System.out.println("Success stored question");
 		}else{
 			System.out.println("Failed to store the questions");
