@@ -47,6 +47,10 @@ public class CreateQuizServlet extends HttpServlet {
 		}
 		System.out.println("Success stored Quiz");
 		String name = request.getParameter("name");
+		if (name == null || name.equals("")) {
+			request.getRequestDispatcher("CreateQuizNeedName.jsp").forward(request, response);
+			return;
+		}
 		String description = request.getParameter("description");
 		ArrayList<Question> Questions = new ArrayList<Question>();
 		//String creator = ((Account) (request.getSession().getAttribute("loggedAccount"))).getUsername();
