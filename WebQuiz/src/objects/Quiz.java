@@ -95,9 +95,9 @@ public class Quiz {
 	 */
 	public String getLinkHTML(boolean admin){
 		String id =  (String) QuizManager.getQuizId(this);
-		String link = "/WebQuiz/quiz.jsp?id="+id;
+		String link = "/WebQuiz/QuizInfo.jsp?id="+id;
 		if(admin){
-			link = "/WebQuiz/createQuestions.jsp?id="+id;
+			link = "/WebQuiz/QuizInfo.jsp?id="+id;
 		}
 		String html = "<a href = \"" + link + "\">" + name + "</a>";
 		return html;
