@@ -1131,6 +1131,10 @@ public class QuizManager {
 			return -1;
 		}
 	}
+	
+	public static int getNumQuizzes() {
+		return getAllQuizzes().size();
+	}
 
 	//main method for testing
 	public static void main(String[] args) {

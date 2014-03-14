@@ -231,6 +231,38 @@
 										</tbody>
 									</table>
 								</div>
+								
+								
+								<div class="tab-pane" id="stats">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Statistic</th>
+												<th>#</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Number of Users (Active & Disabled)</td>
+												<td><%=AccountManager.getTotalAccountCount() %></td>
+											</tr>
+											<tr>
+												<td>Number of Quizzes</td>
+												<td><%=QuizManager.getNumQuizzes() %></td>
+											</tr>
+											<tr>
+												<td>Number of Quiz Attempts</td>
+												<td><%=QuizManager.getTotalAttempts() %></td>
+											</tr>
+											<tr>
+												<td>Number of Friendships</td>
+												<td><%=AccountManager.getNumFriendships() %></td>
+											</tr>
+											
+										</tbody>
+									</table>
+								</div>
+								
 							</div>
 						
 						

@@ -554,6 +554,40 @@ public class AccountManager {
 		}
 	}
 	
+	public static int getNumFriendships() {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.FRIENDS_TABLE;
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			
+			int count = 0;
+			
+			while (rs.next()) {
+				count++;
+			}
+			
+			con.close();
+			return (count / 2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
 	public static ArrayList<Account> getFriendsForUser(String username) {
 		// make lower case
 		username = username.toLowerCase();
@@ -790,7 +824,7 @@ public class AccountManager {
 	 * returns the total number of accounts, regardless of active status
 	 * @return count of accounts, -1 on error
 	 */
-	public int getTotalAccountCount() {
+	public static int getTotalAccountCount() {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
