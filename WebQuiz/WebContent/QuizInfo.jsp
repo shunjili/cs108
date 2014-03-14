@@ -76,6 +76,8 @@ for (int i = 0; i < numTags; i++) {
 					    <li class="list-group-item">Number of Questions: <%=numQuestions %></li>
 					    <li class="list-group-item">Total Score: <%=totalScore %></li>
 					    <li class="list-group-item">Tags: <%=tagsString %></li>
+					    
+					    <%--High scores --%>
 					    <li class="list-group-item">
 <%
 						ArrayList<QuizAttempt> attempts = QuizManager.getTopAttempts(quiz_id, 5);
@@ -105,7 +107,7 @@ for (int i = 0; i < numTags; i++) {
 											href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
 										<td><%=acct.getUsername()%></td>
 										<td><%=attempt.getScore()%></td>
-										<td><%=attempt.getDuration() %> seconds</td>
+										<td><%=attempt.getDurationString() %></td>
 										<td><%=attempt.getStartTimeStr() %></td>
 									</tr>
 									<%
@@ -121,6 +123,50 @@ for (int i = 0; i < numTags; i++) {
 						}
 %>
 					    </li>
+					    
+					    <%--User's past performance --%>
+					    <li class="list-group-item">
+<%
+						attempts = QuizManager.getLastAttemptsForUser(quiz_id, loggedAccount.getUsername(), 5);
+%>
+						Your past performance on this quiz: 
+<%
+						if (attempts.size() > 0) {
+%>
+					    	<br>
+					    	<table class="table">
+								<thead>
+									<tr>
+										<th>Score</th>
+										<th>Duration</th>
+										<th>Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (QuizAttempt attempt : attempts) {
+											Account acct = AccountManager.getAccountByUsername(attempt.getUsername());
+									%>
+									<tr>
+										<td><%=attempt.getScore()%></td>
+										<td><%=attempt.getDurationString() %></td>
+										<td><%=attempt.getStartTimeStr() %></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+<%
+						} else {
+%>
+						You have not taken this quiz yet.
+<%
+						}
+%>
+					    </li>
+					    
+					    <%--Bottom buttons --%>
 					  	<li class="list-group-item">
 					  		<%if(!currentQuiz.isOnePage()){ %>
 					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>

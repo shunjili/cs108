@@ -42,5 +42,10 @@ public class QuizAttempt {
 	public long getDuration() {
 		return this.duration;
 	}
+	
+	public String getDurationString() {
+		String str = "" + (this.duration / 60) + "min " + (this.duration % 60) + "sec";
+		return str;
+	}
 
 }
