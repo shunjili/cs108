@@ -26,8 +26,11 @@ if (loggedAccount == null) {
 String quiz_id = request.getParameter("id");
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
 ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+int numQuestions = 0;
+if(questions != null){
+	numQuestions = questions.size();
+}
 int totalScore = 0;
-int numQuestions = questions.size();
 for (int i = 0; i < numQuestions; i++) {
 	totalScore += questions.get(i).getScore();
 }

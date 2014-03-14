@@ -65,12 +65,13 @@ page import="objects.*, java.util.ArrayList"
 	</div>
 	<div class="row">
 		<div class="col-md-3"></div>
-		<div>
-			<%if(msg != null){ %>
-				<%=msg%>
-				<%} %>
-		</div>
-		<div class="col-md-7">		
+
+		<div class="col-md-7">	
+			<div>
+				<%if(msg != null){ %>
+					<%=msg%>
+					<%} %>
+			</div>	
 		<%if (Questions != null){%>
 			<%for (int j = 0; j < Questions.size(); j ++){ %>	
 				<div class="panel panel-primary">
