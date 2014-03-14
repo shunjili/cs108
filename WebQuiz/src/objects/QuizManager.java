@@ -762,7 +762,8 @@ public class QuizManager {
 			//prepare query
 			String query = "SELECT A.* FROM " + MyDBInfo.ATTEMPTS_TABLE + " A LEFT OUTER JOIN " + MyDBInfo.ATTEMPTS_TABLE
 					+ " B ON (A." + ATTEMPT_USERNAME_COL + "= B." + ATTEMPT_USERNAME_COL + " AND A." + ATTEMPT_SCORE_COL + " < B." + ATTEMPT_SCORE_COL
-					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL ORDER BY " + ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
+					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL AND A." + ATTEMPT_QUIZ_ID_COL + "=" + quiz_id + " ORDER BY " + ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
+			
 
 
 			ResultSet rs = stmt.executeQuery(query);
@@ -798,7 +799,7 @@ public class QuizManager {
 			//prepare query
 			String query = "SELECT A.* FROM " + MyDBInfo.ATTEMPTS_TABLE + " A LEFT OUTER JOIN " + MyDBInfo.ATTEMPTS_TABLE
 					+ " B ON (A." + ATTEMPT_USERNAME_COL + "= B." + ATTEMPT_USERNAME_COL + " AND A." + ATTEMPT_SCORE_COL + " < B." + ATTEMPT_SCORE_COL
-					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL AND A." + ATTEMPT_START_COL + ">=DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY "
+					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL AND " + ATTEMPT_QUIZ_ID_COL + "= " + quiz_id + " AND A." + ATTEMPT_START_COL + ">=DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY "
 					+ ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
 
 
