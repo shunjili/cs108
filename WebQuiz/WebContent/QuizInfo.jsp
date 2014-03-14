@@ -20,6 +20,7 @@ page import="objects.*, java.util.ArrayList"
 String quiz_id = request.getParameter("id");
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 <body>
+	<%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -41,7 +42,10 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					    <li class="list-group-item">Created By: <%=AccountManager.getAccountByUsername("john").getDisplayName() %></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Rating: <%= currentQuiz.getQuizRating() %></li>
-					  	<li class="list-group-item"><a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a></li>
+					  	<li class="list-group-item">
+					  		<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
+							<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a Friend for this Quiz!</button></a>					  	
+					  	</li>
 					  	
 					  </ul>
 				</div>
