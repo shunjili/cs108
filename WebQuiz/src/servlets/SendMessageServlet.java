@@ -54,7 +54,7 @@ public class SendMessageServlet extends HttpServlet {
 			request.getRequestDispatcher("showProfile.jsp?username="+ receiver).forward(request, response);
 			return;
 		} else {
-			request.getRequestDispatcher("messageFailed.html").forward(request, response);
+			request.getRequestDispatcher("messageFailed.jsp").forward(request, response);
 			return;
 		}
 
