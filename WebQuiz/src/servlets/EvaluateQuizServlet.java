@@ -66,7 +66,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 				Question question = questions.get(i);
 				String answer = request.getParameter(question.getQuestionID());
 				ArrayList<String> answers= new ArrayList<String>();
-				if(answer == null | answer.isEmpty()) answer = "You did not answer this question";
+				if(answer == null || answer.isEmpty()) answer = "You did not answer this question";
 				answers.add(answer);
 				questionAnswerHash.put(question, answers);
 				questionList.add(question);

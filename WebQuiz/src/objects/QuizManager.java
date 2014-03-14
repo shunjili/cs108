@@ -33,14 +33,14 @@ public class QuizManager {
 	private static final String ATTEMPT_USERNAME_COL = "username";
 	private static final String ATTEMPT_START_COL = "start_time";
 	private static final String ATTEMPT_DURATION_COL = "duration";
-	
+
 	private static final String ACHIEVEMENTS_USERNAME_COL = "username";
 	private static final String ACHIEVEMENTS_TYPE_COL = "type";
 	private static final String ACHIEVEMENTS_DESCRIPTION_COL = "description";
 	private static final String ACHIEVEMENTS_TIMESTAMP_COL = "time_stamp";
 
 
-		public static ArrayList<Quiz> getAllQuizzes() {
+	public static ArrayList<Quiz> getAllQuizzes() {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -73,7 +73,7 @@ public class QuizManager {
 			int numberOfTimesTaken;
 			int numberOfReviews;
 			double averageRating;
-			
+
 			ArrayList<Question> questionList;
 			ArrayList<String> tags;
 
@@ -95,7 +95,7 @@ public class QuizManager {
 				questionList = QuestionManager.getQuestionsForQuiz("" + quiz_id);
 				tags = getTagsForQuiz("" + quiz_id);
 				Quiz q = new Quiz(quizName, description, questionList, creator, category, tags, correctImmediately,
-								onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quiz_id);
+						onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quiz_id);
 				quizzes.add(q);
 			}
 			con.close();
@@ -106,8 +106,8 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
-	
+
+
 	public static Quiz getQuizById(String quiz_id) {
 		try {
 			try {
@@ -162,7 +162,7 @@ public class QuizManager {
 			if(readEntry) {
 				if(Integer.parseInt(quiz_id) != quizQueryId)
 					return null;
-				
+
 				ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id);
 				ArrayList<String> tags = getTagsForQuiz(quiz_id);
 				return new Quiz(quizName, description, questionList, creator, category, tags,
@@ -176,14 +176,14 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
+
 	public static boolean addReviewForQuiz(String quiz_id, int newRating) {
 		Quiz quiz = getQuizById(quiz_id);
 		double rating = quiz.getQuizRating();
 		int numReviews = quiz.getNumReviews();
 		double newAvgRating = ((rating * numReviews) + newRating) / (numReviews + 1);
 		numReviews++;
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -203,11 +203,11 @@ public class QuizManager {
 
 			//execute the query
 			stmt.executeUpdate(update);
-			
+
 			//prepare query to update number of reviews
 			update = "UPDATE " + MyDBInfo.QUIZ_TABLE + " SET " + NUMBER_OF_REVIEWS_COL + "="
 					+ numReviews + " WHERE " + QUIZ_ID_COL + "=" + quiz_id + ";";
- 			//execute the query
+			//execute the query
 			stmt.executeUpdate(update);
 
 			con.close();
@@ -217,7 +217,7 @@ public class QuizManager {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Adds the quiz, AND it's Questions and Tags to the database.
 	 * @param toStore
@@ -256,30 +256,30 @@ public class QuizManager {
 					+ "," + toStore.getTimesTaken()
 					+ "," + toStore.getNumReviews()
 					+ "," + toStore.getQuizRating() + ");";
-					
+
 			//execute the query
 			int result = stmt.executeUpdate(query);
-			
+
 			ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID();");
-			
+
 			rs.next();
-			
+
 			int quiz_id_int = rs.getInt("LAST_INSERT_ID()");
 			String quiz_id_str = "" + quiz_id_int;
-			
-			
+
+
 			con.close();
 			for(int i = 0; i < toStore.getQuestions().size(); i++) {
 				if(QuestionManager.storeNewQuestion(toStore.getQuestions().get(i), quiz_id_str, i) < 0)
 					return -1;
 			}
-			
+
 			for(String tag : toStore.getQuizTags()) {
 				if(!addTagToQuiz(quiz_id_str, tag))
 					return -1;
 			}
 			return quiz_id_int;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
@@ -320,7 +320,7 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
+
 	private static boolean addTagToQuiz(String quiz_id, String tag) {
 		try {
 			try {
@@ -338,7 +338,7 @@ public class QuizManager {
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.QUIZ_TAG_TABLE + " VALUES ("
 					+ quiz_id + ",\"" + tag + "\");";
-			
+
 			int result = stmt.executeUpdate(query);
 			con.close();
 			return true;
@@ -346,7 +346,7 @@ public class QuizManager {
 			e.printStackTrace();
 			return false;
 		}
-					
+
 	}
 	/**
 	 * get quiz id according to its name and etc.
@@ -368,7 +368,7 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			
+
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE " + QUIZ_NAME_COL + "=\"" + toGet.getQuizName() + "\";");
 			rs.next();	
 			int quiz_id_int = rs.getInt(QUIZ_ID_COL);
@@ -404,7 +404,7 @@ public class QuizManager {
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			//put all the results into an arrayList
 			ArrayList<Quiz> returnList = new ArrayList<Quiz>();
 			Quiz currentQuiz = parseQuiz(rs);
@@ -412,15 +412,15 @@ public class QuizManager {
 				returnList.add(currentQuiz);
 				currentQuiz = parseQuiz(rs);
 			}
-			
+
 			return returnList;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	/**
 	 * @param creatorID use username of the person with creates this list of quizzes
 	 * @return
@@ -441,12 +441,12 @@ public class QuizManager {
 
 			//prepare query
 			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
-					 + CREATOR_COL + "=\"" + creatorID +"\" ORDER BY "
+					+ CREATOR_COL + "=\"" + creatorID +"\" ORDER BY "
 					+ TIMESTAMP_COL + " DESC;";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			//put all the results into an arrayList
 			ArrayList<Quiz> returnList = new ArrayList<Quiz>();
 			Quiz currentQuiz = parseQuiz(rs);
@@ -454,15 +454,15 @@ public class QuizManager {
 				returnList.add(currentQuiz);
 				currentQuiz = parseQuiz(rs);
 			}
-			
+
 			return returnList;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	/**
 	 * @param creatorID use username of the person with creates this list of quizzes.
 	 * Returns the most recent quizzes, with at most parameter max being returned.
@@ -484,12 +484,12 @@ public class QuizManager {
 
 			//prepare query
 			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
-					 + CREATOR_COL + "=\"" + creatorID +"\" ORDER BY "
+					+ CREATOR_COL + "=\"" + creatorID +"\" ORDER BY "
 					+ TIMESTAMP_COL + " DESC LIMIT " + max + ";";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			//put all the results into an arrayList
 			ArrayList<Quiz> returnList = new ArrayList<Quiz>();
 			Quiz currentQuiz = parseQuiz(rs);
@@ -497,16 +497,16 @@ public class QuizManager {
 				returnList.add(currentQuiz);
 				currentQuiz = parseQuiz(rs);
 			}
-			
+
 			return returnList;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	
+
+
 	private static Quiz parseQuiz(ResultSet rs) throws SQLException {
 		int quiz_id = 0;
 		String quizName = "";
@@ -548,7 +548,7 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Gets the top max attempts for the specified quiz. They are ordered first by score, then
 	 * by duration.
@@ -575,9 +575,9 @@ public class QuizManager {
 					+ " B ON (A." + ATTEMPT_USERNAME_COL + "= B." + ATTEMPT_USERNAME_COL + " AND A." + ATTEMPT_SCORE_COL + " < B." + ATTEMPT_SCORE_COL
 					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL ORDER BY " + ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
 
-					
+
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
 			QuizAttempt newAttempt = parseAttempt(rs);
 			while(newAttempt != null) {
@@ -590,42 +590,42 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
+
 	public static ArrayList<QuizAttempt> getLastAttemptsForUser(String quiz_id, String username, int max) {
+		try {
 			try {
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-
-				//set up DB connection
-				Connection con = DriverManager.getConnection
-						( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
-				Statement stmt = con.createStatement();
-				stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-
-				//prepare query
-				String query = "SELECT * FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE " + ATTEMPT_QUIZ_ID_COL + "="
-						+ quiz_id + " AND " + ATTEMPT_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ATTEMPT_START_COL
-						+ " DESC LIMIT " + max + ";";
-
-						
-				ResultSet rs = stmt.executeQuery(query);
-				
-				ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
-				QuizAttempt newAttempt = parseAttempt(rs);
-				while(newAttempt != null) {
-					resultList.add(newAttempt);
-					newAttempt = parseAttempt(rs);
-				}
-				return resultList;
-			} catch (SQLException e) {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				return null;
 			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE " + ATTEMPT_QUIZ_ID_COL + "="
+					+ quiz_id + " AND " + ATTEMPT_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ATTEMPT_START_COL
+					+ " DESC LIMIT " + max + ";";
+
+
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
+			QuizAttempt newAttempt = parseAttempt(rs);
+			while(newAttempt != null) {
+				resultList.add(newAttempt);
+				newAttempt = parseAttempt(rs);
+			}
+			return resultList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+
 	public static boolean storeAttempt(QuizAttempt attempt) {
 		try {
 			try {
@@ -645,17 +645,17 @@ public class QuizManager {
 					+ attempt.getQuizID() + ",\"" + attempt.getUsername() + "\","
 					+ attempt.getScore() + ",'" + attempt.getStartTime().toString() + "',"
 					+ attempt.getDuration() + ");";
-			
+
 			int result = stmt.executeUpdate(query);
 			return true;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
-	
+
+
 	public static QuizAttempt parseAttempt(ResultSet rs) throws SQLException {
 		int quiz_id_int;
 		String username;
@@ -673,8 +673,73 @@ public class QuizManager {
 		return null;
 
 	}
-	
-	
+
+	/**
+	 * Gets count of Quizzes created by the user, 
+	 * @param username username of Account to count quizzed created by.
+	 * @return count of quizzes created by the specified user, -1 if error
+	 */
+	public static int getNumQuizzesCreatedUser(String username) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT COUNT(" + CREATOR_COL +") AS CreatedUser FROM "
+					+ MyDBInfo.QUIZ_TABLE + " WHERE " + CREATOR_COL + "=\"" + username + "\";";
+
+			ResultSet rs = stmt.executeQuery(query);
+
+			int numCreated = rs.getInt("CreatedUser");
+			return numCreated;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	/**
+	 * Returns the count of Quizzes taken by the user passed in, or -1 if error.
+	 * @param username username of user to count Quizzes taken by.
+	 * @return count of quiz attempts, -1 on error.
+	 */
+	public static int getNumQuizAttemptsUser(String username) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT COUNT(" + ATTEMPT_USERNAME_COL +") AS AttemptsUser FROM "
+					+ MyDBInfo.ATTEMPTS_TABLE + " WHERE " + ATTEMPT_USERNAME_COL + "=\"" + username + "\";";
+
+			ResultSet rs = stmt.executeQuery(query);
+
+			int numTaken = rs.getInt("AttemtpsUser");
+			return numTaken;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 	public static boolean storeAchievement(Achievement achieve) {
 		try {
 			try {
@@ -688,11 +753,11 @@ public class QuizManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-			
+
 			String query = "INSERT INTO " + MyDBInfo.ACHIEVEMENTS_TABLE + " VALUES ("
 					+ "\"" + achieve.getUsername() + "\",\"" + achieve.getTypeStr() + "\",\""
 					+ achieve.getDescription() + "\",\'" + achieve.getTimestamp().toString() + "\');";
-			
+
 			int result = stmt.executeUpdate(query);
 			return true;
 		} catch (SQLException e) {
@@ -700,7 +765,7 @@ public class QuizManager {
 			return false;
 		}
 	}
-	
+
 	public static ArrayList<Achievement> getAchievementsForUser(String username, int max) {
 		try {
 			try {
@@ -714,15 +779,15 @@ public class QuizManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-			
+
 			String query = "SELECT * FROM " + MyDBInfo.ACHIEVEMENTS_TABLE + " WHERE "
 					+ ACHIEVEMENTS_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ACHIEVEMENTS_TIMESTAMP_COL
 					+ " DESC LIMIT " + max + ";";
-			
+
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			ArrayList<Achievement> resultList = new ArrayList<Achievement>();
-			
+
 			for(int i = 0; i < max; i++) {
 				Achievement newAchievement = parseAchievement(rs);
 				if(newAchievement == null)
@@ -731,15 +796,15 @@ public class QuizManager {
 					resultList.add(newAchievement);
 			}
 			return resultList;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
-					
+
+
 	}
-	
+
 	private static Achievement parseAchievement(ResultSet rs) throws SQLException {
 		String username;
 		Achievement.Type type;
@@ -754,51 +819,51 @@ public class QuizManager {
 		}
 		return null;
 	}
-	
+
 	//main method for testing
 	public static void main(String[] args) {
-		
-		
+
+
 		Quiz quiz1 = QuizManager.getQuizById("1");
 		Quiz quiz2 = QuizManager.getQuizById("3");
-	
+
 		ArrayList<Question> questionList1 = new ArrayList<Question>();
-		
+
 		Question test1 = new MultipleChoiceQuestion("1", "Who of the following was consul of Rome during the end of the Second Punic War?#" +
 				"Cato the Elder#Cato the Younger#Julius Caesar#Scipio Africanus?", "This is a question about the Roman Republic.",
 				"sally", 10, new Timestamp(System.currentTimeMillis()));
-		
+
 		Question test2 = new QuestionResponseQuestion("2", "Which Roman consul was defeated at the battle of Cannae?",
 				"This is a question about the Roman Republic.","sally", 50, new Timestamp(System.currentTimeMillis()));
-		
+
 		questionList1.add(test1);
 		questionList1.add(test2);
-		
+
 		ArrayList<String> tagList1 = new ArrayList<String>();
 		tagList1.add("Rome");
 		tagList1.add("Ancient");
 		tagList1.add("Classics");
-		
-		
+
+
 		Quiz quiz3 = new Quiz("quiz3","this quiz is added by the manager", questionList1,
 				"john", "History", tagList1, false, false, false, 0, 0, 0.0d,
 				new Timestamp(System.currentTimeMillis()));
-		
+
 		int result = QuizManager.storeQuizQuestionTags(quiz3);
 		quiz3.setQuizID(result);
-		
+
 		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
 		QuizManager.storeAttempt(testAttempt);
 		ArrayList<QuizAttempt> topAttempts = QuizManager.getLastAttemptsForUser("1", "john", 5);
-		
+
 		Achievement A1 = new Achievement("john", Achievement.Type.PRACTICE, "foo", new Timestamp(System.currentTimeMillis()));
 		Achievement A2 = new Achievement("john", Achievement.Type.ONE_CREATED, "bar", new Timestamp(System.currentTimeMillis() + 2000));
 		QuizManager.storeAchievement(A1);
 		QuizManager.storeAchievement(A2);
-		
+
 		ArrayList<Achievement> achieveList = QuizManager.getAchievementsForUser("john", 5);
-		
+
 	}
-	
+
 
 }
