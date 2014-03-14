@@ -43,29 +43,24 @@ if(startingTime == null){
 			</div>
 		</div>
 	</div>
-	<div class="col-md-1"></div>
-		<div class="col-md-2">
-			<div>
-				Some Information About this quiz
-			</div>
-			<p>Description of the Quiz</p>
-		</div>
+	<div class="col-md-3"></div>
 	<div class="col-md-7">
 			<form action="EvaluateQuizServlet" method ="post">
 			<input type="hidden" name="quiz_id" value="<%=quiz_id %>">
 			
 		<%if (Questions != null){ %>
-			<%for (int i = 0; i < Questions.size(); i ++){ %>
+			<%for (int i = 0; i < Questions.size(); i ++){
+					Question q = Questions.get(i);%>
 					<div class="panel panel-primary"> <div class="panel-heading">
-		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
+		    		<h3 class="panel-title">Question #<%= i+1 %> (Score: <%=q.getScore() %>)</h3>
 		  			</div>
-		  			<%= Questions.get(i).getHTML(false) %>
+		  			<%= q.getHTML(false) %>
 		  			</div>	
 			<%} %>
 		 	<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 		<%}else{ %>
-		<p>You do not have a quiz for this id or you don't have any questions in this quiz!</p>
+		<p>There is no quiz for this id or there are no questions in this quiz!</p>
 		<%} %>
 	</div>
 	

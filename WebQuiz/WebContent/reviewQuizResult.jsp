@@ -63,7 +63,7 @@ System.out.println(valid);
 		%>
 			<div class="panel panel-<%=panelClass%>"> 
 				<div class="panel-heading">
-		    		<h3 class="panel-title">Question # <%= i+1 %></h3>
+		    		<h3 class="panel-title">Question #<%= i+1 %> (Score: <%=question.getScore() %>)</h3>
 		    	</div>
 		    	<%= question.getResultView(answers) %>
 		    </div>

@@ -80,7 +80,7 @@ if(Questions != null){
 						</div>
 						<br>
 			 			<div class="input-group">
-			 				<span class="input-group-addon">Tag(Optional)</span>
+			 				<span class="input-group-addon">Tags (Optional)</span>
 			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 						</div>
 						<br>
@@ -122,7 +122,7 @@ if(Questions != null){
 						</div>
 		 			 	<br>
 			 			 <div class="input-group">
-			 				<span class="input-group-addon">Tag(Optional)</span>
+			 				<span class="input-group-addon">Tags (Optional)</span>
 			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 						</div>
 						<br>
@@ -150,7 +150,7 @@ if(Questions != null){
 						</div>
 						<br>
 			 			<div class="input-group">
-			 				<span class="input-group-addon">Tag(Optional)</span>
+			 				<span class="input-group-addon">Tags (Optional)</span>
 			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 						</div>
 						<br>
@@ -169,12 +169,12 @@ if(Questions != null){
  			 			<br>
 			 			<div class="input-group">
 			 				<span class="input-group-addon">Score</span>
-			  				<input type="text"  name = "score" class="form-control" placeholder="score">
+			  				<input type="text"  name = "score" class="form-control" placeholder="Score">
 						</div>
 			 			<br>
 			 			<div class="input-group">
-			 				<span class="input-group-addon">Picture Resourse</span>
-			  				<input type="text"  name = "description" class="form-control" placeholder="URL for Picture Resourse">
+			 				<span class="input-group-addon">Picture URL</span>
+			  				<input type="text"  name = "description" class="form-control" placeholder="Picture URL">
 						</div>
 			 			<br>
 						<div class="input-group">
@@ -183,7 +183,7 @@ if(Questions != null){
 						</div>
 						<br>
 			 			<div class="input-group">
-			 				<span class="input-group-addon">Tag(Optional)</span>
+			 				<span class="input-group-addon">Tags (Optional)</span>
 			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 						</div>
 						<br>

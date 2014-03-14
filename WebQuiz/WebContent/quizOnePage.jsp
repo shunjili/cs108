@@ -69,11 +69,8 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 	<div class="col-md-1"></div>
 		<div class="col-md-2">
 			<div>
-				Some Information About this quiz
+			Current Score: <%=tempScore %>
 			</div>
-			<p>Description of the Quiz<br>
-			Your current Score is <%=tempScore %>
-			</p>
 		</div>
 		<div class="row">
 			<div class="col-md-3"></div>
@@ -93,7 +90,7 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 				%>
 					<div class="panel panel-<%=panelClass%>"> 
 						<div class="panel-heading">
-				    		<h3 class="panel-title">Question</h3>
+				    		<h3 class="panel-title">Question (Score: <%=question.getScore() %>)</h3>
 				    	</div>
 				    	<%= question.getResultView(answers) %>
 				    </div>
@@ -103,7 +100,7 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 			
 				<%if ((Questions != null) &&(Questions.size() >= 0)){ %>
 						<div class="panel panel-primary"> <div class="panel-heading">
-				    	<h3 class="panel-title">Question</h3>
+				    	<h3 class="panel-title">Question (Score: <%=Questions.get(0).getScore() %>)</h3>
 				  		</div>
 				  			<%= Questions.get(0).getHTML(false) %>
 				  		</div>	
