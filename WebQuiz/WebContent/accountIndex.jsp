@@ -26,7 +26,7 @@
 	%>
 	<h1>Error getting accounts.</h1>
 	<%
-	} else {
+			} else {
 	%>
 <%@include file="navbar.html" %>
 	<div class="page-header">
