@@ -71,6 +71,7 @@ public class PracticeModeServlet extends HttpServlet {
 			for(int i =0 ; i < questions.size(); i++){
 				Question question = questions.get(i);
 				String answer = request.getParameter(question.getQuestionID());
+				System.out.println(answer);
 				ArrayList<String> answers= new ArrayList<String>();
 				if(answer == null || answer.isEmpty()){ 
 					answer = null;

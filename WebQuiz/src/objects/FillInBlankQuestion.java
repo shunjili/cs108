@@ -72,8 +72,8 @@ public class FillInBlankQuestion implements Question {
 		return " <div class=\"panel-body\">"+
  		question + 
  		"<div class=\"input-group\">"+ 
-			"<span name = \"" + questionID + "\"class=\"input-group-addon\">Your Answer</span>"+
-			 "<input type=\"text\" class=\"form-control\" placeholder=\"Answer\">"+
+			"<span class=\"input-group-addon\">Your Answer</span>"+
+			 "<input name = \"" + questionID + "\" type=\"text\" class=\"form-control\" placeholder=\"Answer\">"+
 			"</div>"+
 			"</div>";
 	}
