@@ -85,7 +85,7 @@ public class Achievement {
 	public String getNameForType(Type input) {
 		switch(input) {
 		case ONE_CREATED: return "Novice Quiz Maker";
-		case FIVE_CREATED: return "Intermediate Quiz Maker";
+		case FIVE_CREATED: return "Prolific Quiz Maker";
 		case TEN_CREATED: return "Quiz Making Connoisseur";
 		case HIGH_SCORE: return "Genius";
 		case TEN_TAKEN: return "Quiz Taking Machine";
