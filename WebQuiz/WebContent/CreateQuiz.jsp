@@ -77,11 +77,14 @@ if (thisAccount == null) {
 		  				<span class="input-group-addon">Random Order
 		  				<input type="checkbox" name="randomOrder" value = True>
 		  				</span>
-		  				<span class="input-group-addon">Can be taken in Practice Mode
+		  				<span class="input-group-addon">Practice Mode
 		  				<input type="checkbox" name="canPractice" value = True>
 		  				</span>
 					</div>
 					<br>
+					<div>
+						Correct Immediately works if only one page is checked!
+					</div>
 					<button type="submit" class="btn btn-default">Start Adding Questions</button>
 				</form>
 			</div>

@@ -1,4 +1,4 @@
-package objects;
+package servlets;
 
 /** 
 * HtmlEscape in Java, which is compatible with utf-8 

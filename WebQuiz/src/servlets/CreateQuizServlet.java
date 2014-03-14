@@ -46,16 +46,16 @@ public class CreateQuizServlet extends HttpServlet {
 			return;
 		}
 		System.out.println("Success stored Quiz");
-//		String name = HtmlEscape.escape(request.getParameter("name"));
+		String name = HtmlEscape.escape(request.getParameter("name"));
 		
-		String name = (request.getParameter("name"));
+//		String name = (request.getParameter("name"));
 		if (name == null || name.equals("")) {
 			request.getRequestDispatcher("CreateQuizNeedName.jsp").forward(request, response);
 			return;
 		}
-//		String description = HtmlEscape.escape(request.getParameter("description"));
+		String description = HtmlEscape.escape(request.getParameter("description"));
 		
-		String description = (request.getParameter("description"));
+//		String description = (request.getParameter("description"));
 		ArrayList<Question> Questions = new ArrayList<Question>();
 		//String creator = ((Account) (request.getSession().getAttribute("loggedAccount"))).getUsername();
 		String creator = loggedAccount.getUsername();
@@ -67,8 +67,8 @@ public class CreateQuizServlet extends HttpServlet {
 		String[] temp = tag.split(";");
 		int len = temp.length;
 		for(int i = 0; i < len ; i++){
-//			tags.add(HtmlEscape.escape(temp[i].trim().toLowerCase()));
-			tags.add((temp[i].trim().toLowerCase()));
+			tags.add(HtmlEscape.escape(temp[i].trim().toLowerCase()));
+//			tags.add((temp[i].trim().toLowerCase()));
 		}
 		
 		boolean correctImmediately = Boolean.parseBoolean(request.getParameter("correctImmediately"));
