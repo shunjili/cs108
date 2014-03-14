@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import objects.Account;
 import objects.Question;
 import objects.QuestionManager;
 
@@ -39,7 +40,7 @@ public class CreateQuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO getting the information from the form post and create a question
-		
+		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 		String quiz_id = request.getParameter("quiz_id").replace("\"", "\\\"");
 		String question = request.getParameter("question").replace("\"", "\\\"");
 		String answer = request.getParameter("answer").replace("\"", "\\\"");
@@ -74,7 +75,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
-		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, description, "1", score, timeStamp);
+		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, description, loggedAccount.getUsername(), score, timeStamp);
 		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){
 			System.out.println("Success stored question");
 		}else{

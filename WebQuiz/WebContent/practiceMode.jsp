@@ -14,7 +14,7 @@ page import="objects.*, java.util.ArrayList,java.sql.Timestamp, servlets.*, java
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Showing the Quiz</title>
+<title>Practive Mode Quiz</title>
 </head>
 <%
 Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
@@ -22,7 +22,6 @@ if (loggedAccount == null) {
 	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
 }
 String quiz_id = request.getParameter("id");
-
 //ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 ArrayList<Question> Questions = QuizManager.getQuizById(quiz_id).getQuestions();
 Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);
@@ -51,7 +50,7 @@ if(startingTime == null){
 			<p>Description of the Quiz</p>
 		</div>
 	<div class="col-md-7">
-			<form action="EvaluateQuizServlet" method ="post">
+			<form action="PracticeModeServlet" method ="post">
 			<input type="hidden" name="quiz_id" value="<%=quiz_id %>">
 			
 		<%if (Questions != null){ %>
@@ -68,6 +67,5 @@ if(startingTime == null){
 		<p>You do not have a quiz for this id or you don't have any questions in this quiz!</p>
 		<%} %>
 	</div>
-	
 </body>
 </html>
