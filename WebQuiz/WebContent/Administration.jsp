@@ -172,7 +172,65 @@
 										</tbody>
 									</table>
 								</div>
-							
+								
+								<div class="tab-pane" id="announcements">
+									<form action="CreateAnnouncementServlet" method="post">
+										<p>Send an announcement:</p>
+										<textarea name="announcementField" cols="60" rows="5" class="form-control" placeholder="Type your announcement here"></textarea>
+										<p></p>
+										<button type="submit" class="btn btn-default">Send</button>
+									</form>
+									<br>
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Announcement</th>
+												<th>Time</th>
+												<th>Delete</th>
+											</tr>
+										</thead>
+										<tbody>
+<%
+											ArrayList<AnnouncementManager.Announcement> announcements = AnnouncementManager.getAllAnnouncements();
+											if (announcements != null) {
+												for (AnnouncementManager.Announcement a : announcements) {
+													String username = a.getAnnouncementUsername();
+													String text = a.getAnnouncementText();
+													String timestamp = a.getAnnouncementTimestampString();
+%>
+													<tr>
+														<td>
+														<%
+														Account acct = AccountManager.getAccountByUsername(username);
+														if (acct == null) {
+														%>
+														<%=username %>
+														<%
+														} else {
+														%>
+														<a href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName() %></a>
+														<%
+														}
+														%>
+														</td>
+														<td><%=text %></td>
+														<td><%=timestamp %></td>
+														<td>
+															<form action="DeleteAnnouncementServlet" method="post">
+																<input type="hidden" name="username" value="<%=username%>"/>
+																<input type="hidden" name="text" value="<%=text %>"/>
+																<button type="submit" class="btn btn-default">Delete</button>
+															</form>
+														</td>
+													</tr>
+<%
+												}
+											}
+%>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						
 						
