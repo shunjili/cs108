@@ -41,11 +41,16 @@ public class AddQuestionInEditQuestionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 		String quiz_id = request.getParameter("quiz_id");
-		String question = HtmlEscape.escape(request.getParameter("question"));
-		String answer = HtmlEscape.escape(request.getParameter("answer"));
+//		String question = HtmlEscape.escape(request.getParameter("question"));
+//		String answer = HtmlEscape.escape(request.getParameter("answer"));
+		
+		String question = (request.getParameter("question"));
+		String answer = (request.getParameter("answer"));	
+		
 		//String[] ans = answer.split("#");
 		String questionTypeString = request.getParameter("type");
-		String description = HtmlEscape.escape(request.getParameter("description"));
+//		String description = HtmlEscape.escape(request.getParameter("description"));
+		String description = (request.getParameter("description"));
 		
 		String scoreString = request.getParameter("score").replace("\"", "\\\"");
 		int score = 0;
@@ -65,7 +70,8 @@ public class AddQuestionInEditQuestionServlet extends HttpServlet {
 		
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
-				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
+//				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
+				String choice = (request.getParameter("choice"+i));
 				if(choice != null){
 					question += "#"+choice;
 				}

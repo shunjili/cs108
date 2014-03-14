@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import objects.Account;
-import objects.HtmlEscape;
+//import objects.HtmlEscape;
 import objects.Question;
 import objects.QuestionManager;
 import objects.QuizAttempt;
@@ -76,7 +76,8 @@ public class PracticeModeServlet extends HttpServlet {
 					answer = null;
 					answers.add(answer);
 				}else{
-					String[] ans = (HtmlEscape.escape(answer)).split("##");	
+//					String[] ans = (HtmlEscape.escape(answer)).split("##");	
+					String[] ans = ((answer)).split("##");
 					for(int j = 0; j < ans.length;j++){
 						answers.add(ans[j]);
 					}

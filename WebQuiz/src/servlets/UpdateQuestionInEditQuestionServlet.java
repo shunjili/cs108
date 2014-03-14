@@ -41,13 +41,21 @@ public class UpdateQuestionInEditQuestionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 		String quiz_id = request.getParameter("quiz_id");
-		String question = HtmlEscape.escape(request.getParameter("question"));
+//		String question = HtmlEscape.escape(request.getParameter("question"));
+//		String question_id = request.getParameter("question_id");
+//		String answer = HtmlEscape.escape(request.getParameter("answer"));
+//		String[] ans = answer.split("#");
+//		String questionTypeString = request.getParameter("type");
+//		String description = HtmlEscape.escape(request.getParameter("description"));
+//		String scoreString = HtmlEscape.escape(request.getParameter("score"));
+		
+		String question = (request.getParameter("question"));
 		String question_id = request.getParameter("question_id");
-		String answer = HtmlEscape.escape(request.getParameter("answer"));
+		String answer = (request.getParameter("answer"));
 		String[] ans = answer.split("#");
 		String questionTypeString = request.getParameter("type");
-		String description = HtmlEscape.escape(request.getParameter("description"));
-		String scoreString = HtmlEscape.escape(request.getParameter("score"));
+		String description = (request.getParameter("description"));
+		String scoreString = (request.getParameter("score"));
 		int score = 0;
 		
 		if (question == null || question.equals("")||answer == null || answer.equals("")) {
@@ -66,7 +74,8 @@ public class UpdateQuestionInEditQuestionServlet extends HttpServlet {
 		
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
-				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
+//				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
+				String choice = (request.getParameter("choice"+i));
 				if(choice != null){
 					question += "#"+choice;
 				}

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import objects.Account;
-import objects.HtmlEscape;
+//import objects.HtmlEscape;
 import objects.Question;
 import objects.QuestionManager;
 
@@ -40,14 +40,19 @@ public class CreateQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO getting the information from the form post and create a question
 		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 		String quiz_id = request.getParameter("quiz_id").replace("\"", "\\\"");
-		String question = HtmlEscape.escape(request.getParameter("question"));
-		String answer = HtmlEscape.escape(request.getParameter("answer"));
+//		String question = HtmlEscape.escape(request.getParameter("question"));
+//		String answer = HtmlEscape.escape(request.getParameter("answer"));
+//		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
+//		String scoreString = HtmlEscape.escape(request.getParameter("score"));
+//		String description = HtmlEscape.escape(request.getParameter("description"));
+		
+		String question = (request.getParameter("question"));
+		String answer = (request.getParameter("answer"));
 		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
-		String scoreString = HtmlEscape.escape(request.getParameter("score"));
-		String description = HtmlEscape.escape(request.getParameter("description"));
+		String scoreString = (request.getParameter("score"));
+		String description = (request.getParameter("description"));
 		int score = 0;
 		
 		if (question == null || question.equals("")||answer == null || answer.equals("")) {
@@ -58,13 +63,13 @@ public class CreateQuestionServlet extends HttpServlet {
 		try {
 			score = Integer.parseInt(scoreString);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			System.out.print("The entered score is not a valid number string");
 			score = 0;
 		}
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){
-				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
+//				String choice = HtmlEscape.escape(request.getParameter("choice"+i));
+				String choice = (request.getParameter("choice"+i));
 				if(choice != null){
 					question += "#"+choice;
 				}
@@ -91,7 +96,6 @@ public class CreateQuestionServlet extends HttpServlet {
 		}
 		String returnURL = String.format("createQuestions.jsp?id=%s", quiz_id);
 		request.getRequestDispatcher(returnURL).forward(request, response);
-		//TODO adding question to the data base
 		
 	}
 
