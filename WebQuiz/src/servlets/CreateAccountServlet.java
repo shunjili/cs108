@@ -50,9 +50,12 @@ public class CreateAccountServlet extends HttpServlet {
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
 		String isPrivateStr = request.getParameter("private");
+		
 		boolean isPrivate = false;
-		if(isPrivateStr.contains("T"))
-			isPrivate = true;
+		if(isPrivateStr != null){
+			if(isPrivateStr.contains("T"))
+				isPrivate = true;
+		}
 		boolean success = false;
 		
 		//first, check if passwords are equal
