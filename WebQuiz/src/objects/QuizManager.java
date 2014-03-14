@@ -675,7 +675,7 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+			String query = "SELECT DISTINCT " + QUIZ_ID_COL + " FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
 					+ QUIZ_NAME_COL + " LIKE \"%" + name + "%\";";
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -711,7 +711,7 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+			String query = "SELECT DISTINCT " + QUIZ_ID_COL + " FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
 					+ DESCRIPTION_COL + " LIKE \"%" + description + "%\";";
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -747,7 +747,7 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+			String query = "SELECT DISTINCT " + QUIZ_ID_COL + " FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
 					+ CREATOR_COL + " LIKE \"%" + creator + "%\";";
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -783,7 +783,7 @@ public class QuizManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+			String query = "SELECT DISTINCT " + QUIZ_ID_COL + " FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
 					+ CATEGORY_COL + " LIKE \"%" + category + "%\";";
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -812,11 +812,21 @@ public class QuizManager {
 		ArrayList<Quiz> category = getQuizzesWithCategory(search);
 		
 		ArrayList<Quiz> total = new ArrayList<Quiz>();
-		total.addAll(tag);
-		total.addAll(name);
-		total.addAll(description);
-		total.addAll(creator);
-		total.addAll(category);
+		if (tag != null) {
+			total.addAll(tag);
+		}
+		if (name != null) {
+			total.addAll(name);
+		}
+		if (description != null) {
+			total.addAll(description);
+		}
+		if (creator != null) {
+			total.addAll(creator);
+		}
+		if (category != null) {
+			total.addAll(category);
+		}
 		return total;
 	}
 

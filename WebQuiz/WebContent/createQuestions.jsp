@@ -70,7 +70,7 @@ if(Questions != null){
  			 			<br>
 			 			<div class="input-group">
 			 				<span class="input-group-addon">Score</span>
-			  				<input type="text"  name = "score" class="form-control" placeholder="score">
+			  				<input type="text"  name = "score" class="form-control" placeholder="Score">
 						</div>
 
 			 			<br>
@@ -100,13 +100,13 @@ if(Questions != null){
 						<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 						<div class="input-group">
 			 				<span class="input-group-addon">Choice <%=i+1 %></span>
-			  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"choice" + (i+1) + "\""%>>
+			  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"Choice" + (i+1) + "\""%>>
 						</div>
 			 			<br>
 						<%} %>
 						<div class="input-group">
 			 				<span class="input-group-addon">Score</span>
-			  				<input type="text"  name = "score" class="form-control" placeholder="score">
+			  				<input type="text"  name = "score" class="form-control" placeholder="Score">
 						</div>
 			 			<br>
 			 			<div class="input-group">

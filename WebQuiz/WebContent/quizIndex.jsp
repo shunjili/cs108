@@ -23,7 +23,7 @@
 	<% } else {
 			String tag = request.getParameter("tag");
 			ArrayList<Quiz> quizzes;
-			if(tag != null){
+			if(tag != null && !tag.equals("")){
 				quizzes = QuizManager.getQuizzesWithTag(tag);
 			}else{
 				quizzes = QuizManager.getAllQuizzes();	
