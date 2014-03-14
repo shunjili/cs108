@@ -1,11 +1,14 @@
 package servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import objects.AccountManager;
 
 /**
  * Servlet implementation class DisableAccountServlet
@@ -33,7 +36,10 @@ public class DisableAccountServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String username = request.getParameter("username");
+		AccountManager.disableAccount(username);
+		request.getRequestDispatcher("Administration.jsp").forward(request, response);
+		return;
 	}
 
 }
