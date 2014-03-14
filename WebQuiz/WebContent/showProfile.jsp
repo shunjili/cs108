@@ -26,6 +26,10 @@ if (loggedAccount == null) {
 	<p>Error getting account for username <%=shownUsername %></p>
 	<p>Return to <a href="loginPage.jsp">homepage</a></p>
 <%		
+} else if (!shownAccount.isActive()) {
+%>
+	<p><%=shownAccount.getDisplayName() %>'s account has been disabled.</p>
+<%
 } else {
 	String shownDisplayName = shownAccount.getDisplayName();
 	String loggedUsername = loggedAccount.getUsername();
