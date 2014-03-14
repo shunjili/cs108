@@ -41,20 +41,22 @@ public class CreateAnnouncementServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String announcementText = request.getParameter("announcementField");
 		Account thisAccount = (Account) request.getSession().getAttribute("loggedAccount");
-		announcementText = thisAccount.getDisplayName() + ": " + announcementText;
 		Announcement announcement;
 		try {
 			announcement = new Announcement(thisAccount.getUsername(), announcementText);
 			boolean announcementIsMade = AnnouncementManager.makeAnnouncement(announcement);
 			if(announcementIsMade) {
-				request.getRequestDispatcher("/WebQuiz/ViewMyAccount.jsp").forward(request, response);
+				request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
+				return;
 			} else {
 				request.getRequestDispatcher("announcementFailed.html").forward(request, response);
+				return;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			request.getRequestDispatcher("announcementFailed.html").forward(request, response);
+			return;
 		}
 
 	}
