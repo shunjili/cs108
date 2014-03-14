@@ -27,7 +27,7 @@ page import="objects.*, java.util.ArrayList"%>
 </body>
 <%
 	} else {
-		ArrayList<String> announcements = AnnouncementManager.getRecentAnnouncements(10);
+		ArrayList<AnnouncementManager.Announcement> announcements = AnnouncementManager.getRecentAnnouncements(10);
 		ArrayList<Quiz> recentQuizzes = QuizManager.getRecentQuiz(5);
 %>
 <%@include file="navbar.html" %>
@@ -66,11 +66,46 @@ page import="objects.*, java.util.ArrayList"%>
 		<div class="col-md-6">
 			<div class="panel panel-primary">
 				 <div class="panel-heading">Announcements</div>
-				 <div class="panel-body">
-				 	<% for (int i = 0; i < announcements.size(); i++) {%>
-						<p> <%= announcements.get(i) %></p>
-					<%} %>
-				 </div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Announcement</th>
+								<th>Time</th>
+							</tr>
+						</thead>
+						<tbody>
+<%
+							if (announcements != null) {
+								for (AnnouncementManager.Announcement a : announcements) {
+									String username = a.getAnnouncementUsername();
+									String text = a.getAnnouncementText();
+									String timestamp = a.getAnnouncementTimestampString();
+%>
+									<tr>
+										<td>
+										<%
+										Account acct = AccountManager.getAccountByUsername(username);
+										if (acct == null) {
+										%>
+										<%=username %>
+										<%
+										} else {
+										%>
+										<a href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName() %></a>
+										<%
+										}
+										%>
+										</td>
+										<td><%=text %></td>
+										<td><%=timestamp %></td>
+									</tr>
+<%
+								}
+							}
+%>
+						</tbody>
+					</table>
 			</div>
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of Popular Quizzes</div>

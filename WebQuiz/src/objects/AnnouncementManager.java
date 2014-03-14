@@ -157,7 +157,7 @@ public class AnnouncementManager {
 		}
 	}
 	
-	public static ArrayList<String> getRecentAnnouncements(int maxLimit){
+	public static ArrayList<Announcement> getRecentAnnouncements(int maxLimit){
 		//Check for user in database
 		try {
 			try {
@@ -177,12 +177,18 @@ public class AnnouncementManager {
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			ArrayList<String> resultList = new ArrayList<String>();
+			ArrayList<Announcement> resultList = new ArrayList<Announcement>();
 
+			String username;
 			String announcement;
+			Timestamp timestamp;
+			
 			while(rs.next()) {
+				username = rs.getString(USERNAME_COL);
 				announcement = rs.getString(ANNOUNCEMENT_COL);
-				resultList.add(announcement);
+				timestamp = rs.getTimestamp(TIMESTAMP_COL);
+				
+				resultList.add(new Announcement(username, announcement, timestamp));
 			}
 			con.close();
 			return resultList;
