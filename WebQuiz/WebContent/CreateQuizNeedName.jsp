@@ -24,6 +24,12 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-7">
+			<p>You cannot create a quiz without a name. Please try again.</p>
+		</div>
+	</div>
 	<div class="col-md-1">
 	</div>
 	<div class="col-md-7">

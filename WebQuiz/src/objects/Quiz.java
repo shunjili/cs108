@@ -94,7 +94,7 @@ public class Quiz {
 	 * @return a link tag to the quiz site
 	 */
 	public String getLinkHTML(boolean admin){
-		int id = (Integer) QuizManager.getQuizId(this);
+		String id =  (String) QuizManager.getQuizId(this);
 		String link = "/WebQuiz/quiz.jsp?id="+id;
 		if(admin){
 			link = "/WebQuiz/createQuestions.jsp?id="+id;
