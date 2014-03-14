@@ -82,6 +82,30 @@ public class Achievement {
 		}
 	}
 	
+	public String getNameForType(Type input) {
+		switch(input) {
+		case ONE_CREATED: return "Novice Quiz Maker";
+		case FIVE_CREATED: return "Intermediate Quiz Maker";
+		case TEN_CREATED: return "Quiz Making Connoisseur";
+		case HIGH_SCORE: return "Genius";
+		case TEN_TAKEN: return "Quiz Taking Machine";
+		case PRACTICE: return "Practice Makes Perfect";
+		default: return BAD_TYPE_STR;
+		}
+	}
+	
+	public String getDescriptionForType(Type input) {
+		switch(input) {
+		case ONE_CREATED: return "Created a quiz.";
+		case FIVE_CREATED: return "Created 5 quizzes.";
+		case TEN_CREATED: return "Created 10 quizzes.";
+		case HIGH_SCORE: return "Got a high score on a quiz.";
+		case TEN_TAKEN: return "Taken 10 quizzes.";
+		case PRACTICE: return "Taken a quiz in practice mode";
+		default: return BAD_TYPE_STR;
+		}
+	}
+	
 	public static HashSet<Type> getTypeSet() {
 		HashSet<Type> typeSet = new HashSet<Type>();
 		for(Type type : Type.values())

@@ -171,7 +171,6 @@ if (loggedAccount == null) {
 			<div class="col-md-1"></div>
 			<div class="col-md-7">
 				<div class="panel panel-primary">
-					<!-- <div class="panel-heading">Friends:</div> -->
 <%
 		if (friends == null) {
 %>
@@ -211,11 +210,71 @@ if (loggedAccount == null) {
 						<div class="panel-body"><%=shownDisplayName %> does not have any friends yet</div>
 <%			
 		}
+			%>
+			</div>
+		</div>
+	</div>	
+<%
+		ArrayList<Achievement> achievements = QuizManager.getAchievementsForUser(shownUsername);
+		if (achievements == null) {
 %>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Achievements</div>
+							<div class="panel-body">Error getting achievements for <%=shownDisplayName %></div>
+					</div>
 				</div>
 			</div>
-		</div>	
 <%
+		} else if (achievements.size() > 0) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Achievements <span class="badge" align="right"><%=achievements.size() %></span></div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									for (Achievement a : achievements) {
+										Achievement.Type type = a.getType();
+								%>
+								<tr>
+									<td><%=a.getNameForType(type) %></td>
+									<td><%=a.getDescriptionForType(type) %></td>
+									<td><%=a.getTimestamp().toString() %></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+					</div>"
+				</div>
+			</div>
+<%
+		} else {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Achievements <span class="badge" align="right"><%=achievements.size() %></span></div>
+							<div class="panel-body"><%=shownDisplayName %> does not have any achievements yet</div>
+					</div>
+				</div>
+			</div>
+<%	
+		}
 	}
 }
 %>
