@@ -64,7 +64,7 @@ public class QuizManager {
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-			
+
 			while(true) {
 				Quiz resultQuiz = parseQuiz(rs);
 				if(resultQuiz == null)
@@ -80,7 +80,7 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Gets the quizzes sorted by the number of times taken. Highest number of times
 	 * taken come first.
@@ -109,7 +109,52 @@ public class QuizManager {
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-			
+
+			while(true) {
+				Quiz resultQuiz = parseQuiz(rs);
+				if(resultQuiz == null)
+					break;
+				else
+					quizzes.add(resultQuiz);
+			}
+			con.close();
+			return quizzes;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Gets the quizzes sorted by the number of times taken. Highest number of times
+	 * taken come first.
+	 * @param max maximum number of quizzes to be returned
+	 * @return
+	 */
+	public static ArrayList<Quiz> getHighestRatedQuizzes(int max) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " ORDER BY "
+					+ AVERAGE_RATING_COL + " DESC LIMIT " + max + ";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+
 			while(true) {
 				Quiz resultQuiz = parseQuiz(rs);
 				if(resultQuiz == null)
@@ -154,7 +199,7 @@ public class QuizManager {
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-			
+
 			while(true) {
 				Quiz resultQuiz = parseQuiz(rs);
 				if(resultQuiz == null)
@@ -170,7 +215,7 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
+
 
 	public static Quiz getQuizById(String quiz_id) {
 		try {
@@ -261,7 +306,7 @@ public class QuizManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-			
+
 			int canPractice = 0;
 			if(toStore.canPractice())
 				canPractice = 1;
@@ -307,7 +352,7 @@ public class QuizManager {
 				if(!addTagToQuiz(quiz_id_str, tag))
 					return -1;
 			}
-			
+
 			updateAchievementsNewQuiz(toStore.getQuizCreator());
 			con.close();
 			return quiz_id_int;
@@ -560,14 +605,14 @@ public class QuizManager {
 			String query = "UPDATE " + MyDBInfo.QUIZ_TABLE + " SET "
 					+ NUMBER_OF_TIMES_TAKEN_COL + " = " + NUMBER_OF_TIMES_TAKEN_COL + " + 1 WHERE "
 					+ QUIZ_ID_COL + "=" + quiz_id + ";";
-			
+
 			int result = stmt.executeUpdate(query);
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static Quiz parseQuiz(ResultSet rs) throws SQLException {
 		int quiz_id = 0;
 		String quizName = "";
@@ -582,7 +627,7 @@ public class QuizManager {
 		int numberOfReviews = -1;
 		double averageRating = -1.0d;
 		boolean canPractice = false;
-		
+
 		boolean readEntry = false;
 
 		while(rs.next()) {
@@ -656,8 +701,8 @@ public class QuizManager {
 			return null;
 		}
 	}
-	
-	
+
+
 	public static ArrayList<QuizAttempt> getTopAttemptsLastDay(String quiz_id, int max) {
 		try {
 			try {
@@ -750,7 +795,7 @@ public class QuizManager {
 					+ attempt.getDuration() + ");";
 
 			int result = stmt.executeUpdate(query);
-			
+
 			incrementTimesTaken(attempt.getQuizID());
 			updateAchievementsNewAttempt(attempt.getUsername(), attempt.getQuizID());
 			con.close();
@@ -780,7 +825,7 @@ public class QuizManager {
 		return null;
 
 	}
-	
+
 	/**
 	 * updates the achievements for the user with the specified username. Update the
 	 * achievements linked to attempting a quiz (TEN_TAKEN, HIGH_SCORE, etc).
@@ -789,10 +834,10 @@ public class QuizManager {
 	 */
 	private static void updateAchievementsNewAttempt(String username, int quiz_id) {
 		HashSet<Achievement.Type> missingAchievements = getMissingAchievements(username);
-		
+
 		int numAttempts = getNumQuizAttemptsUser(username);
-		
-		
+
+
 		if(missingAchievements.contains(Achievement.Type.HIGH_SCORE)) {
 			ArrayList<QuizAttempt> topAttempts = getTopAttempts(quiz_id + "", 1);
 			if(topAttempts.size() == 0) {
@@ -805,7 +850,7 @@ public class QuizManager {
 				QuizManager.storeAchievement(highScore);
 			}
 		}
-		
+
 		if(missingAchievements.contains(Achievement.Type.TEN_TAKEN)) {
 			if(numAttempts >= 10) {
 				Achievement tenTaken = new Achievement(username, Achievement.Type.TEN_TAKEN,
@@ -814,24 +859,24 @@ public class QuizManager {
 			}
 		}
 	}
-	
+
 	private static void updateAchievementsNewQuiz(String username) {
 		HashSet<Achievement.Type> missingAchievements = getMissingAchievements(username);
 
 		int numCreated = getNumQuizzesCreatedUser(username);
-		
+
 		if(missingAchievements.contains(Achievement.Type.ONE_CREATED) && numCreated >= 1) {
 			Achievement oneCreated = new Achievement(username, Achievement.Type.ONE_CREATED,
 					new Timestamp(System.currentTimeMillis()));
 			QuizManager.storeAchievement(oneCreated);
 		} 
-		
+
 		if(missingAchievements.contains(Achievement.Type.FIVE_CREATED) && numCreated >= 5) {
 			Achievement fiveCreated = new Achievement(username, Achievement.Type.FIVE_CREATED,
 					new Timestamp(System.currentTimeMillis()));
 			QuizManager.storeAchievement(fiveCreated);
 		} 
-		
+
 		if(missingAchievements.contains(Achievement.Type.TEN_CREATED) && numCreated >= 10) {
 			Achievement tenCreated = new Achievement(username, Achievement.Type.TEN_CREATED,
 					new Timestamp(System.currentTimeMillis()));
@@ -839,7 +884,7 @@ public class QuizManager {
 		}
 	}
 
-	
+
 	public static void updatePracticeAchievement(String username) {
 		if(getMissingAchievements(username).contains(Achievement.Type.PRACTICE)) {
 			Achievement practice = new Achievement(username, Achievement.Type.PRACTICE,
@@ -847,7 +892,7 @@ public class QuizManager {
 			QuizManager.storeAchievement(practice);
 		}
 	}
-	
+
 	/**
 	 * Gets count of Quizzes created by the user, 
 	 * @param username username of Account to count quizzed created by.
@@ -984,7 +1029,7 @@ public class QuizManager {
 
 
 	}
-	
+
 	/**
 	 * returns a set of the Achievements not earned by the user with the username passed in
 	 * @param username username of the user to check
@@ -995,9 +1040,9 @@ public class QuizManager {
 		ArrayList<Achievement> currentAchievements = getAchievementsForUser(username);
 		for(Achievement achievement : currentAchievements)
 			missingAchievements.remove(achievement.getType());
-		
+
 		return missingAchievements;
-		
+
 	}
 
 	private static Achievement parseAchievement(ResultSet rs) throws SQLException {
@@ -1013,6 +1058,39 @@ public class QuizManager {
 			return new Achievement(username, type, description, time_stamp);
 		}
 		return null;
+	}
+
+	/**
+	 * return the total number of times people have attempted quizzes
+	 * @return number of attempts, -1 on error
+	 */
+	public static int getTotalAttempts() {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			String query = "SELECT SUM(" + NUMBER_OF_TIMES_TAKEN_COL + ") AS sum FROM " + MyDBInfo.QUIZ_TABLE 
+					+ ";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+			int result = rs.getInt("sum");
+			con.close();
+			return result;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
 
 	//main method for testing
