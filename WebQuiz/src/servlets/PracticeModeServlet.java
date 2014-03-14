@@ -1,10 +1,10 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +18,12 @@ import objects.Question;
 import objects.QuestionManager;
 import objects.QuizAttempt;
 import objects.QuizManager;
+
 /**
- * Servlet implementation class EvaluateQuizServlet
+ * Servlet implementation class PracticeModeServlet
  */
-@WebServlet("/EvaluateQuizServlet")
-public class EvaluateQuizServlet extends HttpServlet {
+@WebServlet("/PracticeModeServlet")
+public class PracticeModeServlet extends HttpServlet {
 	public static final String Hash_Str = "questionAnswerHash";
 	public static final String Questions_Str = "questionList";
 	public static final String StartingTime_Str = "startingTime";
@@ -33,7 +34,7 @@ public class EvaluateQuizServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EvaluateQuizServlet() {
+    public PracticeModeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,12 +50,16 @@ public class EvaluateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO increament quiz taken count
-		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
-		if (loggedAccount == null) {
-			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
-			return;
-		}
+		// TODO Auto-generated method stub
+		
+		//the user dont have to login in in practice mode
+		
+		
+//		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+//		if (loggedAccount == null) {
+//			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+//			return;
+//		}
 				
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
@@ -87,15 +92,9 @@ public class EvaluateQuizServlet extends HttpServlet {
 			//System.out.println("test duration is " + duration);
 			session.setAttribute(Duration_str, duration);
 			//store the quiz attempt before reseting the start time
-			QuizAttempt attempt = new QuizAttempt(Integer.parseInt(quiz_id), loggedAccount.getUsername(),score, startingTime, duration);
-			if(QuizManager.storeAttempt(attempt)){
-				System.out.println("attempt stored correctly");
-			}else{
-				System.out.println("attempt failed to be stored");
-
-			}
 			session.setAttribute(StartingTime_Str, null);
 		}
+
 		session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str, score);
 		session.setAttribute(Hash_Str, questionAnswerHash);
 		session.setAttribute(Questions_Str, questionList);
