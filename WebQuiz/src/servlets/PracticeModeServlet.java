@@ -82,6 +82,7 @@ public class PracticeModeServlet extends HttpServlet {
 			}
 			//System.out.println("The total score is " + score);
 		}
+		QuizManager.updatePracticeAchievement(loggedAccount.getUsername());
 		HttpSession session = request.getSession();
 		Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);
 		long duration = 0;
