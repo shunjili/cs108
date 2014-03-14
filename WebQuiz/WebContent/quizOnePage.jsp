@@ -4,7 +4,10 @@
 page import="objects.*, java.util.ArrayList, javax.servlet.http.HttpSession, java.sql.Timestamp, java.util.Date, java.util.HashMap, servlets.*"
 %>
 <%
-
+Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+if (loggedAccount == null) {
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+}
 session = request.getSession();
 String quiz_id = (String)session.getAttribute("quiz_id");
 if(quiz_id == null){
@@ -14,8 +17,9 @@ if(quiz_id == null){
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
 ArrayList<Question> Questions = (ArrayList<Question>) session.getAttribute(EvaluateOneQuizQuestionServlet.CurQuestion_Str);
 if(Questions == null || Questions.size() <= 0){
-	Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
-	//ArrayList<Question> Questions = QuizManager.getQuizById(quiz_id).getQuestions();
+
+	//Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+	Questions = QuizManager.getQuizById(quiz_id).getQuestions();
 	session.setAttribute(EvaluateOneQuizQuestionServlet.CurQuestion_Str, Questions);
 }
 
