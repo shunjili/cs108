@@ -785,5 +785,38 @@ public class AccountManager {
 			return null;
 		}
 	}
+	
+	/**
+	 * returns the total number of accounts, regardless of active status
+	 * @return count of accounts, -1 on error
+	 */
+	public int getTotalAccountCount() {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT COUNT(*) AS count FROM " + MyDBInfo.ACCOUNTS_TABLE + ";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+			int result = rs.getInt("count");
+			con.close();
+			return result;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 
 }
