@@ -26,7 +26,7 @@
 			if(tag != null){
 				quizzes = QuizManager.getQuizzesWithTag(tag);
 			}else{
-				ArrayList<Quiz> quizzes = QuizManager.getAllQuizzes();	
+				quizzes = QuizManager.getAllQuizzes();	
 			}
 			if (quizzes == null) {
 	%>

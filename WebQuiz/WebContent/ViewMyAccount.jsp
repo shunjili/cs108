@@ -256,6 +256,14 @@ page import="objects.*, java.util.ArrayList"%>
 	
 		<div class="col-md-2">
 			<h5>Additional Options:</h5>
+				<form action="/WebQuiz/quizIndex.jsp">
+						<div class="input-group">
+  						<input type="text" name = "tag" class="form-control" placeholder="keyword">
+					</div>
+					<br>
+					<button type="submit" class="btn btn-default">Search</button>
+				</form>
+				<br>
 				<div class="list-group">
 					<a href="/WebQuiz/accountIndex.jsp" class="list-group-item">Account Index</a>
 					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
