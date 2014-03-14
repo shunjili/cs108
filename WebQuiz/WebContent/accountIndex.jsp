@@ -50,6 +50,7 @@
 							<th>Name</th>
 							<th>Username</th>
 							<th>Type</th>
+							<th>Privacy</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -61,6 +62,19 @@
 								href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
 							<td><%=acct.getUsername()%></td>
 							<td><%=acct.getTypeString()%></td>
+							<td>
+<%
+							if (acct.isPrivate()) {
+%>
+								PRIVATE
+<%								
+							} else {
+%>
+								PUBLIC
+<%									
+							}
+%>
+							</td>
 						</tr>
 						<%
 							}
