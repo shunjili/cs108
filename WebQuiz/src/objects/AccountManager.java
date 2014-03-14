@@ -25,6 +25,7 @@ public class AccountManager {
 	private static final String SALT_COL = "salt";
 	private static final String TYPE_COL = "type";
 	private static final String ISPRIVATE_COL = "isPrivate";
+	private static final String ISACTIVE_COL = "isActive";
 	private static final String FRIENDS_COL1 = "user";
 	private static final String FRIENDS_COL2 = "friends_name";
 	private static final String REQUESTER_COL = "requester";
@@ -78,6 +79,7 @@ public class AccountManager {
 			String salt;
 			String typeString;
 			boolean isPrivate;
+			boolean isActive;
 
 			//get results. If no Account is return in this loop, then no account
 			//with matching credentials was found, and we return null.
@@ -89,11 +91,12 @@ public class AccountManager {
 				salt = rs.getString(SALT_COL);
 				typeString = rs.getString(TYPE_COL);
 				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
+				isActive = (rs.getInt(ISACTIVE_COL) > 0);
 
 				//check if password is correct
 				if(isPasswordCorrect(password, passhash, salt)) {
 					//if so, create and return the account
-					Account resultAcct = new Account(username, displayname, Account.stringToType(typeString), isPrivate);
+					Account resultAcct = new Account(username, displayname, Account.stringToType(typeString), isPrivate, isActive);
 					return resultAcct;
 				}
 			}
@@ -106,7 +109,7 @@ public class AccountManager {
 			return null;
 		}
 	}
-	
+
 	public static ArrayList<Account> getAllAccounts() {
 		ArrayList<Account> accountList = new ArrayList<Account>();
 		//Check for user in database
@@ -128,25 +131,10 @@ public class AccountManager {
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
-			String username;
-			String displayname;
-			String passhash;
-			String salt;
-			String typeString;
-			boolean isPrivate;
-			
-			//get results. If no Account is return in this loop, then no account
-			//with matching credentials was found, and we return null.
-			while(rs.next()) {
-				//grab query info
-				username = rs.getString(USERNAME_COL);
-				displayname = rs.getString(DISPLAYNAME_COL);
-				passhash = rs.getString(PASSHASH_COL);
-				salt = rs.getString(SALT_COL);
-				typeString = rs.getString(TYPE_COL);
-				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
-
-				accountList.add(new Account(username, displayname, Account.stringToType(typeString), isPrivate));
+			Account resultAccount = parseAccount(rs);
+			while(resultAccount != null) {
+				accountList.add(resultAccount);
+				resultAccount = parseAccount(rs);
 			}
 
 			//if we reach this point, there was no account found, or the password was incorrect
@@ -158,7 +146,7 @@ public class AccountManager {
 			return accountList;
 		}
 	}
-	
+
 	public static Account getAccountByUsername(String queryUsername) {
 
 		//sanitize input
@@ -189,35 +177,10 @@ public class AccountManager {
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
-			String username;
-			String displayname;
-			String passhash;
-			String salt;
-			String typeString;
-			boolean isPrivate;
-			
-			//get results. If no Account is return in this loop, then no account
-			//with matching credentials was found, and we return null.
-			while(rs.next()) {
-				//grab query info
-				username = rs.getString(USERNAME_COL);
-				displayname = rs.getString(DISPLAYNAME_COL);
-				passhash = rs.getString(PASSHASH_COL);
-				salt = rs.getString(SALT_COL);
-				typeString = rs.getString(TYPE_COL);
-				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
-
-				//check if password is correct
-
-				Account resultAcct = new Account(username, displayname, Account.stringToType(typeString), isPrivate);
-				con.close();
-				return resultAcct;
-
-			}
-
-			//if we reach this point, there was no account found, or the password was incorrect
+			Account resultAccount = parseAccount(rs);
 			con.close();
-			return null;
+			return resultAccount;
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -283,12 +246,14 @@ public class AccountManager {
 			String typeStr = newAccount.getTypeString();
 			String displayname = newAccount.getDisplayName();
 			int isPrivateInt = 0;
+			int isActiveInt = 0;
 			if(!newAccount.isPrivate()) isPrivateInt = 1;
+			if(newAccount.isActive()) isActiveInt = 1;
 
 			//build the insert statement
 			query = "INSERT INTO " + MyDBInfo.ACCOUNTS_TABLE + " VALUES "
 					+ "(\"" + username + "\",\"" + displayname + "\",\"" + passhash + "\",\"" + salt
-					+ "\",\"" + typeStr + "\"," + isPrivateInt + ");";
+					+ "\",\"" + typeStr + "\"," + isPrivateInt + "," + isActiveInt + ");";
 
 			//execute the update
 			stmt.executeUpdate(query);
@@ -299,6 +264,31 @@ public class AccountManager {
 			return false;
 		}
 
+	}
+
+	private static Account parseAccount(ResultSet rs) throws SQLException {
+		String username;
+		String displayname;
+		String typeString;
+		boolean isPrivate;
+		boolean isActive;
+
+		//get results. If no Account is return in this loop, then no account
+		//with matching credentials was found, and we return null.
+		while(rs.next()) {
+			//grab query info
+			username = rs.getString(USERNAME_COL);
+			displayname = rs.getString(DISPLAYNAME_COL);
+			typeString = rs.getString(TYPE_COL);
+			isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
+			isActive = (rs.getInt(ISACTIVE_COL) > 0);
+
+			//check if password is correct
+
+			Account resultAcct = new Account(username, displayname, Account.stringToType(typeString), isPrivate, isActive);
+			return resultAcct;
+		}
+		return null;
 	}
 
 	public static boolean usernameExists(String queryUsername) {
@@ -348,6 +338,62 @@ public class AccountManager {
 		}
 	}
 
+
+	public static boolean disableAccount(String username) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + ISACTIVE_COL + "=0 WHERE "
+					+ USERNAME_COL + "=\"" + username + "\";";
+			
+			int result = stmt.executeUpdate(query);
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
+	public static boolean enableAccount(String username) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + ISACTIVE_COL + "=1 WHERE "
+					+ USERNAME_COL + "=\"" + username + "\";";
+			
+			int result = stmt.executeUpdate(query);
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
 
 	/**
 	 * This functions determines whether or not the password and salt passed in create
@@ -426,27 +472,27 @@ public class AccountManager {
 
 		return hexToString(saltBytes);
 	}
-	
-	
+
+
 	/*
 	 * This section of the AccountManager code handles friend functionality
 	 */
-	
+
 	public static boolean areFriends(String username1, String username2) {
 		// make sure usernames both exist
 		if (!usernameExists(username1) || !usernameExists(username2)) return false;
-		
+
 		// make usernames lower case
 		username1 = username1.toLowerCase();
 		username2 = username2.toLowerCase();
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			
+
 
 			//set up DB connection
 			Connection con = DriverManager.getConnection
@@ -466,7 +512,7 @@ public class AccountManager {
 				con.close();
 				return true;
 			}
-			
+
 			// if they are not friends, return false
 			con.close();
 			return false;
@@ -475,15 +521,15 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
+
 	public static boolean addFriendship(String username1, String username2) {
 		// make usernames lower case
 		username1 = username1.toLowerCase();
 		username2 = username2.toLowerCase();
-		
+
 		// if the two users are already friends, do nothing and return false
 		if (areFriends(username1, username2)) return false;
-		
+
 		// try to add friendship to table (two-way relationship)
 		try {
 			try {
@@ -497,7 +543,7 @@ public class AccountManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-			
+
 			// prepare query
 			// Insert (username1, username2) and (username2, username1) into friends table
 			String query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
@@ -506,7 +552,7 @@ public class AccountManager {
 			query = "INSERT INTO " + MyDBInfo.FRIENDS_TABLE + " VALUES "
 					+ "(\"" + username2 + "\",\"" + username1 + "\");";
 			stmt.executeUpdate(query);
-			
+
 			con.close();
 			return true;
 		} catch (SQLException e) {
@@ -514,12 +560,12 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
+
 	public static boolean removeFriendship(String username1, String username2) {
 		// make usernames lower case
 		username1 = username1.toLowerCase();
 		username2 = username2.toLowerCase();
-		
+
 		// if the two users aren't friends, return false
 		if (!areFriends(username1, username2)) return false;
 
@@ -553,11 +599,11 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
+
 	public static ArrayList<Account> getFriendsForUser(String username) {
 		// make lower case
 		username = username.toLowerCase();
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -578,26 +624,26 @@ public class AccountManager {
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			ArrayList<Account> friends = new ArrayList<Account>();
-			
+
 			String friendName;
 			String displayname;
 			String typeString;
 			boolean isPrivate;
-			
+
 			while (rs.next()) {
 				friendName = rs.getString(FRIENDS_COL2);
 				displayname = rs.getString(DISPLAYNAME_COL);
 				typeString = rs.getString(TYPE_COL);
 				isPrivate = (rs.getInt(ISPRIVATE_COL) > 0);
-				
+
 				//check if password is correct
 
 				Account friend = new Account(friendName, displayname, Account.stringToType(typeString), isPrivate);
 				friends.add(friend);
 			}
-			
+
 			con.close();
 			return friends;
 		} catch (SQLException e) {
@@ -605,12 +651,12 @@ public class AccountManager {
 			return null;
 		}
 	}
-	
+
 	public static boolean requestIsPending(String requester, String requested) {
 		// make usernames lower case
 		requester = requester.toLowerCase();
 		requested = requested.toLowerCase();
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -643,14 +689,14 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
-	
+
+
 	/*
 	 * This section of the AccountManager code handles friend requests
 	 */
-	
+
 	public static boolean sendFriendRequest(FriendRequest newRequest) {
-		
+
 		// if the two users are friends, return false
 		if (areFriends(newRequest.getRequester(), newRequest.getRequested())) return false;
 
@@ -666,7 +712,7 @@ public class AccountManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-			
+
 			// see if the request already exists
 			if (requestIsPending(newRequest.getRequester(), newRequest.getRequested())) return false;
 
@@ -675,7 +721,7 @@ public class AccountManager {
 					+ " (" + REQUESTER_COL + "," + REQUESTED_COL + "," + MESSAGE_COL + "," + TIMESTAMP_COL +")"
 					+ " VALUES (\"" + newRequest.getRequester() + "\", \"" + newRequest.getRequested()
 					+ "\", \"" + newRequest.getMessage() + "\", " + "NOW()" + ");";
-			
+
 			stmt.executeUpdate(query);
 
 			con.close();
@@ -685,7 +731,7 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
+
 	public static boolean removeFriendRequest(String requester, String requested) {
 		// try to remove friendship from table (two-way relationship)
 		try {
@@ -705,7 +751,7 @@ public class AccountManager {
 			String update = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
 					+ "=\"" + requester + "\" AND " + REQUESTED_COL + "=\"" + requested + "\";";
 			stmt.executeUpdate(update);
-			
+
 			update = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
 					+ "=\"" + requested + "\" AND " + REQUESTED_COL + "=\"" + requester + "\";";
 			stmt.executeUpdate(update);
@@ -717,7 +763,7 @@ public class AccountManager {
 			return false;
 		}
 	}
-	
+
 	public static boolean confirmFriendRequest(String requester, String requested) {
 		System.out.println("Requester: " + requester + ", Requested: " + requested);
 		if (!requestIsPending(requester, requested)) {
@@ -735,11 +781,11 @@ public class AccountManager {
 		}
 		return success;
 	}
-	
+
 	public static ArrayList<FriendRequest> getFriendReqeustsForUser(String username) {
 		//make lower case
 		username = username.toLowerCase();
-		
+
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -759,9 +805,9 @@ public class AccountManager {
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			ArrayList<FriendRequest> requests = new ArrayList<FriendRequest>();
-			
+
 			String requester;
 			String requested;
 			String message;
@@ -773,10 +819,10 @@ public class AccountManager {
 				requested = rs.getString(REQUESTED_COL);
 				message = rs.getString(MESSAGE_COL);
 				timestamp = rs.getTimestamp(TIMESTAMP_COL);
-				
+
 				FriendRequest r = new FriendRequest(requester, requested, message, timestamp);
 				requests.add(r);
-				
+
 			}
 			con.close();
 			return requests;
@@ -785,7 +831,7 @@ public class AccountManager {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * returns the total number of accounts, regardless of active status
 	 * @return count of accounts, -1 on error
@@ -806,13 +852,13 @@ public class AccountManager {
 
 			//prepare query
 			String query = "SELECT COUNT(*) AS count FROM " + MyDBInfo.ACCOUNTS_TABLE + ";";
-			
+
 			ResultSet rs = stmt.executeQuery(query);
 			rs.next();
 			int result = rs.getInt("count");
 			con.close();
 			return result;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;

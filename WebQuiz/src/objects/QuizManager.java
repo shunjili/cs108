@@ -1135,6 +1135,10 @@ public class QuizManager {
 	//main method for testing
 	public static void main(String[] args) {
 
+		AccountManager.disableAccount("john");
+		Account acct1 = AccountManager.getAccountByUsername("john");
+		AccountManager.enableAccount("john");
+		Account acct2 = AccountManager.getAccountByUsername("john");
 
 		Quiz quiz1 = QuizManager.getQuizById("1");
 		Quiz quiz2 = QuizManager.getQuizById("3");

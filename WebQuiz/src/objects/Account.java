@@ -9,12 +9,14 @@ public class Account {
 	private String displayname;
 	private Type userType;
 	private boolean isPrivate;
+	private boolean isActive;
 	
 	public Account(String username) {
 		this.username = username;
 		this.displayname = username;
 		this.userType = Type.USER;
 		this.isPrivate = true;
+		this.isActive = true;
 	}
 	
 	public Account(String username, String displayname, Type userType, boolean isPrivate) {
@@ -22,6 +24,15 @@ public class Account {
 		this.displayname = displayname;
 		this.userType = userType;
 		this.isPrivate = isPrivate;
+		this.isActive = true;
+	}
+	
+	public Account(String username, String displayname, Type userType, boolean isPrivate, boolean isActive) {
+		this.username = username;
+		this.displayname = displayname;
+		this.userType = userType;
+		this.isPrivate = isPrivate;
+		this.isActive = isActive;
 	}
 	
 	public boolean equals(Account acct) {
@@ -42,6 +53,10 @@ public class Account {
 	
 	public boolean isPrivate() {
 		return isPrivate;
+	}
+	
+	public boolean isActive() {
+		return this.isActive;
 	}
 	
 	public String getTypeString() {
