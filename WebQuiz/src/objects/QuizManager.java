@@ -545,7 +545,7 @@ public class QuizManager {
 		}
 	}
 
-	private static boolean addTagToQuiz(String quiz_id, String tag) {
+	public static boolean addTagToQuiz(String quiz_id, String tag) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");

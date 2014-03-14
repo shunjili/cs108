@@ -63,11 +63,14 @@ public class CreateQuizServlet extends HttpServlet {
 		
 		
 		ArrayList<String> tags = new ArrayList<String>();
-		String tag = request.getParameter("tag");//then split by ;
-		String[] temp = tag.split(";");
+		String tag = request.getParameter("tag");//then split by #
+		String[] temp = (HtmlEscape.escape(tag)).split("#");
 		int len = temp.length;
 		for(int i = 0; i < len ; i++){
-			tags.add(HtmlEscape.escape(temp[i].trim().toLowerCase()));
+			if(temp[i].equals("")){
+				break;
+			}
+			tags.add(temp[i].trim().toLowerCase());
 //			tags.add((temp[i].trim().toLowerCase()));
 		}
 		

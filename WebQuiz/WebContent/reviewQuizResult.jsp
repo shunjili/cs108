@@ -7,6 +7,7 @@ page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="shortcut icon" href="images/ico.jpg" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
@@ -88,8 +89,26 @@ System.out.println(valid);
 			    		
 					</div>	
 		    	</div>
-    	
 	    	</div>
+	    	
+	    	<div class="panel panel-info"> 
+				<div class="panel-heading">
+		    		<h3 class="panel-title">Please Tag the Quiz</h3>
+		    	</div>
+		    	
+		    	<div class="panel-body">
+		    		<form action="UpdateQuizServlet" method="post">
+		    			<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+				 		<div class="input-group">
+			 				<span class="input-group-addon">Tag(Optional)</span>
+			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
+						</div>	
+						<br>
+						<button type="submit" class="btn btn-default">Add tags</button>
+					</form>
+		    	</div>
+	    	</div>
+	    	
 		<%}%>
 	</div>
 	<div class="col-md-2"></div>
