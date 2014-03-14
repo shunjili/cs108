@@ -235,6 +235,72 @@ if (loggedAccount == null) {
 <%
 		}
 		
+		ArrayList<Quiz> takenQuizzes = QuizManager.getQuizzesTaken(shownUsername);
+		if (takenQuizzes == null) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quizzes Taken by <%=shownDisplayName %></div>
+						<div class="panel-body">Error getting quizzes taken by <%=shownDisplayName %></div>
+					</div>
+				</div>
+			</div>
+<%
+		} else if (takenQuizzes.size() > 0) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quizzes Taken by <%=shownDisplayName %> <span class="badge"><%=takenQuizzes.size()%></span></div>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Quiz Name</th>
+										<th>Rating</th>
+										<th>Category</th>
+										<th>Times Taken</th>
+										<th>Creation Time</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (Quiz quiz : takenQuizzes) {
+									%>
+									<tr>
+										<td><a
+											href="QuizInfo.jsp?id=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
+										<td><%=quiz.getQuizRating()%></td>
+										<td><%=quiz.getQuizCategory()%></td>
+										<td><%=quiz.getTimesTaken() %></td>
+										<td><%=quiz.getQuizTimestampString() %></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+<%
+		} else {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quizzes Taken by <%=shownDisplayName %> <span class="badge"><%=takenQuizzes.size()%></span></div>
+						<div class="panel-body"><%=shownDisplayName %> has not taken any quizzes</div>
+					</div>
+				</div>
+			</div>
+<%
+		}
+		
 		
 		
 		
@@ -331,7 +397,7 @@ if (loggedAccount == null) {
 								%>
 							</tbody>
 						</table>
-					</div>"
+					</div>
 				</div>
 			</div>
 <%
