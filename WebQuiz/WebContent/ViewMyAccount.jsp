@@ -49,7 +49,14 @@ page import="objects.*, java.util.ArrayList"%>
 				<div>
 					<%=thisAccount.getDisplayName()%>
 				</div>
-				<p>Some Basic Information</p>
+				<div>Type: <%=thisAccount.getTypeString() %></div>
+<%
+				if (thisAccount.isPrivate()) {
+%>
+				<div>Private</div>
+<%	
+				}
+%>
 			</div>
 			<div class="list-group">
 				<a href="/WebQuiz/showProfile.jsp?username=<%=thisAccount.getUsername()%>" class="list-group-item">View My Profile</a>	
