@@ -49,6 +49,7 @@ public class CreateAccountServlet extends HttpServlet {
 		String displayName = request.getParameter("displayName");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
+		boolean isPrivate = Boolean.parseBoolean(request.getParameter("private"));
 		boolean success = false;
 		
 		//first, check if passwords are equal
@@ -71,7 +72,7 @@ public class CreateAccountServlet extends HttpServlet {
 		if (displayName == null || displayName.equals("")) {
 			displayName = username;
 		}
-		Account newAccount = new Account(username, displayName, Account.Type.USER, false);
+		Account newAccount = new Account(username, displayName, Account.Type.USER, isPrivate);
 		success = AccountManager.storeNewAccount(newAccount, password1);
 		if (success) {
 			Account loggedAccount = AccountManager.getAccountLogin(username, password1);
