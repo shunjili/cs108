@@ -74,17 +74,52 @@ page import="objects.*, java.util.ArrayList"%>
 			</div>
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of Popular Quizzes</div>
-				 <div class="panel-body">
-				 	<ul class="list-group">
-
-				 <%ArrayList<Quiz> quizlist = QuizManager.getMostPopularQuizzes(4);
-				 	if(!quizlist.isEmpty()){
-				 		for(Quiz quiz:quizlist){
-				 %>
-				 		 <li class="list-group-item"><%=quiz.getLinkHTML(false) %></li>
-				 <%} }%>
-				 	</ul>
-				 </div>	
+<%
+					ArrayList<Quiz> popularQuizzes = QuizManager.getMostPopularQuizzes(5);
+%>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Quiz Name</th>
+							<th>Rating</th>
+							<th>Category</th>
+							<th>Times Taken</th>
+							<th>Creator</th>
+							<th>Creation Time</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for (Quiz quiz : popularQuizzes) {
+						%>
+						<tr>
+							<td><a
+								href="QuizInfo.jsp?id=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
+							<td><%=quiz.getQuizRating()%></td>
+							<td><%=quiz.getQuizCategory()%></td>
+							<td><%=quiz.getTimesTaken() %></td>
+							<td>
+							<%
+							Account creator = quiz.getQuizCreatorAccount();
+							if (creator == null) {
+							%>
+								<%=quiz.getQuizCreator() %>
+							<%
+							} else {
+							%>
+								<a href="showProfile.jsp?username=<%=creator.getUsername()%>"><%=creator.getDisplayName() %></a>
+							<%
+							}
+							%>
+							</td>
+							<td><%=quiz.getQuizTimestampString() %></td>
+						</tr>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
 			</div>
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of Recently Created Quizzes</div>
@@ -137,7 +172,7 @@ page import="objects.*, java.util.ArrayList"%>
 				 <div class="panel-body">
 					<ul class="list-group">
 						 <%ArrayList<Quiz> takenList = QuizManager.getQuizzesTaken(thisAccount.getUsername());
-						 	if(!quizlist.isEmpty()){
+						 	if(!takenList.isEmpty()){
 						 		for(Quiz quiz:takenList){
 						 %>
 						 		 <li class="list-group-item"><%=quiz.getLinkHTML(false) %></li>
@@ -150,7 +185,7 @@ page import="objects.*, java.util.ArrayList"%>
 				 <div class="panel-body">
 					<ul class="list-group">
 						 <%ArrayList<Quiz> createList = QuizManager.getMostPopularQuizzes(4);
-						 	if(!quizlist.isEmpty()){
+						 	if(!createList.isEmpty()){
 						 		for(Quiz quiz:createList){
 						 %>
 						 		 <li class="list-group-item">You created <%=quiz.getLinkHTML(false) %> at <%=quiz.getQuizTimestampString() %></li>
