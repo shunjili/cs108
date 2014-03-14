@@ -580,6 +580,45 @@ public class QuizManager {
 			return null;
 		}
 	}
+	
+	public static ArrayList<Quiz> getQuizzesTaken(String username) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT DISTINCT " + ATTEMPT_QUIZ_ID_COL + " FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE "
+					+ ATTEMPT_USERNAME_COL + "=\"" + username + "\";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			ArrayList<String> quizIdArr = new ArrayList<String>();
+			while(rs.next()) {
+				quizIdArr.add(rs.getString(ATTEMPT_QUIZ_ID_COL));
+			}
+			
+			ArrayList<Quiz> resultList = new ArrayList<Quiz>();
+			for(String quizIdStr : quizIdArr) {
+				Quiz newQuiz = QuizManager.getQuizById(quizIdStr);
+				if(newQuiz != null)
+					resultList.add(newQuiz);
+			}
+			con.close();
+			return resultList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	/**
 	 * @param creatorID use username of the person with creates this list of quizzes.
@@ -1138,6 +1177,8 @@ public class QuizManager {
 
 	//main method for testing
 	public static void main(String[] args) {
+		
+		ArrayList<Quiz> attemptedQuizzes = QuizManager.getQuizzesTaken("john");
 
 		Account testAcct = new Account("mary", "Mary Thompson", Account.Type.USER, true, true);
 		boolean resultBool = AccountManager.storeNewAccount(testAcct, "asdf");
