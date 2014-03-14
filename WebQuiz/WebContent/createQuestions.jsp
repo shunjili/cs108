@@ -33,18 +33,12 @@ if(Questions != null){
 			<div class="col-md-3"></div>
 			<div class="col-md-7">
 				<h1>
-					View the Quiz <small> Good Luck!</small>
+					Create Questions
 				</h1>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-1"></div>
-	<div class="col-md-2">
-		<div>
-			Some Information About this quiz
-		</div>
-		<p>Description of the Quiz</p>
-	</div>
+	<div class="col-md-3"></div>
 	<div class="col-md-7">
 		<div class="panel panel-primary">
 			<div class="panel-heading">Create a New Question</div>
@@ -198,6 +192,7 @@ if(Questions != null){
 
 	<%}%>
 	<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Creating Questions</button></a>
+	<br>
 </div>	
 </body>
 </html>
