@@ -339,6 +339,11 @@ public class AccountManager {
 	}
 
 
+	/**
+	 * disables
+	 * @param username
+	 * @return
+	 */
 	public static boolean disableAccount(String username) {
 		try {
 			try {
