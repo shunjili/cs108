@@ -63,42 +63,14 @@ public class QuizManager {
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
-			int quiz_id;
-			String quizName;
-			String creator;
-			String description;
-			Timestamp timestamp;
-			String category;
-			boolean correctImmediately;
-			boolean onePage;
-			boolean randomOrder;
-			int numberOfTimesTaken;
-			int numberOfReviews;
-			double averageRating;
-
-			ArrayList<Question> questionList;
-			ArrayList<String> tags;
-
 			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
-
-			while(rs.next()) {
-				quiz_id = rs.getInt(QUIZ_ID_COL);
-				quizName = rs.getString(QUIZ_NAME_COL);
-				creator = rs.getString(CREATOR_COL);
-				description = rs.getString(DESCRIPTION_COL);
-				timestamp = rs.getTimestamp(TIMESTAMP_COL);
-				category = rs.getString(CATEGORY_COL);
-				correctImmediately = (rs.getInt(CORRECT_IMMEDIATELY_COL) != 0);
-				numberOfTimesTaken = rs.getInt(NUMBER_OF_TIMES_TAKEN_COL);
-				numberOfReviews = rs.getInt(NUMBER_OF_REVIEWS_COL);
-				onePage = (rs.getInt(ONE_PAGE_COL) != 0);
-				randomOrder = (rs.getInt(RANDOM_ORDER_COL) != 0);
-				averageRating = rs.getDouble(AVERAGE_RATING_COL);
-				questionList = QuestionManager.getQuestionsForQuiz("" + quiz_id);
-				tags = getTagsForQuiz("" + quiz_id);
-				Quiz q = new Quiz(quizName, description, questionList, creator, category, tags, correctImmediately,
-						onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quiz_id);
-				quizzes.add(q);
+			
+			while(true) {
+				Quiz resultQuiz = parseQuiz(rs);
+				if(resultQuiz == null)
+					break;
+				else
+					quizzes.add(resultQuiz);
 			}
 			con.close();
 			return quizzes;
@@ -130,53 +102,9 @@ public class QuizManager {
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
-			int quizQueryId = 0;
-			String quizName = "";
-			String creator = "";
-			String description = "";
-			Timestamp timestamp = null;;
-			String category = "";
-			boolean correctImmediately = false;
-			boolean onePage = false;
-			boolean randomOrder = false;
-			int numberOfTimesTaken = -1;
-			int numberOfReviews = -1;
-			double averageRating = -1.0d;
-			boolean canPractice = false;
-			
-			boolean readEntry = false;
-
-			while(rs.next()) {
-				readEntry = true;
-				quizQueryId = rs.getInt(QUIZ_ID_COL);
-				quizName = rs.getString(QUIZ_NAME_COL);
-				creator = rs.getString(CREATOR_COL);
-				description = rs.getString(DESCRIPTION_COL);
-				timestamp = rs.getTimestamp(TIMESTAMP_COL);
-				category = rs.getString(CATEGORY_COL);
-				correctImmediately = (rs.getInt(CORRECT_IMMEDIATELY_COL) != 0);
-				numberOfTimesTaken = rs.getInt(NUMBER_OF_TIMES_TAKEN_COL);
-				numberOfReviews = rs.getInt(NUMBER_OF_REVIEWS_COL);
-				onePage = (rs.getInt(ONE_PAGE_COL) != 0);
-				randomOrder = (rs.getInt(RANDOM_ORDER_COL) != 0);
-				averageRating = rs.getDouble(AVERAGE_RATING_COL);
-				if(rs.getInt(CAN_PRACTICE_COL) != 0)
-					canPractice = true;
-				else
-					canPractice = false;
-			}
+			Quiz resultQuiz = parseQuiz(rs);
 			con.close();
-			if(readEntry) {
-				if(Integer.parseInt(quiz_id) != quizQueryId)
-					return null;
-
-				ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id);
-				ArrayList<String> tags = getTagsForQuiz(quiz_id);
-				return new Quiz(quizName, description, questionList, creator, category, tags,
-						correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quizQueryId, canPractice);
-			} else {
-				return null;
-			}
+			return resultQuiz;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -534,7 +462,8 @@ public class QuizManager {
 		int numberOfTimesTaken = -1;
 		int numberOfReviews = -1;
 		double averageRating = -1.0d;
-
+		boolean canPractice = false;
+		
 		boolean readEntry = false;
 
 		while(rs.next()) {
@@ -551,13 +480,17 @@ public class QuizManager {
 			onePage = (rs.getInt(ONE_PAGE_COL) != 0);
 			randomOrder = (rs.getInt(RANDOM_ORDER_COL) != 0);
 			averageRating = rs.getDouble(AVERAGE_RATING_COL);
+			if(rs.getInt(CAN_PRACTICE_COL) != 0)
+				canPractice = true;
+			else
+				canPractice = false;
 			break;
 		}
 		if(readEntry) {
 			ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id + "");
 			ArrayList<String> tags = getTagsForQuiz(quiz_id + "");
 			return new Quiz(quizName, description, questionList, creator, category, tags,
-					correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quiz_id);
+					correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quiz_id, canPractice);
 		} else {
 			return null;
 		}
