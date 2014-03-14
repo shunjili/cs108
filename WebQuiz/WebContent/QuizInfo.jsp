@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@
-page import="objects.*, java.util.ArrayList"
+page import="objects.*, java.util.ArrayList, servlets.*"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -50,6 +50,12 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					  		<%if(!currentQuiz.isOnePage()){ %>
 					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
 					  		<%}else{ %>
+					  			<% 
+						  			session.setAttribute(EvaluateQuizServlet.Questions_Str,null);
+						  			session.setAttribute(EvaluateQuizServlet.Hash_Str,null);
+						  			session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str,null);
+						  			session.setAttribute("quiz_id",null);
+					  			%>
 					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
 					  		<%} %>
 								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a Friend for this Quiz!</button></a>	
