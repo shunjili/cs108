@@ -80,6 +80,45 @@ public class QuizManager {
 			return null;
 		}
 	}
+	
+	public static boolean deleteQuiz(String quiz_id) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+			
+			String query = "DELETE FROM " + MyDBInfo.QUIZ_QUESTION_TABLE + " WHERE "
+					+ QUIZ_ID_COL + "=\"" + quiz_id + "\";";
+			stmt.executeUpdate(query);
+			
+			query = "DELETE FROM " + MyDBInfo.QUIZ_TAG_TABLE + " WHERE "
+					+ QUIZ_ID_COL + "=\"" + quiz_id + "\";";
+			stmt.executeUpdate(query);
+			
+			query = "DELETE FROM " + MyDBInfo.ATTEMPTS_TABLE + " WHERE "
+					+ QUIZ_ID_COL + "=\"" + quiz_id + "\";";
+			stmt.executeUpdate(query);
+			
+			query = "DELETE FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					+ QUIZ_ID_COL + "=\"" + quiz_id + "\";";
+			stmt.executeUpdate(query);
+			
+			con.close();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	/**
 	 * Gets the quizzes sorted by the number of times taken. Highest number of times
