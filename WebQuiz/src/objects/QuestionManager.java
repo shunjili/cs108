@@ -380,8 +380,11 @@ public class QuestionManager {
              userAnswers.add("haha");
  			// System.out.println(test2.getResultView(userAnswers ));
              ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz("2");
+            
              Question test4 = questionList.get(0);
              Question test5 = questionList.get(1);
+            
+             
 
      }
 
