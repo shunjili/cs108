@@ -400,6 +400,33 @@ public class AccountManager {
 
 	}
 
+	public static boolean makeUserAdmin(String username) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + TYPE_COL + "=\"" + Account.ADMIN_STR +  "\" WHERE "
+					+ USERNAME_COL + "=\"" + username + "\";";
+			
+			int result = stmt.executeUpdate(query);
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	/**
 	 * This functions determines whether or not the password and salt passed in create
 	 * a hash equal to the hash value passed in.
