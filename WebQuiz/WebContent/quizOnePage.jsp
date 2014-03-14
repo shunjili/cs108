@@ -98,26 +98,23 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 				    	<%= question.getResultView(answers) %>
 				    </div>
 				<%}%>
+					<form action="EvaluateOneQuizQuestionServlet" method ="post">
+					<input type="hidden" name="quiz_id" value="<%=quiz_id %>">
+			
+				<%if ((Questions != null) &&(Questions.size() >= 0)){ %>
+						<div class="panel panel-primary"> <div class="panel-heading">
+				    	<h3 class="panel-title">Question</h3>
+				  		</div>
+				  			<%= Questions.get(0).getHTML(false) %>
+				  		</div>	
+				 	<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+					<% //Questions.remove(0); 
+					   //session.setAttribute("Questions", Questions);%>
+				<%}else{ %>
+				<p>You do not have a quiz for this id or you don't have any questions in this quiz!</p>
+				<%} %>
 			</div>
 		</div>
-		
-	<div class="col-md-7">
-			<form action="EvaluateOneQuizQuestionServlet" method ="post">
-			<input type="hidden" name="quiz_id" value="<%=quiz_id %>">
-			
-		<%if ((Questions != null) &&(Questions.size() >= 0)){ %>
-				<div class="panel panel-primary"> <div class="panel-heading">
-		    	<h3 class="panel-title">Question</h3>
-		  		</div>
-		  			<%= Questions.get(0).getHTML(false) %>
-		  		</div>	
-		 	<button type="submit" class="btn btn-default">Submit</button>
-			</form>
-			<% //Questions.remove(0); 
-			   //session.setAttribute("Questions", Questions);%>
-		<%}else{ %>
-		<p>You do not have a quiz for this id or you don't have any questions in this quiz!</p>
-		<%} %>
-	</div>
 </body>
 </html>
