@@ -309,7 +309,7 @@ public class QuizManager {
 			}
 			
 			updateAchievementsNewQuiz(toStore.getQuizCreator());
-			
+			con.close();
 			return quiz_id_int;
 
 		} catch (SQLException e) {
@@ -445,6 +445,7 @@ public class QuizManager {
 				currentQuiz = parseQuiz(rs);
 			}
 
+			con.close();
 			return returnList;
 
 		} catch (SQLException e) {
@@ -487,6 +488,7 @@ public class QuizManager {
 				currentQuiz = parseQuiz(rs);
 			}
 
+			con.close();
 			return returnList;
 
 		} catch (SQLException e) {
@@ -530,6 +532,7 @@ public class QuizManager {
 				currentQuiz = parseQuiz(rs);
 			}
 
+			con.close();
 			return returnList;
 
 		} catch (SQLException e) {
@@ -539,6 +542,32 @@ public class QuizManager {
 	}
 
 
+	private static void incrementTimesTaken(int quiz_id) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "UPDATE " + MyDBInfo.QUIZ_TABLE + " SET "
+					+ NUMBER_OF_TIMES_TAKEN_COL + " = " + NUMBER_OF_TIMES_TAKEN_COL + " + 1 WHERE "
+					+ QUIZ_ID_COL + "=" + quiz_id + ";";
+			
+			int result = stmt.executeUpdate(query);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static Quiz parseQuiz(ResultSet rs) throws SQLException {
 		int quiz_id = 0;
 		String quizName = "";
@@ -722,7 +751,9 @@ public class QuizManager {
 
 			int result = stmt.executeUpdate(query);
 			
+			incrementTimesTaken(attempt.getQuizID());
 			updateAchievementsNewAttempt(attempt.getUsername(), attempt.getQuizID());
+			con.close();
 			return true;
 
 		} catch (SQLException e) {
@@ -844,6 +875,7 @@ public class QuizManager {
 
 			rs.next();
 			int numCreated = rs.getInt("CreatedUser");
+			con.close();
 			return numCreated;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -878,6 +910,7 @@ public class QuizManager {
 			rs.next();
 
 			int numTaken = rs.getInt("AttemptsUser");
+			con.close();
 			return numTaken;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -904,6 +937,7 @@ public class QuizManager {
 					+ achieve.getDescription() + "\",\'" + achieve.getTimestamp().toString() + "\');";
 
 			int result = stmt.executeUpdate(query);
+			con.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -940,6 +974,7 @@ public class QuizManager {
 				else
 					resultList.add(newAchievement);
 			}
+			con.close();
 			return resultList;
 
 		} catch (SQLException e) {
