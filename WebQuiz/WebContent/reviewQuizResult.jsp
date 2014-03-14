@@ -38,7 +38,7 @@ System.out.println(valid);
 				<h1>
 					Review Quiz Results <small> You got <%=score %> points! 
 					<%if(duration != null ){ %>
-						Duration: <%=duration %> minutes
+						Duration: <%=duration %> seconds
 					<%}%>
 					 </small>
 				</h1>
