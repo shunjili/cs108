@@ -659,6 +659,166 @@ public class QuizManager {
 			return null;
 		}
 	}
+	
+	public static ArrayList<Quiz> getQuizzesWithName(String name) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					+ QUIZ_NAME_COL + " LIKE \"%" + name + "%\";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<Quiz> resultList = new ArrayList<Quiz>();
+			
+			while(rs.next()) {
+				Quiz resultQuiz = parseQuiz(rs);
+				resultList.add(resultQuiz);
+			}
+			
+			con.close();
+			return resultList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<Quiz> getQuizzesWithDescription(String description) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					+ DESCRIPTION_COL + " LIKE \"%" + description + "%\";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<Quiz> resultList = new ArrayList<Quiz>();
+			
+			while(rs.next()) {
+				Quiz resultQuiz = parseQuiz(rs);
+				resultList.add(resultQuiz);
+			}
+			
+			con.close();
+			return resultList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<Quiz> getQuizzesWithCreator(String creator) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					+ CREATOR_COL + " LIKE \"%" + creator + "%\";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<Quiz> resultList = new ArrayList<Quiz>();
+			
+			while(rs.next()) {
+				Quiz resultQuiz = parseQuiz(rs);
+				resultList.add(resultQuiz);
+			}
+			
+			con.close();
+			return resultList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<Quiz> getQuizzesWithCategory(String category) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " WHERE "
+					+ CATEGORY_COL + " LIKE \"%" + category + "%\";";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			ArrayList<Quiz> resultList = new ArrayList<Quiz>();
+			
+			while(rs.next()) {
+				Quiz resultQuiz = parseQuiz(rs);
+				resultList.add(resultQuiz);
+			}
+			
+			con.close();
+			return resultList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<Quiz> getQuizzesForSearch(String search) {
+		ArrayList<Quiz> tag = getQuizzesWithTag(search);
+		ArrayList<Quiz> name = getQuizzesWithName(search);
+		ArrayList<Quiz> description = getQuizzesWithDescription(search);
+		ArrayList<Quiz> creator = getQuizzesWithCreator(search);
+		ArrayList<Quiz> category = getQuizzesWithCategory(search);
+		
+		ArrayList<Quiz> total = new ArrayList<Quiz>();
+		total.addAll(tag);
+		total.addAll(name);
+		total.addAll(description);
+		total.addAll(creator);
+		total.addAll(category);
+		return total;
+	}
 
 	/**
 	 * @param creatorID use username of the person with creates this list of quizzes.
