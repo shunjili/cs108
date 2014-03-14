@@ -43,8 +43,8 @@
 						<div class="panel-heading">Quiz Rankings</div>
 						<div class="panel-body">
 							<ul class="nav nav-tabs">
-				  			<li class="active"><a href="#rating" data-toggle="tab">Sort by Rating</a></li>
-				  			<li><a href="#timesTaken" data-toggle="tab">Sort by Times Taken</a></li>
+				  			<li class="active"><a href="#rating" data-toggle="tab">Ratings Leaderboard</a></li>
+				  			<li><a href="#timesTaken" data-toggle="tab">Times Taken Leaderboard</a></li>
 							</ul>
 							
 							<div class="tab-content">
