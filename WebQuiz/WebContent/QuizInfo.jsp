@@ -20,9 +20,21 @@ page import="objects.*, java.util.ArrayList, servlets.*"
 Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 if (loggedAccount == null) {
 	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
 }
 String quiz_id = request.getParameter("id");
-Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
+Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
+ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
+String tagsString = "";
+int numTags = tags.size();
+for (int i = 0; i < numTags; i++) {
+	if (i == numTags - 1) {
+		tagsString += tags.get(i);
+	} else {
+		tagsString += tags.get(i) + ", ";
+	}
+}
+%>
 <body>
 	<%@include file="navbar.html" %>
 	<div class="page-header">
@@ -46,6 +58,7 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					    <li class="list-group-item">Created By: <%=currentQuiz.getQuizCreatorAccount().getDisplayName() %></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Average Rating: <%= currentQuiz.getQuizRating() %></li>
+					    <li class="list-group-item">Tags: <%=tagsString %></li>
 					  	<li class="list-group-item">
 					  		<%if(!currentQuiz.isOnePage()){ %>
 					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>

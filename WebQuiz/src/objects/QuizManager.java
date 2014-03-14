@@ -403,7 +403,7 @@ public class QuizManager {
 	}
 
 
-	private static ArrayList<String> getTagsForQuiz(String quiz_id) {
+	public static ArrayList<String> getTagsForQuiz(String quiz_id) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
