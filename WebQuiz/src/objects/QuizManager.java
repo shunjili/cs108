@@ -25,6 +25,7 @@ public class QuizManager {
 	public static final String NUMBER_OF_TIMES_TAKEN_COL = "number_of_times_taken";
 	public static final String NUMBER_OF_REVIEWS_COL = "number_of_reviews";
 	public static final String AVERAGE_RATING_COL = "average_rating";
+	public static final String CAN_PRACTICE_COL = "can_practice";
 
 	public static final String TAG_QUIZ_ID_COL = "quiz_id";
 	public static final String TAG_TAG_COL = "tag";
@@ -141,7 +142,8 @@ public class QuizManager {
 			int numberOfTimesTaken = -1;
 			int numberOfReviews = -1;
 			double averageRating = -1.0d;
-
+			boolean canPractice = false;
+			
 			boolean readEntry = false;
 
 			while(rs.next()) {
@@ -158,6 +160,10 @@ public class QuizManager {
 				onePage = (rs.getInt(ONE_PAGE_COL) != 0);
 				randomOrder = (rs.getInt(RANDOM_ORDER_COL) != 0);
 				averageRating = rs.getDouble(AVERAGE_RATING_COL);
+				if(rs.getInt(CAN_PRACTICE_COL) != 0)
+					canPractice = true;
+				else
+					canPractice = false;
 			}
 			con.close();
 			if(readEntry) {
@@ -167,7 +173,7 @@ public class QuizManager {
 				ArrayList<Question> questionList = QuestionManager.getQuestionsForQuiz(quiz_id);
 				ArrayList<String> tags = getTagsForQuiz(quiz_id);
 				return new Quiz(quizName, description, questionList, creator, category, tags,
-						correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quizQueryId);
+						correctImmediately, onePage, randomOrder, numberOfTimesTaken, numberOfReviews, averageRating, timestamp, quizQueryId, canPractice);
 			} else {
 				return null;
 			}
@@ -237,6 +243,10 @@ public class QuizManager {
 					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+			
+			int canPractice = 0;
+			if(toStore.canPractice())
+				canPractice = 1;
 
 			//prepare query
 			String query = "INSERT INTO " + MyDBInfo.QUIZ_TABLE + " ("
@@ -245,7 +255,7 @@ public class QuizManager {
 					+ "," + CATEGORY_COL + "," + CORRECT_IMMEDIATELY_COL
 					+ "," + ONE_PAGE_COL + "," + RANDOM_ORDER_COL
 					+ "," + NUMBER_OF_TIMES_TAKEN_COL + "," + NUMBER_OF_REVIEWS_COL
-					+ "," + AVERAGE_RATING_COL + ") VALUES ("
+					+ "," + AVERAGE_RATING_COL + "," + CAN_PRACTICE_COL + ") VALUES ("
 					+ "\"" + toStore.getQuizName() + "\""
 					+ ",\"" + toStore.getQuizCreator() + "\""
 					+ ",\"" + toStore.getQuizDescription() + "\""
@@ -256,7 +266,7 @@ public class QuizManager {
 					+ "," + (toStore.isRandomOrder() ? 1 : 0)
 					+ "," + toStore.getTimesTaken()
 					+ "," + toStore.getNumReviews()
-					+ "," + toStore.getQuizRating() + ");";
+					+ "," + toStore.getQuizRating() + "," + canPractice + ");";
 
 			//execute the query
 			int result = stmt.executeUpdate(query);
@@ -937,7 +947,7 @@ public class QuizManager {
 
 		Quiz quiz3 = new Quiz("quiz3","this quiz is added by the manager", questionList1,
 				"sally", "History", tagList1, false, false, false, 0, 0, 0.0d,
-				new Timestamp(System.currentTimeMillis()));
+				new Timestamp(System.currentTimeMillis()), 0, true);
 
 		int result = QuizManager.storeQuizQuestionTags(quiz3);
 		quiz3.setQuizID(result);
@@ -952,6 +962,7 @@ public class QuizManager {
 		QuizManager.storeAchievement(A2);*/
 
 		ArrayList<Achievement> achieveList = QuizManager.getAchievementsForUser("john");
+		Quiz testQuery = QuizManager.getQuizById(result + "");
 
 	}
 

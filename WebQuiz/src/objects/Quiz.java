@@ -24,6 +24,7 @@ public class Quiz {
 	private int quiz_id;
 	private double rating;
 	private Timestamp timestamp;
+	private boolean canPractice;
 	
 	public Quiz(String name, String description, ArrayList<Question> questions, 
 			String creator, String category, ArrayList<String> tags,
@@ -43,6 +44,28 @@ public class Quiz {
 		this.rating = rating;
 		this.timestamp = timestamp;
 		this.quiz_id = quiz_id;
+		this.canPractice = false;
+	}
+	
+	public Quiz(String name, String description, ArrayList<Question> questions, 
+			String creator, String category, ArrayList<String> tags,
+			boolean correctImmediately, boolean onePage, boolean randomOrder,
+			int timesTaken, int numReviews, double rating, Timestamp timestamp, int quiz_id, boolean canPractice) {
+		this.name = name;
+		this.description = description;
+		this.questions = questions;
+		this.creator = creator;
+		this.category = category;
+		this.tags = tags;
+		this.correctImmediately = correctImmediately;
+		this.onePage = onePage;
+		this.randomOrder = randomOrder;
+		this.timesTaken = timesTaken;
+		this.numReviews = numReviews;
+		this.rating = rating;
+		this.timestamp = timestamp;
+		this.quiz_id = quiz_id;
+		this.canPractice = canPractice;
 	}
 	
 	public Quiz(String name, String description, ArrayList<Question> questions, 
@@ -152,6 +175,10 @@ public class Quiz {
 	
 	public double getQuizRating() {
 		return this.rating;
+	}
+	
+	public boolean canPractice() {
+		return this.canPractice;
 	}
 	
 	public Timestamp getQuizTimestamp() {

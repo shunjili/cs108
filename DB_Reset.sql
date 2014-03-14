@@ -101,6 +101,7 @@ CREATE TABLE Quizzes (
 	number_of_times_taken INT,
 	number_of_reviews INT,
 	average_rating FLOAT(5,3),
+	can_practice TINYINT(1),
 	FOREIGN KEY (creator) REFERENCES Accounts(username)
 );
 
@@ -168,8 +169,8 @@ INSERT INTO Answers VALUES
 
 
 INSERT INTO Quizzes (quiz_id,quiz_name, creator, description, time_stamp, category,
-	correct_immediately, one_page, random_order, number_of_times_taken, number_of_reviews, average_rating) VALUES
-	(1,"quiz on Ancient Rome","sally","This is a quiz on Ancient Rome",NOW(),"History",0,0,0,0,0,0.0);
+	correct_immediately, one_page, random_order, number_of_times_taken, number_of_reviews, average_rating,can_practice) VALUES
+	(1,"quiz on Ancient Rome","sally","This is a quiz on Ancient Rome",NOW(),"History",0,0,0,0,0,0.0,1);
 
 INSERT INTO QuizQuestionTable VALUES
 	(1, 1, 0),
