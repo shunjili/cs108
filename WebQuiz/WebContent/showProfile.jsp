@@ -301,6 +301,70 @@ if (loggedAccount == null) {
 <%
 		}
 		
+		ArrayList<QuizAttempt> attempts = QuizManager.getQuizAttemptsForUser(shownUsername);
+		if (attempts == null) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quiz Attempts fo <%=shownDisplayName %></div>
+						<div class="panel-body">Error getting quiz attempts for <%=shownDisplayName %></div>
+					</div>
+				</div>
+			</div>
+<%
+		} else if (attempts.size() > 0) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quiz Attempts for <%=shownDisplayName %> <span class="badge"><%=attempts.size()%></span></div>
+							<table class="table">
+							<thead>
+								<tr>
+									<th>Quiz Name</th>
+									<th>Score</th>
+									<th>Duration</th>
+									<th>Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									for (QuizAttempt attempt : attempts) {
+										Quiz quiz = QuizManager.getQuizById("" + attempt.getQuizID());
+								%>
+								<tr>
+									<td><a
+										href="QuizInfo.jsp?username=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
+									<td><%=attempt.getScore()%></td>
+									<td><%=attempt.getDuration() %></td>
+									<td><%=attempt.getStartTimeStr() %></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+<%
+		} else {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quiz Attempts for <%=shownDisplayName %> <span class="badge"><%=attempts.size()%></span></div>
+						<div class="panel-body"><%=shownDisplayName %> has not attempted any quizzes</div>
+					</div>
+				</div>
+			</div>
+<%
+		}
+		
 		
 		
 		
