@@ -106,7 +106,10 @@
 <%
 													if (!acct.isActive()) {
 %>
-													DISABLED
+													<form action="EnableAccountServlet" method="post">
+														<input type="hidden" name="username" value="<%=acct.getUsername() %>"/>
+														<button type="submit" class="btn btn-default">Enable</button>
+													</form>
 <%
 													} else if (type == Account.Type.ADMIN) {
 %>
