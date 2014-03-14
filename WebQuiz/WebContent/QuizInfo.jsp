@@ -27,9 +27,12 @@ String quiz_id = request.getParameter("id");
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
 ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 int totalScore = 0;
-int numQuestions = questions.size();
-for (int i = 0; i < numQuestions; i++) {
-	totalScore += questions.get(i).getScore();
+int numQuestions = 0;
+if (questions != null) {
+	numQuestions = questions.size();
+	for (int i = 0; i < numQuestions; i++) {
+		totalScore += questions.get(i).getScore();
+	}
 }
 ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
 String tagsString = "";
@@ -65,7 +68,9 @@ for (int i = 0; i < numTags; i++) {
 					<div class="panel-heading"><%= currentQuiz.getQuizName() %></div>
 					<ul class="list-group">
 					    <li class="list-group-item">Category: <%=currentQuiz.getQuizCategory() %></li>
-					    <li class="list-group-item">Created By: <%=currentQuiz.getQuizCreatorAccount().getDisplayName() %></li>
+					    <li class="list-group-item">Created By: 
+					    <%Account creator = currentQuiz.getQuizCreatorAccount(); %>
+					    	<a href="showProfile?username="<%=creator.getUsername() %>><%=creator.getDisplayName() %></a></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Average Rating: <%= currentQuiz.getQuizRating() %></li>
 					    <li class="list-group-item">Number of Questions: <%=numQuestions %></li>
