@@ -173,7 +173,8 @@ public class AnnouncementManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.ANNOUNCEMENTS_TABLE;
+			String query = "SELECT * FROM " + MyDBInfo.ANNOUNCEMENTS_TABLE + " ORDER BY "
+					+ TIMESTAMP_COL + " DESC LIMIT " + maxLimit + ";";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
