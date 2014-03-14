@@ -108,7 +108,54 @@ page import="objects.*, java.util.ArrayList"%>
 					</table>
 			</div>
 			<div class="panel panel-primary">
-				 <div class="panel-heading">List of Popular Quizzes</div>
+				 <div class="panel-heading">Recently Created Quizzes</div>
+				 <table class="table">
+					<thead>
+						<tr>
+							<th>Quiz Name</th>
+							<th>Rating</th>
+							<th>Category</th>
+							<th>Times Taken</th>
+							<th>Creator</th>
+							<th>Creation Time</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for (Quiz quiz : recentQuizzes) {
+						%>
+						<tr>
+							<td><a
+								href="QuizInfo.jsp?id=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
+							<td><%=quiz.getQuizRating()%></td>
+							<td><%=quiz.getQuizCategory()%></td>
+							<td><%=quiz.getTimesTaken() %></td>
+							<td>
+							<%
+							Account creator = quiz.getQuizCreatorAccount();
+							if (creator == null) {
+							%>
+								<%=quiz.getQuizCreator() %>
+							<%
+							} else {
+							%>
+								<a href="showProfile.jsp?username=<%=creator.getUsername()%>"><%=creator.getDisplayName() %></a>
+							<%
+							}
+							%>
+							</td>
+							<td><%=quiz.getQuizTimestampString() %></td>
+						</tr>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="panel panel-primary">
+				 <div class="panel-heading">Most Popular Quizzes</div>
 <%
 					ArrayList<Quiz> popularQuizzes = QuizManager.getMostPopularQuizzes(5);
 %>
@@ -156,9 +203,13 @@ page import="objects.*, java.util.ArrayList"%>
 					</tbody>
 				</table>
 			</div>
+			
 			<div class="panel panel-primary">
-				 <div class="panel-heading">List of Recently Created Quizzes</div>
-				 <table class="table">
+				 <div class="panel-heading">Highest Rated Quizzes</div>
+<%
+					ArrayList<Quiz> highestRated = QuizManager.getHighestRatedQuizzes(5);
+%>
+				<table class="table">
 					<thead>
 						<tr>
 							<th>Quiz Name</th>
@@ -172,7 +223,7 @@ page import="objects.*, java.util.ArrayList"%>
 					</thead>
 					<tbody>
 						<%
-							for (Quiz quiz : recentQuizzes) {
+							for (Quiz quiz : highestRated) {
 						%>
 						<tr>
 							<td><a
@@ -202,8 +253,9 @@ page import="objects.*, java.util.ArrayList"%>
 					</tbody>
 				</table>
 			</div>
+			
 			<div class="panel panel-primary">
-				 <div class="panel-heading">List of Taken Quizzes</div>
+				 <div class="panel-heading">Quizzes You Have Taken</div>
 <%
 				ArrayList<Quiz> takenQuizzes = QuizManager.getQuizzesTaken(thisAccount.getUsername());
 %>
@@ -255,15 +307,6 @@ page import="objects.*, java.util.ArrayList"%>
 		</div>
 	
 		<div class="col-md-2">
-<!-- 			<h5>Additional Options:</h5>
-				<form action="/WebQuiz/quizIndex.jsp">
-						<div class="input-group">
-  						<input type="text" name = "tag" class="form-control" placeholder="keyword">
-					</div>
-					<br>
-					<button type="submit" class="btn btn-default">Search</button>
-				</form>
-				<br> -->
 				<div class="list-group">
 					<a href="/WebQuiz/accountIndex.jsp" class="list-group-item">Account Index</a>
 					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
