@@ -77,7 +77,7 @@ for (int i = 0; i < numTags; i++) {
 					    <li class="list-group-item">Total Score: <%=totalScore %></li>
 					    <li class="list-group-item">Tags: <%=tagsString %></li>
 					    
-					    					    <%--User's past performance --%>
+					    <%--User's past performance --%>
 					    <li class="list-group-item">
 <%
 						ArrayList<QuizAttempt> attempts = QuizManager.getLastAttemptsForUser(quiz_id, loggedAccount.getUsername(), 5);
@@ -129,6 +129,55 @@ for (int i = 0; i < numTags; i++) {
 						if (attempts != null) size = attempts.size();
 %>
 						Best Scores in the Last Day: 
+<%
+						if (size > 0) {
+%>
+					    	<br>
+					    	<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Username</th>
+										<th>Score</th>
+										<th>Duration</th>
+										<th>Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (QuizAttempt attempt : attempts) {
+											Account acct = AccountManager.getAccountByUsername(attempt.getUsername());
+									%>
+									<tr>
+										<td><a
+											href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
+										<td><%=acct.getUsername()%></td>
+										<td><%=attempt.getScore()%></td>
+										<td><%=attempt.getDurationString() %></td>
+										<td><%=attempt.getStartTimeStr() %></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+<%
+						} else {
+%>
+						This quiz has not been attempted in the last day.
+<%
+						}
+%>
+					    </li>
+					    
+					    <%--Everyone's recent performance on this quiz --%>
+					    <li class="list-group-item">
+<%
+						attempts = QuizManager.getLastAttemptsForQuiz(quiz_id, 5);
+						size = 0;
+						if (attempts != null) size = attempts.size();
+%>
+						Recent Performance on this Quiz: 
 <%
 						if (size > 0) {
 %>
@@ -232,7 +281,6 @@ for (int i = 0; i < numTags; i++) {
 					  			%>
 					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
 					  		<%} %>
-					  			<a href = "/WebQuiz/quizHighScores.jsp?id=<%=quiz_id %>"><button type="submit" class="btn btn-default">Quiz High Scores</button></a>
 								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a friend to take this quiz!</button></a>	
 							<%if(currentQuiz.canPractice()){ %>	
 								<a href = "/WebQuiz/practiceMode.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Practice Mode</button></a>	
