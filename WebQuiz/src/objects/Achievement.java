@@ -1,6 +1,7 @@
 package objects;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 
 public class Achievement {
 
@@ -22,6 +23,13 @@ public class Achievement {
 		this.username = username;
 		this.type = type;
 		this.description = description;
+		this.time_stamp = time_stamp;
+	}
+	
+	public Achievement(String username, Type type, Timestamp time_stamp) {
+		this.username = username;
+		this.type = type;
+		this.description = "";
 		this.time_stamp = time_stamp;
 	}
 	
@@ -72,6 +80,13 @@ public class Achievement {
 		case PRACTICE: return PRACTICE_STR;
 		default: return BAD_TYPE_STR;
 		}
+	}
+	
+	public static HashSet<Type> getTypeSet() {
+		HashSet<Type> typeSet = new HashSet<Type>();
+		for(Type type : Type.values())
+			typeSet.add(type);
+		return typeSet;
 	}
 	
 }

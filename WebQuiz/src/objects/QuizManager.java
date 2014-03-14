@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class QuizManager {
@@ -278,6 +279,9 @@ public class QuizManager {
 				if(!addTagToQuiz(quiz_id_str, tag))
 					return -1;
 			}
+			
+			updateAchievementsNewQuiz(toStore.getQuizCreator());
+			
 			return quiz_id_int;
 
 		} catch (SQLException e) {
@@ -647,6 +651,8 @@ public class QuizManager {
 					+ attempt.getDuration() + ");";
 
 			int result = stmt.executeUpdate(query);
+			
+			updateAchievementsNewAttempt(attempt.getUsername(), attempt.getQuizID());
 			return true;
 
 		} catch (SQLException e) {
@@ -673,7 +679,74 @@ public class QuizManager {
 		return null;
 
 	}
+	
+	/**
+	 * updates the achievements for the user with the specified username. Update the
+	 * achievements linked to attempting a quiz (TEN_TAKEN, HIGH_SCORE, etc).
+	 * @param username username of the Account to update Achievements
+	 * @param quiz_id ID of the quiz just taken
+	 */
+	private static void updateAchievementsNewAttempt(String username, int quiz_id) {
+		HashSet<Achievement.Type> missingAchievements = getMissingAchievements(username);
+		
+		int numAttempts = getNumQuizAttemptsUser(username);
+		
+		
+		if(missingAchievements.contains(Achievement.Type.HIGH_SCORE)) {
+			ArrayList<QuizAttempt> topAttempts = getTopAttempts(quiz_id + "", 1);
+			if(topAttempts.size() == 0) {
+				Achievement highScore = new Achievement(username, Achievement.Type.HIGH_SCORE,
+						new Timestamp(System.currentTimeMillis()));
+				QuizManager.storeAchievement(highScore);
+			} else if(topAttempts.get(0).getUsername().equals(username)) {
+				Achievement highScore = new Achievement(username, Achievement.Type.HIGH_SCORE,
+						new Timestamp(System.currentTimeMillis()));
+				QuizManager.storeAchievement(highScore);
+			}
+		}
+		
+		if(missingAchievements.contains(Achievement.Type.TEN_TAKEN)) {
+			if(numAttempts >= 10) {
+				Achievement tenTaken = new Achievement(username, Achievement.Type.TEN_TAKEN,
+						new Timestamp(System.currentTimeMillis()));
+				QuizManager.storeAchievement(tenTaken);
+			}
+		}
+	}
+	
+	private static void updateAchievementsNewQuiz(String username) {
+		HashSet<Achievement.Type> missingAchievements = getMissingAchievements(username);
 
+		int numCreated = getNumQuizzesCreatedUser(username);
+		
+		if(missingAchievements.contains(Achievement.Type.ONE_CREATED) && numCreated >= 1) {
+			Achievement oneCreated = new Achievement(username, Achievement.Type.ONE_CREATED,
+					new Timestamp(System.currentTimeMillis()));
+			QuizManager.storeAchievement(oneCreated);
+		} 
+		
+		if(missingAchievements.contains(Achievement.Type.FIVE_CREATED) && numCreated >= 5) {
+			Achievement fiveCreated = new Achievement(username, Achievement.Type.FIVE_CREATED,
+					new Timestamp(System.currentTimeMillis()));
+			QuizManager.storeAchievement(fiveCreated);
+		} 
+		
+		if(missingAchievements.contains(Achievement.Type.TEN_CREATED) && numCreated >= 10) {
+			Achievement tenCreated = new Achievement(username, Achievement.Type.TEN_CREATED,
+					new Timestamp(System.currentTimeMillis()));
+			QuizManager.storeAchievement(tenCreated);
+		}
+	}
+
+	
+	public static void updatePracticeAchievement(String username) {
+		if(getMissingAchievements(username).contains(Achievement.Type.PRACTICE)) {
+			Achievement practice = new Achievement(username, Achievement.Type.PRACTICE,
+					new Timestamp(System.currentTimeMillis()));
+			QuizManager.storeAchievement(practice);
+		}
+	}
+	
 	/**
 	 * Gets count of Quizzes created by the user, 
 	 * @param username username of Account to count quizzed created by.
@@ -699,6 +772,7 @@ public class QuizManager {
 
 			ResultSet rs = stmt.executeQuery(query);
 
+			rs.next();
 			int numCreated = rs.getInt("CreatedUser");
 			return numCreated;
 		} catch (SQLException e) {
@@ -731,8 +805,9 @@ public class QuizManager {
 					+ MyDBInfo.ATTEMPTS_TABLE + " WHERE " + ATTEMPT_USERNAME_COL + "=\"" + username + "\";";
 
 			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
 
-			int numTaken = rs.getInt("AttemtpsUser");
+			int numTaken = rs.getInt("AttemptsUser");
 			return numTaken;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -766,7 +841,7 @@ public class QuizManager {
 		}
 	}
 
-	public static ArrayList<Achievement> getAchievementsForUser(String username, int max) {
+	public static ArrayList<Achievement> getAchievementsForUser(String username) {
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -782,13 +857,13 @@ public class QuizManager {
 
 			String query = "SELECT * FROM " + MyDBInfo.ACHIEVEMENTS_TABLE + " WHERE "
 					+ ACHIEVEMENTS_USERNAME_COL + "=\"" + username + "\" ORDER BY " + ACHIEVEMENTS_TIMESTAMP_COL
-					+ " DESC LIMIT " + max + ";";
+					+ " DESC;";
 
 			ResultSet rs = stmt.executeQuery(query);
 
 			ArrayList<Achievement> resultList = new ArrayList<Achievement>();
 
-			for(int i = 0; i < max; i++) {
+			while(true) {
 				Achievement newAchievement = parseAchievement(rs);
 				if(newAchievement == null)
 					break;
@@ -803,6 +878,21 @@ public class QuizManager {
 		}
 
 
+	}
+	
+	/**
+	 * returns a set of the Achievements not earned by the user with the username passed in
+	 * @param username username of the user to check
+	 * @return HashSet<Achievement.Type> of the Achievements that the user has not yet earned.
+	 */
+	private static HashSet<Achievement.Type> getMissingAchievements(String username) {
+		HashSet<Achievement.Type> missingAchievements = Achievement.getTypeSet();
+		ArrayList<Achievement> currentAchievements = getAchievementsForUser(username);
+		for(Achievement achievement : currentAchievements)
+			missingAchievements.remove(achievement.getType());
+		
+		return missingAchievements;
+		
 	}
 
 	private static Achievement parseAchievement(ResultSet rs) throws SQLException {
@@ -846,7 +936,7 @@ public class QuizManager {
 
 
 		Quiz quiz3 = new Quiz("quiz3","this quiz is added by the manager", questionList1,
-				"john", "History", tagList1, false, false, false, 0, 0, 0.0d,
+				"sally", "History", tagList1, false, false, false, 0, 0, 0.0d,
 				new Timestamp(System.currentTimeMillis()));
 
 		int result = QuizManager.storeQuizQuestionTags(quiz3);
@@ -856,12 +946,12 @@ public class QuizManager {
 		QuizManager.storeAttempt(testAttempt);
 		ArrayList<QuizAttempt> topAttempts = QuizManager.getLastAttemptsForUser("1", "john", 5);
 
-		Achievement A1 = new Achievement("john", Achievement.Type.PRACTICE, "foo", new Timestamp(System.currentTimeMillis()));
+		/*Achievement A1 = new Achievement("john", Achievement.Type.PRACTICE, "foo", new Timestamp(System.currentTimeMillis()));
 		Achievement A2 = new Achievement("john", Achievement.Type.ONE_CREATED, "bar", new Timestamp(System.currentTimeMillis() + 2000));
 		QuizManager.storeAchievement(A1);
-		QuizManager.storeAchievement(A2);
+		QuizManager.storeAchievement(A2);*/
 
-		ArrayList<Achievement> achieveList = QuizManager.getAchievementsForUser("john", 5);
+		ArrayList<Achievement> achieveList = QuizManager.getAchievementsForUser("john");
 
 	}
 
