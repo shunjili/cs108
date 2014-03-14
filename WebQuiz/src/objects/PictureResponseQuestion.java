@@ -78,7 +78,7 @@ public class PictureResponseQuestion implements Question{
  		"\" alt=\""+ creator_id + "\"></div>" +
  		"<div class=\"input-group\">"+ 
 			"<span class=\"input-group-addon\">Your Answer</span>"+
-			 "<input name = \"" + questionID + "\"type=\"text\" class=\"form-control\" placeholder=\"You Anwer \">"+
+			 "<input name = \"" + questionID + "\"type=\"text\" class=\"form-control\" placeholder=\"Answer\">"+
 			"</div>"+
 			"</div>";
 		if(showAnswer){
