@@ -46,6 +46,7 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		//grab the necessary parameters
 		String username = request.getParameter("username");
+		String displayName = request.getParameter("displayName");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
 		boolean success = false;
@@ -67,7 +68,10 @@ public class CreateAccountServlet extends HttpServlet {
 		}
 
 		//now, try storing the account
-		Account newAccount = new Account(username);
+		if (displayName == null || displayName.equals("")) {
+			displayName = username;
+		}
+		Account newAccount = new Account(username, displayName, Account.Type.USER, false);
 		success = AccountManager.storeNewAccount(newAccount, password1);
 		if (success) {
 			Account loggedAccount = AccountManager.getAccountLogin(username, password1);
@@ -77,7 +81,8 @@ public class CreateAccountServlet extends HttpServlet {
 			request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
 		} else {
 			request.setAttribute("success", success);
-			request.getRequestDispatcher("CreateAccountUnsuccessful.html").forward(request, response);
+//			request.getRequestDispatcher("CreateAccountUnsuccessful.html").forward(request, response);
+			request.getRequestDispatcher("Login.html").forward(request, response);
 			return;
 		}
 	}
