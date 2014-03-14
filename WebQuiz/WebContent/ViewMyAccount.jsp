@@ -304,6 +304,7 @@ page import="objects.*, java.util.ArrayList"%>
 		<div class="col-md-2">
 				<div class="list-group">
 					<a href="/WebQuiz/accountIndex.jsp" class="list-group-item">Account Index</a>
+					<a href="/WebQuiz/FindFriends.jsp" class="list-group-item">Find Friends</a>
 					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
 					<a href="/WebQuiz/Leaderboard.jsp" class="list-group-item">Quiz Leaderboard</a>
 					<a href="/WebQuiz/messages.jsp" class="list-group-item"> <span class="badge"><%= MessageManager.getReceived(thisAccount.getUsername()).size()%></span>Messages</a>
