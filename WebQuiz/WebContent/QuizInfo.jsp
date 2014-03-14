@@ -43,9 +43,9 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					<div class="panel-heading"><%= currentQuiz.getQuizName() %></div>
 					<ul class="list-group">
 					    <li class="list-group-item">Category: <%=currentQuiz.getQuizCategory() %></li>
-					    <li class="list-group-item">Created By: <%=AccountManager.getAccountByUsername("john").getDisplayName() %></li>
+					    <li class="list-group-item">Created By: <%=currentQuiz.getQuizCreatorAccount().getDisplayName() %></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
-					    <li class="list-group-item">Rating: <%= currentQuiz.getQuizRating() %></li>
+					    <li class="list-group-item">Average Rating: <%= currentQuiz.getQuizRating() %></li>
 					  	<li class="list-group-item">
 					  		<%if(!currentQuiz.isOnePage()){ %>
 					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
@@ -58,6 +58,7 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					  			%>
 					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
 					  		<%} %>
+					  			<a href = "/WebQuiz/quizHighScores.jsp?id=<%=quiz_id %>"><button type="submit" class="btn btn-default">Quiz High Scores</button></a>
 								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a friend to take this quiz!</button></a>	
 							<%if(currentQuiz.canPractice()){ %>	
 								<a href = "/WebQuiz/practiceMode.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Practice Mode</button></a>	
