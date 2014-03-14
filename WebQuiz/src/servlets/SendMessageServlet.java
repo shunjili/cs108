@@ -43,13 +43,19 @@ public class SendMessageServlet extends HttpServlet {
 		}
 
 		Account thisAccount = (Account) request.getSession().getAttribute("loggedAccount");
+		if (thisAccount == null) {
+			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+			return;
+		}
 		
 		Message newMsg = new Message(thisAccount.getUsername(), receiver, messageText);
 		boolean result = MessageManager.sendMessage(newMsg);
 		if(result == true) {
 			request.getRequestDispatcher("messageSent.html").forward(request, response);
+			return;
 		} else {
 			request.getRequestDispatcher("messageFailed.html").forward(request, response);
+			return;
 		}
 
 	}

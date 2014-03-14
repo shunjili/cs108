@@ -18,9 +18,8 @@ String shownUsername = request.getParameter("username");
 Account shownAccount = AccountManager.getAccountByUsername(shownUsername);
 Account loggedAccount = (Account)session.getAttribute("loggedAccount");
 if (loggedAccount == null) {
-%>
-	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
-<%	
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
 } else if (shownAccount == null) {
 %>
 	<p>Error getting account for username <%=shownUsername %></p>

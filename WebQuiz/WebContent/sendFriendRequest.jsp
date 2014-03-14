@@ -12,6 +12,11 @@
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%
+Account thisAccount = (Account) session.getAttribute("loggedAccount");
+if (thisAccount == null) {
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
+}
 	String requester = request.getParameter("requester");
 	String requested = request.getParameter("requested");
 	Account friendAccount = AccountManager.getAccountByUsername(requested);

@@ -20,6 +20,12 @@ page import="objects.*, java.util.ArrayList"
 <title>Showing the Quiz</title>
 </head>
 <%
+Account thisAccount = (Account) session.getAttribute("loggedAccount");
+if (thisAccount == null) {
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
+}
+
 String quiz_id = request.getParameter("id");
 String msg = request.getParameter("message");
 ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);

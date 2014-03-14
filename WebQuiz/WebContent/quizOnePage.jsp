@@ -7,6 +7,7 @@ page import="objects.*, java.util.ArrayList, javax.servlet.http.HttpSession, jav
 Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 if (loggedAccount == null) {
 	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
 }
 session = request.getSession();
 String quiz_id = (String)session.getAttribute("quiz_id");

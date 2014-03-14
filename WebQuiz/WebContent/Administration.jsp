@@ -21,9 +21,8 @@
 <body>
 <%
 	if (thisAccount == null) {
-%>
-		<p>Please <a href="loginPage.jsp">login</a> to Quizville</p>
-<%
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
 	} else {
 %>
 		<%@include file="navbar.html" %>

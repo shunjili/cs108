@@ -20,11 +20,8 @@ page import="objects.*,java.util.ArrayList"%>
 			.getAttribute("loggedAccount");
 
 	if(thisAccount == null) {
-%>
-<body>
-	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
-</body>
-<%
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
 	} else {
 		ArrayList<FriendRequest> friendRequests = AccountManager.getFriendReqeustsForUser(thisAccount.getUsername());
 %>

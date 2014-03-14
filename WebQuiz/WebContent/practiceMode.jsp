@@ -20,6 +20,7 @@ page import="objects.*, java.util.ArrayList,java.sql.Timestamp, servlets.*, java
 Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
 if (loggedAccount == null) {
 	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
 }
 String quiz_id = request.getParameter("id");
 //ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);

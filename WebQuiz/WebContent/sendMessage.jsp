@@ -17,11 +17,8 @@
 	Account thisAccount = (Account) session
 			.getAttribute("loggedAccount");
 	if(thisAccount == null) {
-%>
-<body>
-	<p>Please <a href="loginPage.jsp">login</a> to send a message.<p>
-</body>
-<%
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
 	} else {
 		String toUsername = request.getParameter("toUsername");
 		Account toAccount = AccountManager.getAccountByUsername(toUsername);

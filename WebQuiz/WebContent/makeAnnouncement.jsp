@@ -16,17 +16,10 @@
 <title>Create Announcement</title>
 </head>
 <%
-	Account thisAccount = (Account) session
-			.getAttribute("loggedAccount");
+	Account thisAccount = (Account) session.getAttribute("loggedAccount");
 	if(thisAccount == null) {
-%>
-
-<body>
-	<h2>
-		Please <a href="loginPage.jsp">login</a> to send a message.
-	</h2>
-</body>
-<%
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
 	} else {
 %>
 <body>

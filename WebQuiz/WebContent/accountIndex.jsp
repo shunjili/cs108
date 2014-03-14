@@ -18,9 +18,10 @@
 		.getAttribute("loggedAccount");
 %>
 <body>
-	<% if(thisAccount == null) { %>
-	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
-	<% } else {
+	<% if(thisAccount == null) { 
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
+	} else {
 			ArrayList<Account> accounts = AccountManager.getAllActiveAccounts();
 			if (accounts == null) {
 	%>

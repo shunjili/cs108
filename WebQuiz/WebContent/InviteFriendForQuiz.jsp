@@ -18,16 +18,21 @@ page import="objects.*, java.util.ArrayList"
 <body>
 <%@include file="navbar.html" %>
 <%
+Account thisAccount = (Account) session.getAttribute("loggedAccount");
+if(thisAccount == null) { 
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
+}
 String quiz_id = request.getParameter("quiz_id");
 if(quiz_id != null){
-	String placeHolderMessage = "Hi, I would like you to take this <a href = '/WebQuiz/quiz.jsp?id="+quiz_id+"'> quiz </a> that I find really interesting!"; 
+	String placeHolderMessage = "Hi, would you like you to take this <a href = '/WebQuiz/quiz.jsp?id="+quiz_id+"'> quiz </a> ?";
 %>
 	<div class="page-header">
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-7">
 					<h1>
-						Invite a Friend <small> </small>
+						Invite a Friend
 					</h1>
 				</div>
 			</div>		

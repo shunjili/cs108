@@ -19,6 +19,11 @@ page import="objects.*, java.util.ArrayList, java.util.HashMap, servlets.*"
 <title>Review Quiz Result</title>
 </head>
 <%
+Account thisAccount = (Account) session.getAttribute("loggedAccount");
+if (thisAccount == null) {
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	return;
+}
 int score = (Integer) session.getAttribute(EvaluateOneQuizQuestionServlet.Score_Str);
 String quiz_id = request.getParameter("quiz_id");
 Long duration = (Long) session.getAttribute(EvaluateQuizServlet.Duration_str);

@@ -18,9 +18,10 @@
 		.getAttribute("loggedAccount");
 %>
 <body>
-	<% if(thisAccount == null) { %>
-	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
-	<% } else {
+	<% if(thisAccount == null) {
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
+	} else {
 			String quiz_id = request.getParameter("id");
 			Quiz quiz = QuizManager.getQuizById(quiz_id);
 			ArrayList<QuizAttempt> attempts = QuizManager.getTopAttempts(quiz_id, 5);

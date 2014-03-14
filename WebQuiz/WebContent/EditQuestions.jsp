@@ -25,8 +25,9 @@ page import="objects.*, java.util.ArrayList"
 	String msg = request.getParameter("message");
 	if (loggedAccount == null) {
 		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
 	}else if(!loggedAccount.getUsername().equals(QuizManager.getQuizById(quiz_id).getQuizCreator())){%>
-		<script>alert("You are not creator");</script>
+		<script>alert("You are not the creator of this quiz");</script>
 <% 	
 	request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
 	}

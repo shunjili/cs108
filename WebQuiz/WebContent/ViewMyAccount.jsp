@@ -19,13 +19,8 @@ page import="objects.*, java.util.ArrayList"%>
 				.getAttribute("loggedAccount");
 
 	if(thisAccount == null) {
-%>
-<body>
-	<h2>
-		Please <a href="loginPage.jsp">login</a> to view your account.
-	</h2>
-</body>
-<%
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		return;
 	} else {
 		ArrayList<AnnouncementManager.Announcement> announcements = AnnouncementManager.getRecentAnnouncements(10);
 		ArrayList<Quiz> recentQuizzes = QuizManager.getRecentQuiz(5);
