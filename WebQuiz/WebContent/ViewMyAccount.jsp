@@ -204,32 +204,52 @@ page import="objects.*, java.util.ArrayList"%>
 			</div>
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of Taken Quizzes</div>
-				 <div class="panel-body">
-					<ul class="list-group">
-						 <%ArrayList<Quiz> takenList = QuizManager.getQuizzesTaken(thisAccount.getUsername());
-						 	if(!takenList.isEmpty()){
-						 		for(Quiz quiz:takenList){
-						 %>
-						 		 <li class="list-group-item"><%=quiz.getLinkHTML(false) %></li>
-						 <%} }%>
-				 	</ul>
-				 </div>	
-			</div>	
-			<div class="panel panel-primary">
-				 <div class="panel-heading">List of recent quiz creation activity</div>
-				 <div class="panel-body">
-					<ul class="list-group">
-						 <%ArrayList<Quiz> createList = QuizManager.getMostPopularQuizzes(4);
-						 	if(!createList.isEmpty()){
-						 		for(Quiz quiz:createList){
-						 			Account creator = quiz.getQuizCreatorAccount();
-						 %>
-						 		 <li class="list-group-item">
-						 		 <a href=showProfile.jsp?username=<%=creator.getUsername()%>><%=creator.getDisplayName() %></a>
-						 		  created <%=quiz.getLinkHTML(false) %> at <%=quiz.getQuizTimestampString() %></li>
-						 <%} }%>
-				 	</ul>
-				 </div>	
+<%
+				ArrayList<Quiz> takenQuizzes = QuizManager.getQuizzesTaken(thisAccount.getUsername());
+%>
+				 <table class="table">
+					<thead>
+						<tr>
+							<th>Quiz Name</th>
+							<th>Rating</th>
+							<th>Category</th>
+							<th>Times Taken</th>
+							<th>Creator</th>
+							<th>Creation Time</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for (Quiz quiz : takenQuizzes) {
+						%>
+						<tr>
+							<td><a
+								href="QuizInfo.jsp?id=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
+							<td><%=quiz.getQuizRating()%></td>
+							<td><%=quiz.getQuizCategory()%></td>
+							<td><%=quiz.getTimesTaken() %></td>
+							<td>
+							<%
+							Account creator = quiz.getQuizCreatorAccount();
+							if (creator == null) {
+							%>
+								<%=quiz.getQuizCreator() %>
+							<%
+							} else {
+							%>
+								<a href="showProfile.jsp?username=<%=creator.getUsername()%>"><%=creator.getDisplayName() %></a>
+							<%
+							}
+							%>
+							</td>
+							<td><%=quiz.getQuizTimestampString() %></td>
+						</tr>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
 			</div>				
 
 		</div>
