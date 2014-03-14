@@ -21,11 +21,75 @@ public class AnnouncementManager {
 	public static class Announcement {
 		String username;
 		String announcement;
+		Timestamp timestamp;
 		public Announcement(String username, String announcementText){
 			this.username = username;
 			this.announcement = announcementText;
+			this.timestamp = null;
+		}
+		
+		public Announcement(String username, String announcementText, Timestamp timestamp) {
+			this.username = username;
+			this.announcement = announcementText;
+			this.timestamp = timestamp;
+		}
+		
+		public String getAnnouncementUsername() {
+			return this.username;
+		}
+		
+		public String getAnnouncementText() {
+			return this.announcement;
+		}
+		
+		public Timestamp getAnnouncementTimestamp() {
+			return this.timestamp;
+		}
+		
+		public String getAnnouncementTimestampString() {
+			return this.timestamp.toString();
 		}
 	}
+	
+	public static ArrayList<Announcement> getAllAnnouncements() {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ANNOUNCEMENTS_TABLE;
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+			ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+
+			String username;
+			String announcementText;
+			Timestamp timestamp;
+			while(rs.next()) {
+				username = rs.getString(USERNAME_COL);
+				announcementText = rs.getString(ANNOUNCEMENT_COL);
+				timestamp = rs.getTimestamp(TIMESTAMP_COL);
+				Announcement a = new Announcement(username, announcementText, timestamp);
+				announcements.add(a);
+			}
+			con.close();
+			return announcements;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static boolean makeAnnouncement(Announcement announcement){
 		//check the announcer is valid 
 		if(!AccountManager.usernameExists(announcement.username))
