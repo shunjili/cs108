@@ -51,7 +51,7 @@ public class SendMessageServlet extends HttpServlet {
 		Message newMsg = new Message(thisAccount.getUsername(), receiver, messageText);
 		boolean result = MessageManager.sendMessage(newMsg);
 		if(result == true) {
-			request.getRequestDispatcher("messageSent.html").forward(request, response);
+			request.getRequestDispatcher("showProfile.jsp?username="+ receiver).forward(request, response);
 			return;
 		} else {
 			request.getRequestDispatcher("messageFailed.html").forward(request, response);

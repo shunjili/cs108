@@ -14,21 +14,22 @@
 </head>
 <body>
 <%
-String shownUsername = request.getParameter("username");
-Account shownAccount = AccountManager.getAccountByUsername(shownUsername);
 Account loggedAccount = (Account)session.getAttribute("loggedAccount");
 if (loggedAccount == null) {
 	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
 	return;
-} else if (shownAccount == null) {
+}
+String shownUsername = request.getParameter("username");
+Account shownAccount = AccountManager.getAccountByUsername(shownUsername);
+if (shownAccount == null) {
 %>
 	<p>Error getting account for username <%=shownUsername %></p>
 	<p>Return to <a href="loginPage.jsp">homepage</a></p>
-<%		
+<%	
 } else if (!shownAccount.isActive()) {
 %>
 	<p><%=shownAccount.getDisplayName() %>'s account has been disabled.</p>
-<%
+<%	
 } else {
 	String shownDisplayName = shownAccount.getDisplayName();
 	String loggedUsername = loggedAccount.getUsername();
@@ -480,6 +481,5 @@ if (loggedAccount == null) {
 	}
 }
 %>
-
 </body>
 </html>
