@@ -59,9 +59,9 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
 					  		<%} %>
 								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a Friend for this Quiz!</button></a>	
-							<%if(currentQuiz.isPracticable()){ %>	
+							<%if(currentQuiz.canPractice()){ %>	
 								<a href = "/WebQuiz/practiceMode.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Practice Mode</button></a>	
-							<%} %>
+							<%}%>	
 							<%if(currentQuiz.getQuizCreator().equals(loggedAccount.getUsername())){ %>	
 								<a href = "/WebQuiz/EditQuestions.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Edit Questions</button></a>	
 							<%} %>						  		  	

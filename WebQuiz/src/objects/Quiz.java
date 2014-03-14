@@ -99,7 +99,7 @@ public class Quiz {
 		if(admin){
 			link = "/WebQuiz/createQuestions.jsp?id="+id;
 		}
-		String html = "<a href = \"" + link + "\">" + name + "<a>";
+		String html = "<a href = \"" + link + "\">" + name + "</a>";
 		return html;
 	}
 	
@@ -163,11 +163,6 @@ public class Quiz {
 	
 	public boolean isRandomOrder() {
 		return this.randomOrder;
-	}
-	
-	public boolean isPracticable() {
-		//implemented by steven
-		return false;
 	}
 	
 	public int getTimesTaken() {

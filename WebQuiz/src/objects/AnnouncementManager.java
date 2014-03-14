@@ -157,7 +157,7 @@ public class AnnouncementManager {
 		}
 	}
 	
-	public static ArrayList<String> getRecentAnnouncements(int maxLimit){
+	public static ArrayList<Announcement> getRecentAnnouncements(int maxLimit){
 		//Check for user in database
 		try {
 			try {
@@ -173,16 +173,23 @@ public class AnnouncementManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.ANNOUNCEMENTS_TABLE;
+			String query = "SELECT * FROM " + MyDBInfo.ANNOUNCEMENTS_TABLE + " ORDER BY "
+					+ TIMESTAMP_COL + " DESC LIMIT " + maxLimit + ";";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
-			ArrayList<String> resultList = new ArrayList<String>();
+			ArrayList<Announcement> resultList = new ArrayList<Announcement>();
 
+			String username;
 			String announcement;
+			Timestamp timestamp;
+			
 			while(rs.next()) {
+				username = rs.getString(USERNAME_COL);
 				announcement = rs.getString(ANNOUNCEMENT_COL);
-				resultList.add(announcement);
+				timestamp = rs.getTimestamp(TIMESTAMP_COL);
+				
+				resultList.add(new Announcement(username, announcement, timestamp));
 			}
 			con.close();
 			return resultList;

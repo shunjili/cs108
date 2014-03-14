@@ -105,22 +105,30 @@ public class MultipleChoiceQuestion implements Question {
 		return html;
 	}
 	
-	public boolean isCorrect(ArrayList<String> userAnswers){		
-		ArrayList<String> answers = new ArrayList<String>();
-		answers = QuestionManager.getAnswers(questionID);
-		//check answer might have multiple user answers 
-		int len = userAnswers.size();
-		boolean flag = true;
-		for(int i = 0; i < len; i++){
-			// if any of the solutions are not in the answer then it's false
-			if(!answers.contains(userAnswers.get(i).trim())){
-				System.out.println(userAnswers.get(i));
-				flag = false;
-				break;
-			}
-		}		
-		//return flag
-		return flag;	
+	public boolean isCorrect(ArrayList<String> userAnswers){
+		if(userAnswers==null || userAnswers.size() <=0||userAnswers.contains(null)){
+			return false;
+		}else{
+			ArrayList<String> answers = new ArrayList<String>();
+			answers = QuestionManager.getAnswers(questionID);
+			//check answer might have multiple user answers 
+			int len = userAnswers.size();
+			boolean flag = true;
+			for(int i = 0; i < len; i++){
+				// if any of the solutions are not in the answer then it's false
+				//String temp = userAnswers.get(i);
+				//System.out.println(temp);
+				//temp = temp.trim();
+				//System.out.println(temp);
+				if(!answers.contains(userAnswers.get(i).trim())){
+					System.out.println(userAnswers.get(i));
+					flag = false;
+					break;
+				}
+			}		
+			//return flag
+			return flag;
+		}
 	}
 
 	public int getScore(ArrayList<String> userAnswers){
@@ -148,7 +156,7 @@ public class MultipleChoiceQuestion implements Question {
 		}		
 		htmlContent += "</td><td>";
 
-		if(userAnswers == null){
+		if(userAnswers == null||userAnswers.contains(null)){
 			htmlContent += "";
 			htmlContent += "&nbsp;"; 
 		}else{

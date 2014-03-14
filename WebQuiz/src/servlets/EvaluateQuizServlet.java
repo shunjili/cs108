@@ -66,7 +66,7 @@ public class EvaluateQuizServlet extends HttpServlet {
 				Question question = questions.get(i);
 				String answer = request.getParameter(question.getQuestionID());
 				ArrayList<String> answers= new ArrayList<String>();
-				if(answer == null || answer.isEmpty()) answer = "0";
+				if(answer == null || answer.isEmpty()) answer = null;
 				answers.add(answer);
 				questionAnswerHash.put(question, answers);
 				questionList.add(question);

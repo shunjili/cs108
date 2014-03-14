@@ -48,6 +48,12 @@ public class CreateQuestionServlet extends HttpServlet {
 		String scoreString = request.getParameter("score").replace("\"", "\\\"");
 		String description = request.getParameter("description");
 		int score = 0;
+		
+		if (question == null || question.equals("")||answer == null || answer.equals("")) {
+			request.getRequestDispatcher("createQuestions.jsp?id="+quiz_id+"&message=invalid input!").forward(request, response);
+			return;
+		}
+		
 		try {
 			score = Integer.parseInt(scoreString);
 		} catch (NumberFormatException e) {

@@ -69,7 +69,11 @@ public class CreateQuizServlet extends HttpServlet {
 		boolean correctImmediately = Boolean.parseBoolean(request.getParameter("correctImmediately"));
 		boolean onePage = Boolean.parseBoolean(request.getParameter("onePage"));
 		boolean randomOrder = Boolean.parseBoolean(request.getParameter("randomOrder"));
-		boolean canPractice = Boolean.parseBoolean(request.getParameter("canPractice"));
+		boolean flag = Boolean.parseBoolean(request.getParameter("canPractice"));
+		int canPractice = 0;
+		if(flag){
+			canPractice = 1;
+		}
 
 		
 		int timesTaken = 0;
@@ -77,7 +81,8 @@ public class CreateQuizServlet extends HttpServlet {
 		double rating = 0;
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		
-		Quiz toStore = new Quiz(name, description, Questions, creator, category, tags,correctImmediately, onePage, randomOrder, timesTaken, numReviews, rating, timeStamp);
+		
+		Quiz toStore = new Quiz(name, description, Questions, creator, category, tags,correctImmediately, onePage, randomOrder, timesTaken, numReviews, rating, timeStamp, 1,flag);
 		int quiz_id = QuizManager.storeQuizQuestionTags(toStore);
 		toStore.setQuizID(quiz_id);
 		
