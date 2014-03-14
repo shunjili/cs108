@@ -1139,6 +1139,11 @@ public class QuizManager {
 	//main method for testing
 	public static void main(String[] args) {
 
+		Account testAcct = new Account("mary", "Mary Thompson", Account.Type.USER, true, true);
+		boolean resultBool = AccountManager.storeNewAccount(testAcct, "asdf");
+		
+		AccountManager.makeUserAdmin("mary");
+		
 		AccountManager.disableAccount("john");
 		Account acct1 = AccountManager.getAccountByUsername("john");
 		AccountManager.enableAccount("john");

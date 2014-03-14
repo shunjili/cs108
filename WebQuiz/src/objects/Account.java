@@ -2,6 +2,8 @@ package objects;
 
 public class Account {
 	
+	public static final String ADMIN_STR = "ADMIN";
+	
 	public enum Type{USER, ADMIN};
 	
 	
