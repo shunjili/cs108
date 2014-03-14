@@ -135,13 +135,20 @@ page import="objects.*, java.util.ArrayList"%>
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of Taken Quizzes</div>
 				 <div class="panel-body">
-
+				
 				 </div>	
 			</div>	
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of their recent quiz creating activities</div>
 				 <div class="panel-body">
-
+					<ul class="list-group">
+						 <%ArrayList<Quiz> createList = QuizManager.getMostPopularQuizzes(4);
+						 	if(!quizlist.isEmpty()){
+						 		for(Quiz quiz:createList){
+						 %>
+						 		 <li class="list-group-item"><%=quiz.getLinkHTML(false) %></li>
+						 <%} }%>
+				 	</ul>
 				 </div>	
 			</div>				
 

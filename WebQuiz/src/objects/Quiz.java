@@ -99,7 +99,7 @@ public class Quiz {
 		if(admin){
 			link = "/WebQuiz/createQuestions.jsp?id="+id;
 		}
-		String html = "<a href = \"" + link + "\">" + name + "<a>";
+		String html = "<a href = \"" + link + "\">" + name + "</a>";
 		return html;
 	}
 	
