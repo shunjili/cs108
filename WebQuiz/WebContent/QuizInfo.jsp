@@ -24,13 +24,13 @@ if (loggedAccount == null) {
 }
 String quiz_id = request.getParameter("id");
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
-ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
 ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 int totalScore = 0;
 int numQuestions = questions.size();
 for (int i = 0; i < numQuestions; i++) {
 	totalScore += questions.get(i).getScore();
 }
+ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
 String tagsString = "";
 int numTags = tags.size();
 for (int i = 0; i < numTags; i++) {
