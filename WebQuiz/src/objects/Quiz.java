@@ -165,11 +165,6 @@ public class Quiz {
 		return this.randomOrder;
 	}
 	
-	public boolean isPracticable() {
-		//implemented by steven
-		return false;
-	}
-	
 	public int getTimesTaken() {
 		return this.timesTaken;
 	}

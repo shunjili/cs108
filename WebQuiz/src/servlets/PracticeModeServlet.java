@@ -55,11 +55,10 @@ public class PracticeModeServlet extends HttpServlet {
 		//the user dont have to login in in practice mode
 		
 		
-//		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
-//		if (loggedAccount == null) {
-//			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
-//			return;
-//		}
+		Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+		if (loggedAccount == null) {
+			request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+		}
 				
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
@@ -95,7 +94,9 @@ public class PracticeModeServlet extends HttpServlet {
 			//store the quiz attempt before reseting the start time
 			session.setAttribute(StartingTime_Str, null);
 		}
-
+		
+		QuizManager.updatePracticeAchievement(loggedAccount.getUsername());
+		
 		session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str, score);
 		session.setAttribute(Hash_Str, questionAnswerHash);
 		session.setAttribute(Questions_Str, questionList);
