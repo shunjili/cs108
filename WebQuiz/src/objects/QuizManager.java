@@ -1179,6 +1179,10 @@ public class QuizManager {
 
 		ArrayList<Achievement> achieveList = QuizManager.getAchievementsForUser("john");
 		Quiz testQuery = QuizManager.getQuizById(result + "");
+		
+		ArrayList<Quiz> quizPopular = QuizManager.getMostPopularQuizzes(5);
+		ArrayList<Quiz> quizRated = QuizManager.getHighestRatedQuizzes(5);
+		int attemptCount = QuizManager.getTotalAttempts();
 
 	}
 

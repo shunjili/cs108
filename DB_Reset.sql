@@ -26,6 +26,7 @@ CREATE TABLE Accounts (
     salt CHAR(80),
 	type CHAR(64),
 	isPrivate TINYINT(1),
+	isActive TINYINT(1),
 	PRIMARY KEY(username)
 );
 
@@ -145,9 +146,9 @@ CREATE TABLE Accouncements (
 );
 
 INSERT INTO Accounts VALUES
-	("john","John Smith","94f8f397b809abadcc4730044e28ba93a21d7db0","d47242a3114bc14d2309e9f45bec20f2f781b2d0","USER",0),
-	("sally","Sally Jones","1ba0f068fe9d0f424d92bf50a04dee5e9025617a","cba8a56de43d217c7f14fe64daf10f5186d2548d","USER",1),
-	("mark","Mark","37b6b4c2556c9a4cf407d102fd4dcd7570a73c5d","2bb15325f19921ff236829a7cba3747bec127e2d","ADMIN",1);
+	("john","John Smith","94f8f397b809abadcc4730044e28ba93a21d7db0","d47242a3114bc14d2309e9f45bec20f2f781b2d0","USER",0,1),
+	("sally","Sally Jones","1ba0f068fe9d0f424d92bf50a04dee5e9025617a","cba8a56de43d217c7f14fe64daf10f5186d2548d","USER",1,1),
+	("mark","Mark","37b6b4c2556c9a4cf407d102fd4dcd7570a73c5d","2bb15325f19921ff236829a7cba3747bec127e2d","ADMIN",1,1);
 
 INSERT INTO Messages (sender, receiver, message, time_stamp) VALUES
 	("john","sally","Test message from John to Sally", NOW()),
