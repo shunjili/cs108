@@ -147,8 +147,7 @@ public class AccountManager {
 		}
 	}
 	
-	public static ArrayList<Account> getAllActiveAccounts() {
-		ArrayList<Account> accountList = new ArrayList<Account>();
+	public static ArrayList<Account> getAllActiveAccounts() {		ArrayList<Account> accountList = new ArrayList<Account>();
 		//Check for user in database
 		try {
 			try {
@@ -164,7 +163,7 @@ public class AccountManager {
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
 			//prepare query
-			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + ";";
+			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + " WHERE " + ISACTIVE_COL + ">0 ;";
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -172,8 +171,8 @@ public class AccountManager {
 			while(resultAccount != null) {
 				if (resultAccount.isActive()) {
 					accountList.add(resultAccount);
-					resultAccount = parseAccount(rs);
 				}
+				resultAccount = parseAccount(rs);
 			}
 
 			//if we reach this point, there was no account found, or the password was incorrect
