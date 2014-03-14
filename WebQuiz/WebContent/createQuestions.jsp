@@ -21,6 +21,7 @@ page import="objects.*, java.util.ArrayList"
 </head>
 <%
 String quiz_id = request.getParameter("id");
+String msg = request.getParameter("message");
 ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 int questionIndex = 0;
 if(Questions != null){
@@ -40,6 +41,11 @@ if(Questions != null){
 	</div>
 	<div class="col-md-3"></div>
 	<div class="col-md-7">
+		<div>
+			<%if(msg != null){ %>
+				<%=msg%>
+				<%} %>
+		</div>
 		<div class="panel panel-primary">
 			<div class="panel-heading">Create a New Question</div>
 			<div class="panel-body">
