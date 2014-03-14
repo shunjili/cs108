@@ -40,7 +40,14 @@
 <%
 		if (thisAccount.getType() != Account.Type.ADMIN) {
 %>
-			<p>You do not have access to this page, since you are not an Administrator.</p>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<p>
+						You do not have access to this page, since you are not an Administrator.
+					</p>
+				</div>
+			</div>
 <%
 		} else {
 %>
@@ -66,6 +73,7 @@
 												<th>Name</th>
 												<th>Username</th>
 												<th>Type</th>
+												<th>Privacy</th>
 												<th>Disable Account</th>
 												<th>Make Admin</th>
 											</tr>
@@ -82,6 +90,19 @@
 													href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
 												<td><%=acct.getUsername()%></td>
 												<td><%=acct.getTypeString()%></td>
+												<td>
+<%
+												if (acct.isPrivate()) {
+%>
+													PRIVATE
+<%								
+												} else {
+%>
+													PUBLIC
+<%									
+												}
+%>
+												</td>
 												<td>
 <%
 													if (type == Account.Type.ADMIN) {
