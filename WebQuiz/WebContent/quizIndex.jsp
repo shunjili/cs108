@@ -21,7 +21,13 @@
 	<% if(thisAccount == null) { %>
 	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
 	<% } else {
-			ArrayList<Quiz> quizzes = QuizManager.getAllQuizzes();
+			String tag = request.getParameter("tag");
+			ArrayList<Quiz> quizzes;
+			if(tag != null){
+				quizzes = QuizManager.getQuizzesWithTag(tag);
+			}else{
+				ArrayList<Quiz> quizzes = QuizManager.getAllQuizzes();	
+			}
 			if (quizzes == null) {
 	%>
 	<h1>Error getting quizzes.</h1>
