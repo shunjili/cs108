@@ -83,7 +83,7 @@ if(Questions != null){
 			 			<br>
 						<div class="input-group">
 			 				<span class="input-group-addon">Correct Answer</span>
-			  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+			  				<input type="text" name = "answer" class="form-control" placeholder="If you have multiple answers , seperate them with #">
 						</div>
 						<br>
 			 			<div class="input-group">
@@ -186,7 +186,7 @@ if(Questions != null){
 			 			<br>
 						<div class="input-group">
 			 				<span class="input-group-addon">Correct Answer</span>
-			  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+			  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
 						</div>
 						<br>
 			 			<div class="input-group">

@@ -77,8 +77,7 @@ public class PracticeModeServlet extends HttpServlet {
 					answer = null;
 					answers.add(answer);
 				}else{
-					String[] ans = (HtmlEscape.escape(answer)).split("##");	
-//					String[] ans = ((answer)).split("##");
+					String[] ans = (HtmlEscape.escape(answer)).split("#");	
 					for(int j = 0; j < ans.length;j++){
 						answers.add(ans[j]);
 					}

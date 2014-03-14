@@ -117,7 +117,7 @@ page import="objects.*, java.util.ArrayList"
 												</div><br>
 												<div class="input-group">
 									 				<span class="input-group-addon">Correct Answer</span>
-									  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+									  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
 												</div><br>
 									 			 <div class="input-group">
 									 				<span class="input-group-addon">Tag(Optional)</span>
@@ -179,7 +179,7 @@ page import="objects.*, java.util.ArrayList"
 												</div><br>
 												<div class="input-group">
 									 				<span class="input-group-addon">Correct Answer</span>
-									  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+									  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
 												</div><br>
 									 			<div class="input-group">
 									 				<span class="input-group-addon">Tag(Optional)</span>
@@ -269,7 +269,7 @@ page import="objects.*, java.util.ArrayList"
 								</div><br>
 								<div class="input-group">
 					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+					  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
 								</div><br>
 					 			 <div class="input-group">
 					 				<span class="input-group-addon">Tag(Optional)</span>
@@ -339,7 +339,7 @@ page import="objects.*, java.util.ArrayList"
 								</div><br>
 								<div class="input-group">
 					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+					  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
 								</div><br>
 					 			<div class="input-group">
 					 				<span class="input-group-addon">Tag(Optional)</span>
@@ -370,7 +370,7 @@ page import="objects.*, java.util.ArrayList"
 					 			<br>
 								<div class="input-group">
 					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+					  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
 								</div>
 								<br>
 					 			<div class="input-group">

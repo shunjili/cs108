@@ -44,6 +44,11 @@ public class CreateQuestionServlet extends HttpServlet {
 		String quiz_id = request.getParameter("quiz_id").replace("\"", "\\\"");
 		String question = HtmlEscape.escape(request.getParameter("question"));
 		String answer = HtmlEscape.escape(request.getParameter("answer"));
+		String[] answerArray = answer.split("#");
+		boolean multipleAnswer = false;
+		if(answerArray.length >=1){
+			multipleAnswer = true;
+		}
 		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
 		String scoreString = HtmlEscape.escape(request.getParameter("score"));
 		String description = HtmlEscape.escape(request.getParameter("description"));
@@ -89,10 +94,19 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, description, loggedAccount.getUsername(), score, timeStamp);
-		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){
-			System.out.println("Success stored question");
+		
+		if(multipleAnswer){
+			if(QuestionManager.storeNewQuestionMultiple(toStore, quiz_id, index, answerArray) >=0){
+				System.out.println("Success stored question");
+			}else{
+				System.out.println("Failed to store the questions");
+			}
 		}else{
-			System.out.println("Failed to store the questions");
+			if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){
+				System.out.println("Success stored question");
+			}else{
+				System.out.println("Failed to store the questions");
+			}
 		}
 		String returnURL = String.format("createQuestions.jsp?id=%s", quiz_id);
 		request.getRequestDispatcher(returnURL).forward(request, response);

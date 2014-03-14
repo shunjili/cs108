@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -115,7 +116,11 @@ public class EvaluateOneQuizQuestionServlet extends HttpServlet {
 			String answer = request.getParameter(question.getQuestionID());
 			ArrayList<String> answers= new ArrayList<String>();
 			if(answer == null|| answer.isEmpty()) answer = "You did not answer this question";
-			answers.add(answer);
+			if(answer.split("#").length >1){
+				answers =  (ArrayList<String>) Arrays.asList(answer.split("#"));
+			}else{
+				answers.add(answer);
+			}
 			questionAnswerHash.put(question, answers);
 			questionList.add(question);
 			if(question.isCorrect(answers)){
