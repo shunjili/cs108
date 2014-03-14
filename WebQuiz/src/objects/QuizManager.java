@@ -1117,7 +1117,7 @@ public class QuizManager {
 			//prepare query
 			String query = "SELECT A.* FROM " + MyDBInfo.ATTEMPTS_TABLE + " A LEFT OUTER JOIN " + MyDBInfo.ATTEMPTS_TABLE
 					+ " B ON (A." + ATTEMPT_USERNAME_COL + "= B." + ATTEMPT_USERNAME_COL + " AND A." + ATTEMPT_SCORE_COL + " < B." + ATTEMPT_SCORE_COL
-					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL AND " + ATTEMPT_QUIZ_ID_COL + "= " + quiz_id + " AND A." + ATTEMPT_START_COL + ">=DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY "
+					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL AND A." + ATTEMPT_QUIZ_ID_COL + "= " + quiz_id + " AND A." + ATTEMPT_START_COL + ">=DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY "
 					+ ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
 
 
@@ -1531,7 +1531,7 @@ public class QuizManager {
 	//main method for testing
 	public static void main(String[] args) {
 		
-		ArrayList<Account> testSearch = AccountManager.getAccountsByDisplayName("mar");
+	//	ArrayList<Account> testSearch = AccountManager.getAccountsByDisplayName("mar");
 		
 		//QuizManager.clearQuizHistory("3");
 		
@@ -1578,8 +1578,9 @@ public class QuizManager {
 		quiz3.setQuizID(result);
 
 		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
-		QuizManager.storeAttempt(testAttempt);
-		ArrayList<QuizAttempt> topAttempts = QuizManager.getTopAttemptsLastDay("1", 5); */
+		QuizManager.storeAttempt(testAttempt); */
+		ArrayList<QuizAttempt> topAttempts = QuizManager.getTopAttemptsLastDay("1", 5); 
+		
 
 		/*Achievement A1 = new Achievement("john", Achievement.Type.PRACTICE, "foo", new Timestamp(System.currentTimeMillis()));
 		Achievement A2 = new Achievement("john", Achievement.Type.ONE_CREATED, "bar", new Timestamp(System.currentTimeMillis() + 2000));
