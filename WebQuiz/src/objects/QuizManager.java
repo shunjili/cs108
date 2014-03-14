@@ -165,6 +165,45 @@ public class QuizManager {
 		}
 	}
 	
+	public static ArrayList<Quiz> getAllQuizzesMostTakenOrder() {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " ORDER BY "
+					+ NUMBER_OF_TIMES_TAKEN_COL + " DESC;";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+
+			while(true) {
+				Quiz resultQuiz = parseQuiz(rs);
+				if(resultQuiz == null)
+					break;
+				else
+					quizzes.add(resultQuiz);
+			}
+			con.close();
+			return quizzes;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * Gets the quizzes sorted by the number of times taken. Highest number of times
 	 * taken come first.
@@ -188,6 +227,45 @@ public class QuizManager {
 			//prepare query
 			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " ORDER BY "
 					+ AVERAGE_RATING_COL + " DESC LIMIT " + max + ";";
+
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
+
+			while(true) {
+				Quiz resultQuiz = parseQuiz(rs);
+				if(resultQuiz == null)
+					break;
+				else
+					quizzes.add(resultQuiz);
+			}
+			con.close();
+			return quizzes;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static ArrayList<Quiz> getHighestRatedQuizzes() {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.QUIZ_TABLE + " ORDER BY "
+					+ AVERAGE_RATING_COL + " DESC;";
 
 			//execute the query
 			ResultSet rs = stmt.executeQuery(query);
