@@ -139,8 +139,15 @@ page import="objects.*, java.util.ArrayList"%>
 					<a href="/WebQuiz/quizIndex.jsp" class="list-group-item">Quizzes</a>
 					<a href="/WebQuiz/messages.jsp" class="list-group-item"> <span class="badge"><%= MessageManager.getReceived(thisAccount.getUsername()).size()%></span>Messages</a>
 					<a href = "/WebQuiz/FriendRequests.jsp" class="list-group-item"> 
-				<span class="badge"><%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></span>Friend Requests</a>
+						<span class="badge"><%= AccountManager.getFriendReqeustsForUser(thisAccount.getUsername()).size()%></span>Friend Requests</a>
+<%
+					if (thisAccount.getType() == Account.Type.ADMIN) {
+%>
 					<a href = "/WebQuiz/makeAnnouncement.jsp" class="list-group-item">Create Announcement</a>
+					<a href="/WebQuiz/Administration.jsp" class="list-group-item">Administration</a>
+<%
+					}
+%>
 					<a href="/WebQuiz/loginPage.jsp" class="list-group-item">Logout</a>
 				</div>
 		</div>

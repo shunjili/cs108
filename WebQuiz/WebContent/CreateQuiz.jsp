@@ -69,7 +69,7 @@
 		  				<span class="input-group-addon">Random Order
 		  				<input type="checkbox" name="randomOrder" value = True>
 		  				</span>
-		  				<span class="input-group-addon">Can be Taken in Practice Mode
+		  				<span class="input-group-addon">Can be taken in Practice Mode
 		  				<input type="checkbox" name="canPractice" value = True>
 		  				</span>
 					</div>
