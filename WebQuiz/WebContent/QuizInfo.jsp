@@ -43,7 +43,11 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Rating: <%= currentQuiz.getQuizRating() %></li>
 					  	<li class="list-group-item">
+					  		<%if(!currentQuiz.isOnePage()){ %>
 					  		<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
+					  		<%}else{ %>
+					  		<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
+					  		<%} %>
 							<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a Friend for this Quiz!</button></a>					  	
 					  	</li>
 					  	

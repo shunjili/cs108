@@ -69,12 +69,13 @@ page import="objects.*, java.util.ArrayList"
 						<div class="panel-heading">Edit the Question</div>
 						 	<div class="panel-body">
 						 		<ul class="nav nav-tabs">
-			  						<li class="active"><a href="#question_response" data-toggle="tab">Question Response</a></li>
-			  						<li><a href="#multiple_choice" data-toggle="tab">Multiple Choice</a></li>
-			  						<li><a href="#filling_blank" data-toggle="tab">Filling the blank</a></li>
+			  						<li class="active"><a href=<%="\"#question_response" + j + "\""%> data-toggle="tab">Question Response</a></li>
+			  						<li><a href=<%="\"#multiple_choice" + j + "\""%> data-toggle="tab">Multiple Choice</a></li>
+			  						<li><a href=<%="\"#filling_blank" + j + "\""%> data-toggle="tab">Filling the blank</a></li>
+			  						<li><a href=<%="\"#picture_response" + j + "\""%> data-toggle="tab">Filling the blank</a></li>
 								</ul>
 								<div class="tab-content"><br>
-			  						<div class="tab-pane active" id="question_response">
+			  						<div class="tab-pane active" id=<%="\"question_response" + j + "\""%>>
 							    		<form action="UpdateQuestionInEditQuestionServlet" method="post">
 											<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 											<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
@@ -102,7 +103,7 @@ page import="objects.*, java.util.ArrayList"
 											<button type="submit" class="btn btn-default">Submit</button>
 										</form>
 			  						</div>
-			  						<div class="tab-pane" id="multiple_choice">
+			  						<div class="tab-pane" id=<%="\"multiple_choice" + j + "\""%>>
 			  							<form action="UpdateQuestionInEditQuestionServlet" method="post">
 											<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 											<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
@@ -136,7 +137,7 @@ page import="objects.*, java.util.ArrayList"
 											<button type="submit" class="btn btn-default">Submit</button>	
 						 				</form>
 			  						</div>
-			  						<div class="tab-pane" id="filling_blank">
+			  						<div class="tab-pane" id=<%="\"filling_blank" + j + "\""%>>
 			  							<form action="UpdateQuestionInEditQuestionServlet" method="post">
 											<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 											<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
@@ -164,6 +165,39 @@ page import="objects.*, java.util.ArrayList"
 											<button type="submit" class="btn btn-default">Submit</button>
 						 				</form>
 									</div>
+									<div class="tab-pane" id=<%="\"picture_response" + j + "\""%>>
+					  					<form action="CreateQuestionServlet" method="post">
+											<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+											<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
+											<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">
+								    		<div class="input-group">
+					 							<span class="input-group-addon">Question</span>
+					  							<input type="text"  name = "question" class="form-control" placeholder="Question">
+											</div>
+					 			 			<br>
+								 			<div class="input-group">
+								 				<span class="input-group-addon">Score</span>
+								  				<input type="text"  name = "score" class="form-control" placeholder="score">
+											</div>
+								 			<br>
+								 			<div class="input-group">
+								 				<span class="input-group-addon">Picture Resourse</span>
+								  				<input type="text"  name = "description" class="form-control" placeholder="URL for Picture Resourse">
+											</div>
+								 			<br>
+											<div class="input-group">
+								 				<span class="input-group-addon">Correct Answer</span>
+								  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+											</div>
+											<br>
+								 			<div class="input-group">
+								 				<span class="input-group-addon">Tag(Optional)</span>
+								  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
+											</div>
+											<br>
+											<button type="submit" class="btn btn-default">Add Question</button>
+										</form>
+					  				</div>
 								</div>
 							</div>
 						</div>
@@ -190,6 +224,7 @@ page import="objects.*, java.util.ArrayList"
   						<li class="active"><a href="#question_response" data-toggle="tab">Question Response</a></li>
   						<li><a href="#multiple_choice" data-toggle="tab">Multiple Choice</a></li>
   						<li><a href="#filling_blank" data-toggle="tab">Filling the blank</a></li>
+  						<li><a href="#picture_response" data-toggle="tab">Picture Response</a></li>
 					</ul>
 					<div class="tab-content"><br>
   						<div class="tab-pane active" id="question_response">
@@ -282,6 +317,39 @@ page import="objects.*, java.util.ArrayList"
 								<button type="submit" class="btn btn-default">Submit</button>
 			 				</form>
 						</div>
+						<div class="tab-pane" id="picture_response">
+		  					<form action="CreateQuestionServlet" method="post">
+								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+								<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
+								<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">
+					    		<div class="input-group">
+		 							<span class="input-group-addon">Question</span>
+		  							<input type="text"  name = "question" class="form-control" placeholder="Question">
+								</div>
+		 			 			<br>
+					 			<div class="input-group">
+					 				<span class="input-group-addon">Score</span>
+					  				<input type="text"  name = "score" class="form-control" placeholder="score">
+								</div>
+					 			<br>
+					 			<div class="input-group">
+					 				<span class="input-group-addon">Picture Resourse</span>
+					  				<input type="text"  name = "description" class="form-control" placeholder="URL for Picture Resourse">
+								</div>
+					 			<br>
+								<div class="input-group">
+					 				<span class="input-group-addon">Correct Answer</span>
+					  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+								</div>
+								<br>
+					 			<div class="input-group">
+					 				<span class="input-group-addon">Tag(Optional)</span>
+					  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
+								</div>
+								<br>
+								<button type="submit" class="btn btn-default">Add Question</button>
+							</form>
+		  				</div>
 					</div>
 				</div>
 			</div>

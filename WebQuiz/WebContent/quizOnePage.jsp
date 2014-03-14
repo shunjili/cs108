@@ -11,6 +11,7 @@ if(quiz_id == null){
 	quiz_id = request.getParameter("id");
 	session.setAttribute("quiz_id",quiz_id);
 }
+Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
 ArrayList<Question> Questions = (ArrayList<Question>) session.getAttribute(EvaluateOneQuizQuestionServlet.CurQuestion_Str);
 if(Questions == null || Questions.size() <= 0){
 	Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
@@ -72,7 +73,7 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-7">
-				<%if(valid){ 
+				<%if(valid&&currentQuiz.isCorrectedImmediately()){ 
 					//for(int i = 0; i < questions.size(); i++){
 						Question question = questionsList.get(questionsList.size() - 1);
 						ArrayList<String> answers = questionAnswerHash.get(question);

@@ -79,7 +79,7 @@ public class EvaluateOneQuizQuestionServlet extends HttpServlet {
 					Question question = questions.get(0);
 					String answer = request.getParameter(question.getQuestionID());
 					ArrayList<String> answers= new ArrayList<String>();
-					if(answer == null) answer = "You did not answer this question";
+					if(answer == null|| answer.isEmpty()) answer = "You did not answer this question";
 					answers.add(answer);
 					questionAnswerHash.put(question, answers);
 					questionList.add(question);
@@ -105,7 +105,7 @@ public class EvaluateOneQuizQuestionServlet extends HttpServlet {
 			Question question = questions.get(0);
 			String answer = request.getParameter(question.getQuestionID());
 			ArrayList<String> answers= new ArrayList<String>();
-			if(answer == null) answer = "You did not answer this question";
+			if(answer == null|| answer.isEmpty()) answer = "You did not answer this question";
 			answers.add(answer);
 			questionAnswerHash.put(question, answers);
 			questionList.add(question);

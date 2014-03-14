@@ -166,11 +166,8 @@ if(Questions != null){
   				<div class="tab-pane" id="picture_response">
   					<form action="CreateQuestionServlet" method="post">
 						<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
-						<%=quiz_id %>
 						<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
-						<%=questionIndex %>
 						<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">
-						<%= Question.PIC_RESPONSE_STR %>
 			    		<div class="input-group">
  							<span class="input-group-addon">Question</span>
   							<input type="text"  name = "question" class="form-control" placeholder="Question">
