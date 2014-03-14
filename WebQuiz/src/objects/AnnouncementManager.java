@@ -90,6 +90,35 @@ public class AnnouncementManager {
 		}
 	}
 	
+	public static boolean deleteAnnouncement(String username, String announcementText) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "DELETE FROM " + MyDBInfo.ANNOUNCEMENTS_TABLE + " WHERE " + USERNAME_COL 
+					+ "=\"" + username + "\" AND " + ANNOUNCEMENT_COL + "=\"" + announcementText + "\";";
+
+			//execute the query
+			System.out.println(query);
+			stmt.executeUpdate(query);
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static boolean makeAnnouncement(Announcement announcement){
 		//check the announcer is valid 
 		if(!AccountManager.usernameExists(announcement.username))
