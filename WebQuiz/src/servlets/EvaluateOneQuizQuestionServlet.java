@@ -120,7 +120,7 @@ public class EvaluateOneQuizQuestionServlet extends HttpServlet {
 			if(startingTime != null){
 				// the duration is in minutes
 				Timestamp now = new Timestamp(new Date().getTime());
-				duration = (now.getTime()- startingTime.getTime())/60000;
+				duration = (now.getTime()- startingTime.getTime())/1000;
 				//System.out.println("test duration is " + duration);
 				session.setAttribute(EvaluateQuizServlet.Duration_str, duration);
 				session.setAttribute(EvaluateQuizServlet.StartingTime_Str, null);
