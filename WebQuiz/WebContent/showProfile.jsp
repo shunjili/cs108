@@ -139,7 +139,7 @@ if (shownAccount == null) {
 					<button type="submit" class="btn btn-default">Remove Friend</button>
 				</form>
 				</div>
-			</div>
+			</div><br>
 <%
 			
 		} else if (requestShownToLogged) {
