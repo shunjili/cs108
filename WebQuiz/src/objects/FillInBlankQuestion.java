@@ -16,6 +16,7 @@ public class FillInBlankQuestion implements Question {
 	public FillInBlankQuestion(String questionID, String question, String description,
 			String creator_id, int score, Timestamp timestamp) {
 		this.questionID = questionID;
+		question = question.replaceAll("#", "_");
 		this.question = question;
 		this.description = description;
 		this.creator_id = creator_id;
