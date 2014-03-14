@@ -53,6 +53,7 @@ public class CreateQuizServlet extends HttpServlet {
 		String creator = loggedAccount.getUsername();
 		String category = request.getParameter("category");
 		
+		
 		ArrayList<String> tags = new ArrayList<String>();
 		String tag = request.getParameter("tag");//then split by ;
 		String[] temp = tag.split(";");
@@ -64,6 +65,8 @@ public class CreateQuizServlet extends HttpServlet {
 		boolean correctImmediately = Boolean.parseBoolean(request.getParameter("correctImmediately"));
 		boolean onePage = Boolean.parseBoolean(request.getParameter("onePage"));
 		boolean randomOrder = Boolean.parseBoolean(request.getParameter("randomOrder"));
+		boolean canPractice = Boolean.parseBoolean(request.getParameter("canPractice"));
+
 		
 		int timesTaken = 0;
 		int numReviews = 0;
