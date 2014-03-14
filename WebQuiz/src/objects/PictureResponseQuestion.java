@@ -135,7 +135,7 @@ public class PictureResponseQuestion implements Question{
 		answers = QuestionManager.getAnswers(questionID);
 		
 		String htmlContent = "<div class=\"panel-body\"><p>" + question + "</p>";
-		htmlContent += "<img src=\""+ description + "\" alt=\""+ creator_id + "\">";
+		htmlContent += "<div><img src=\""+ description + "\" alt=\""+ creator_id + "\"></div>";
 		htmlContent += "<table class=\"table\">";
 		
 		htmlContent += "<thead><tr><th>Correct Answer</th><th>Your Answer</th></tr></thead>";
