@@ -88,10 +88,15 @@ page import="objects.*,java.util.ArrayList"%>
 						<p>You do not have any friend requests.</p>
 					</div>
 				</div>
-				<p><a href="accountIndex.jsp">Find Friends</a></p>
 			</div>
 		</div>
 	<%} %>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-5">
+			<a href="FindFriends.jsp">Find Friends</a>
+		</div>
+	</div>
 <%
 	}
 %>
