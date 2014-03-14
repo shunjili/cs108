@@ -105,10 +105,15 @@
 												</td>
 												<td>
 <%
-													if (type == Account.Type.ADMIN) {
+													if (!acct.isActive()) {
+%>
+													DISABLED
+<%
+													} else if (type == Account.Type.ADMIN) {
 %>
 													N/A
 <%
+														
 													} else {
 %>
 													<form action="DisableAccountServlet" method="post">
