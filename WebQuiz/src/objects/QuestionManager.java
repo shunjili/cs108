@@ -34,7 +34,9 @@ public class QuestionManager {
 			return Question.Type.MULTIPLE_CHOICE;
 		} else if (type.equals(Question.QUESTION_RESPONSE_STR)) {
 			return Question.Type.QUESTION_RESPONSE;
-		} else return Question.Type.BAD_TYPE;
+		} else if (type.equals(Question.PIC_RESPONSE_STR)) {
+			return Question.Type.PIC_RESPONSE;
+		}else return Question.Type.BAD_TYPE;
 	}
 
 	private static String getStringForType(Question.Type type) {
@@ -335,6 +337,7 @@ public class QuestionManager {
 				return new FillInBlankQuestion(question_id, question, description, creator_id, score, timestamp);
 			case MULTIPLE_CHOICE: return new MultipleChoiceQuestion(question_id, question, description, creator_id, score, timestamp);
 			case QUESTION_RESPONSE: return new QuestionResponseQuestion(question_id, question, description, creator_id, score, timestamp);
+			case PIC_RESPONSE: return new PictureResponseQuestion(question_id, question, description, creator_id, score, timestamp);
 			default: return null;
 		}
 	}

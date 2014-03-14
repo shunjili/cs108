@@ -45,6 +45,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		String answer = request.getParameter("answer").replace("\"", "\\\"");
 		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
 		String scoreString = request.getParameter("score").replace("\"", "\\\"");
+		String description = request.getParameter("description");
 		int score = 0;
 		try {
 			score = Integer.parseInt(scoreString);
@@ -73,8 +74,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
-		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, null, "1", score, timeStamp);
-
+		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, description, "1", score, timeStamp);
 		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){
 			System.out.println("Success stored question");
 		}else{
