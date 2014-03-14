@@ -19,8 +19,16 @@ page import="objects.*, java.util.ArrayList"
 
 <title>Edit Quiz</title>
 </head>
-<%
+<%	
 	String quiz_id = request.getParameter("id");
+	Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+	if (loggedAccount == null) {
+		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+	}else if(!loggedAccount.getUsername().equals(QuizManager.getQuizById(quiz_id).getQuizCreator())){%>
+		<script>alert("You are not creator");</script>
+<% 	
+	request.getRequestDispatcher("ViewMyAccount.jsp").forward(request, response);
+	}
 	ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
 	int questionIndex = 0;
 	if(Questions != null){
@@ -129,9 +137,17 @@ page import="objects.*, java.util.ArrayList"
 									  				<input type="text"  name = "score" class="form-control" placeholder="score">
 												</div><br>
 												<div class="input-group">
-									 				<span class="input-group-addon">Correct Answer</span>
-									  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
-												</div><br>
+								 					<span class="input-group-addon">Correct Answer</span>
+								 					<span  class="form-control">
+								 						<select name="answer">
+							  								<option value="1">Choice One</option>
+							  								<option value="2">Choice Two</option>
+							  								<option value="3">Choice Three</option>
+							 								<option value="4">Choice Four</option>
+													</select>
+								 					</span>
+												</div>
+								 			 	<br>
 									 			 <div class="input-group">
 									 				<span class="input-group-addon">Tag(Optional)</span>
 									  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
@@ -277,10 +293,18 @@ page import="objects.*, java.util.ArrayList"
 					  				<input type="text"  name = "description" class="form-control" placeholder="description">
 								</div><br>
 								<div class="input-group">
-					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
-								</div><br>
-					 			 <div class="input-group">
+				 					<span class="input-group-addon">Correct Answer</span>
+				 					<span  class="form-control">
+				 						<select name="answer">
+			  								<option value="1">Choice One</option>
+			  								<option value="2">Choice Two</option>
+			  								<option value="3">Choice Three</option>
+			 								<option value="4">Choice Four</option>
+									</select>
+				 					</span>
+								</div>
+				 			 	<br>
+					 			<div class="input-group">
 					 				<span class="input-group-addon">Tag(Optional)</span>
 					  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 								</div><br>
