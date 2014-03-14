@@ -627,6 +627,43 @@ public class QuizManager {
 			return null;
 		}
 	}
+	
+	
+	public static ArrayList<QuizAttempt> getTopAttemptsLastDay(String quiz_id, int max) {
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT A.* FROM " + MyDBInfo.ATTEMPTS_TABLE + " A LEFT OUTER JOIN " + MyDBInfo.ATTEMPTS_TABLE
+					+ " B ON (A." + ATTEMPT_USERNAME_COL + "= B." + ATTEMPT_USERNAME_COL + " AND A." + ATTEMPT_SCORE_COL + " < B." + ATTEMPT_SCORE_COL
+					+ ") WHERE B." + ATTEMPT_USERNAME_COL + " IS NULL AND A." + ATTEMPT_START_COL + ">=DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY "
+					+ ATTEMPT_SCORE_COL + " DESC, " + ATTEMPT_START_COL + " ASC LIMIT " + max + ";";
+
+
+			ResultSet rs = stmt.executeQuery(query);
+
+			ArrayList<QuizAttempt> resultList = new ArrayList<QuizAttempt>();
+			QuizAttempt newAttempt = parseAttempt(rs);
+			while(newAttempt != null) {
+				resultList.add(newAttempt);
+				newAttempt = parseAttempt(rs);
+			}
+			return resultList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static ArrayList<QuizAttempt> getLastAttemptsForUser(String quiz_id, String username, int max) {
 		try {
@@ -977,7 +1014,7 @@ public class QuizManager {
 
 		QuizAttempt testAttempt = new QuizAttempt(1, "john", 60, new Timestamp(System.currentTimeMillis()), 70);
 		QuizManager.storeAttempt(testAttempt);
-		ArrayList<QuizAttempt> topAttempts = QuizManager.getLastAttemptsForUser("1", "john", 5);
+		ArrayList<QuizAttempt> topAttempts = QuizManager.getTopAttemptsLastDay("1", 5);
 
 		/*Achievement A1 = new Achievement("john", Achievement.Type.PRACTICE, "foo", new Timestamp(System.currentTimeMillis()));
 		Achievement A2 = new Achievement("john", Achievement.Type.ONE_CREATED, "bar", new Timestamp(System.currentTimeMillis() + 2000));
