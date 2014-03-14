@@ -106,6 +106,17 @@ public class Achievement {
 		}
 	}
 	
+	public String getAchievementIconString() {
+		switch(this.type) {
+		case ONE_CREATED: return "glyphicon glyphicon-pencil";
+		case FIVE_CREATED: return "glyphicon glyphicon-star-empty";
+		case TEN_CREATED: return "glyphicon glyphicon-flash";
+		case HIGH_SCORE: return "glyphicon glyphicon-search";
+		case TEN_TAKEN: return "glyphicon glyphicon-fire";
+		default: return "glyphicon glyphicon-cog";
+		}
+	}
+	
 	public static HashSet<Type> getTypeSet() {
 		HashSet<Type> typeSet = new HashSet<Type>();
 		for(Type type : Type.values())

@@ -452,6 +452,7 @@ if (shownAccount == null) {
 						<table class="table">
 							<thead>
 								<tr>
+									<th><span class="glyphicon glyphicon-th-list"></span></th>
 									<th>Name</th>
 									<th>Description</th>
 									<th>Time</th>
@@ -463,6 +464,7 @@ if (shownAccount == null) {
 										Achievement.Type type = a.getType();
 								%>
 								<tr>
+									<td><span class="<%=a.getAchievementIconString() %>"></span></td>
 									<td><%=a.getNameForType(type) %></td>
 									<td><%=a.getDescriptionForType(type) %></td>
 									<td><%=a.getTimestamp().toString() %></td>
