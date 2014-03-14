@@ -25,6 +25,12 @@ if (loggedAccount == null) {
 String quiz_id = request.getParameter("id");
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
 ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
+ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+int totalScore = 0;
+int numQuestions = questions.size();
+for (int i = 0; i < numQuestions; i++) {
+	totalScore += questions.get(i).getScore();
+}
 String tagsString = "";
 int numTags = tags.size();
 for (int i = 0; i < numTags; i++) {
@@ -58,6 +64,8 @@ for (int i = 0; i < numTags; i++) {
 					    <li class="list-group-item">Created By: <%=currentQuiz.getQuizCreatorAccount().getDisplayName() %></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Average Rating: <%= currentQuiz.getQuizRating() %></li>
+					    <li class="list-group-item">Number of Questions: <%=numQuestions %></li>
+					    <li class="list-group-item">Total Score: <%=totalScore %></li>
 					    <li class="list-group-item">Tags: <%=tagsString %></li>
 					  	<li class="list-group-item">
 					  		<%if(!currentQuiz.isOnePage()){ %>
