@@ -22,6 +22,7 @@ page import="objects.*, java.util.ArrayList"
 <%	
 	String quiz_id = request.getParameter("id");
 	Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+	String msg = request.getParameter("message");
 	if (loggedAccount == null) {
 		request.getRequestDispatcher("loginPage.jsp").forward(request, response);
 	}else if(!loggedAccount.getUsername().equals(QuizManager.getQuizById(quiz_id).getQuizCreator())){%>
@@ -62,6 +63,11 @@ page import="objects.*, java.util.ArrayList"
 	</div>
 	<div class="row">
 		<div class="col-md-3"></div>
+		<div>
+			<%if(msg != null){ %>
+				<%=msg%>
+				<%} %>
+		</div>
 		<div class="col-md-7">		
 		<%if (Questions != null){%>
 			<%for (int j = 0; j < Questions.size(); j ++){ %>	

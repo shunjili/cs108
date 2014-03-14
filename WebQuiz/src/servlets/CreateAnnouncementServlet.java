@@ -39,7 +39,7 @@ public class CreateAnnouncementServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String announcementText = request.getParameter("announcementField");
+		String announcementText = HtmlEscape.escape(request.getParameter("announcementField"));
 		Account thisAccount = (Account) request.getSession().getAttribute("loggedAccount");
 		Announcement announcement;
 		try {
