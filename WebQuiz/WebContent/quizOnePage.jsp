@@ -15,6 +15,7 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id);
 ArrayList<Question> Questions = (ArrayList<Question>) session.getAttribute(EvaluateOneQuizQuestionServlet.CurQuestion_Str);
 if(Questions == null || Questions.size() <= 0){
 	Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+	//ArrayList<Question> Questions = QuizManager.getQuizById(quiz_id).getQuestions();
 	session.setAttribute(EvaluateOneQuizQuestionServlet.CurQuestion_Str, Questions);
 }
 

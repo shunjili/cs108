@@ -63,6 +63,7 @@ public class PracticeModeServlet extends HttpServlet {
 				
 		String quiz_id = request.getParameter("quiz_id");
 		ArrayList<Question> questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+		
 		int score = 0;
 		HashMap<Question, ArrayList<String>> questionAnswerHash = new HashMap<Question, ArrayList<String>>();
 		ArrayList<Question> questionList = new ArrayList<Question>();

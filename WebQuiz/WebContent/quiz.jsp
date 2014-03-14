@@ -23,6 +23,7 @@ if (loggedAccount == null) {
 }
 String quiz_id = request.getParameter("id");
 ArrayList<Question> Questions = QuestionManager.getQuestionsForQuiz(quiz_id);
+//ArrayList<Question> Questions = QuizManager.getQuizById(quiz_id).getQuestions();
 Timestamp startingTime = (Timestamp) session.getAttribute(EvaluateQuizServlet.StartingTime_Str);
 if(startingTime == null){
 	startingTime = new Timestamp( new Date().getTime());
