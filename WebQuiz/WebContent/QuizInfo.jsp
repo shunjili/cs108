@@ -67,6 +67,27 @@ for (int i = 0; i < numTags; i++) {
 				<div class="panel panel-primary">
 					<div class="panel-heading"><%= currentQuiz.getQuizName() %></div>
 					<ul class="list-group">
+						<%--Top buttons --%>
+					  	<li class="list-group-item">
+					  		<%if(!currentQuiz.isOnePage()){ %>
+					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
+					  		<%}else{ %>
+					  			<% 
+						  			session.setAttribute(EvaluateQuizServlet.Questions_Str,null);
+						  			session.setAttribute(EvaluateQuizServlet.Hash_Str,null);
+						  			session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str,null);
+						  			session.setAttribute("quiz_id",null);
+					  			%>
+					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
+					  		<%} %>
+								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a friend to take this quiz!</button></a>	
+							<%if(currentQuiz.canPractice()){ %>	
+								<a href = "/WebQuiz/practiceMode.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Practice Mode</button></a>	
+							<%}%>	
+							<%if(currentQuiz.getQuizCreator().equals(loggedAccount.getUsername())){ %>	
+								<a href = "/WebQuiz/EditQuestions.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Edit Questions</button></a>	
+							<%} %>						  		  	
+					  	</li>
 					    <li class="list-group-item">Category: <%=currentQuiz.getQuizCategory() %></li>
 					    <li class="list-group-item">Created By: 
 					    <%Account creator = currentQuiz.getQuizCreatorAccount(); %>
@@ -267,28 +288,6 @@ for (int i = 0; i < numTags; i++) {
 						}
 %>
 					    </li>
-					    
-					    <%--Bottom buttons --%>
-					  	<li class="list-group-item">
-					  		<%if(!currentQuiz.isOnePage()){ %>
-					  			<a href = "/WebQuiz/quiz.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
-					  		<%}else{ %>
-					  			<% 
-						  			session.setAttribute(EvaluateQuizServlet.Questions_Str,null);
-						  			session.setAttribute(EvaluateQuizServlet.Hash_Str,null);
-						  			session.setAttribute(EvaluateOneQuizQuestionServlet.Score_Str,null);
-						  			session.setAttribute("quiz_id",null);
-					  			%>
-					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
-					  		<%} %>
-								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a friend to take this quiz!</button></a>	
-							<%if(currentQuiz.canPractice()){ %>	
-								<a href = "/WebQuiz/practiceMode.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Practice Mode</button></a>	
-							<%}%>	
-							<%if(currentQuiz.getQuizCreator().equals(loggedAccount.getUsername())){ %>	
-								<a href = "/WebQuiz/EditQuestions.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Edit Questions</button></a>	
-							<%} %>						  		  	
-					  	</li>
 					  </ul>
 				</div>
 			</div>
