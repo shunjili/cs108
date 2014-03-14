@@ -102,11 +102,18 @@ if(Questions != null){
 			  				<input type="text"  name = "score" class="form-control" placeholder="score">
 						</div>
 			 			<br>
-						<div class="input-group">
-			 				<span class="input-group-addon">Correct Answer</span>
-			  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+			 			<div class="input-group">
+		 					<span class="input-group-addon">Correct Answer</span>
+		 					<span  class="form-control">
+		 						<select name="answer">
+	  								<option value="1">Choice One</option>
+	  								<option value="2">Choice Two</option>
+	  								<option value="3">Choice Three</option>
+	 								<option value="4">Choice Four</option>
+							</select>
+		 					</span>
 						</div>
-						<br>
+		 			 	<br>
 			 			 <div class="input-group">
 			 				<span class="input-group-addon">Tag(Optional)</span>
 			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">

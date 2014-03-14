@@ -45,11 +45,11 @@
 		 				<span class="input-group-addon">category</span>
 		 				<span  class="form-control">
 		 					<select name="category">
-  							<option value="Common Sense">Common Sense</option>
-  							<option value="Life Style">Life Style</option>
-  							<option value="Academic">Academic</option>
- 							<option value="Sport">Sport</option>
-						</select>
+	  							<option value="Common Sense">Common Sense</option>
+	  							<option value="Life Style">Life Style</option>
+	  							<option value="Academic">Academic</option>
+	 							<option value="Sport">Sport</option>
+							</select>
 		 				</span>
 		 				
 					</div>
