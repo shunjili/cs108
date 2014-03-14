@@ -153,7 +153,7 @@ public class MultipleChoiceQuestion implements Question {
 			htmlContent += "&nbsp;"; 
 		}else{
 			for(int i = 0; i < userAnswers.size(); i++){;
-				htmlContent += userAnswers.get(i);
+				htmlContent += choices[Integer.parseInt(userAnswers.get(i)) - 1];
 				htmlContent += "&nbsp;";
 			}	
 
