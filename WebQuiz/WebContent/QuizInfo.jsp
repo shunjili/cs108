@@ -43,7 +43,7 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					<div class="panel-heading"><%= currentQuiz.getQuizName() %></div>
 					<ul class="list-group">
 					    <li class="list-group-item">Category: <%=currentQuiz.getQuizCategory() %></li>
-					    <li class="list-group-item">Created By: <%=AccountManager.getAccountByUsername("john").getDisplayName() %></li>
+					    <li class="list-group-item">Created By: <%=AccountManager.getAccountByUsername(currentQuiz.getQuizCreator()).getDisplayName() %></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Rating: <%= currentQuiz.getQuizRating() %></li>
 					  	<li class="list-group-item">
