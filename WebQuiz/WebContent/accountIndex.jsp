@@ -21,7 +21,7 @@
 	<% if(thisAccount == null) { %>
 	<p><a href="loginPage.jsp">Log in to Quizville</a></p>
 	<% } else {
-			ArrayList<Account> accounts = AccountManager.getAllAccounts();
+			ArrayList<Account> accounts = AccountManager.getAllActiveAccounts();
 			if (accounts == null) {
 	%>
 	<h1>Error getting accounts.</h1>
