@@ -159,6 +159,7 @@
 												<th>Quiz Name</th>
 												<th>Category</th>
 												<th>Creator</th>
+												<th>Clear History</th>
 												<th>Delete</th>
 											</tr>
 										</thead>
@@ -185,6 +186,12 @@
 													<%
 													}
 													%>
+												</td>
+												<td>
+													<form action="ClearQuizHistoryServlet" method="post">
+														<input type="hidden" name="quiz_id" value="<%=quiz.getQuizID() %>"/>
+														<button type="submit" class="btn btn-default">Clear History</button>
+													</form>
 												</td>
 												<td>
 													<form action="DeleteQuizServlet" method="post">
