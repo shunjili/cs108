@@ -49,7 +49,14 @@ page import="objects.*, java.util.ArrayList"%>
 				<div>
 					<%=thisAccount.getDisplayName()%>
 				</div>
-				<p>Some Basic Information</p>
+				<div>Type: <%=thisAccount.getTypeString() %></div>
+<%
+				if (thisAccount.isPrivate()) {
+%>
+				<div>Private</div>
+<%	
+				}
+%>
 			</div>
 			<div class="list-group">
 				<a href="/WebQuiz/showProfile.jsp?username=<%=thisAccount.getUsername()%>" class="list-group-item">View My Profile</a>	
@@ -128,13 +135,27 @@ page import="objects.*, java.util.ArrayList"%>
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of Taken Quizzes</div>
 				 <div class="panel-body">
-
+					<ul class="list-group">
+						 <%ArrayList<Quiz> takenList = QuizManager.getQuizzesTaken(thisAccount.getUsername());
+						 	if(!quizlist.isEmpty()){
+						 		for(Quiz quiz:takenList){
+						 %>
+						 		 <li class="list-group-item"><%=quiz.getLinkHTML(false) %></li>
+						 <%} }%>
+				 	</ul>
 				 </div>	
 			</div>	
 			<div class="panel panel-primary">
 				 <div class="panel-heading">List of their recent quiz creating activities</div>
 				 <div class="panel-body">
-
+					<ul class="list-group">
+						 <%ArrayList<Quiz> createList = QuizManager.getMostPopularQuizzes(4);
+						 	if(!quizlist.isEmpty()){
+						 		for(Quiz quiz:createList){
+						 %>
+						 		 <li class="list-group-item">You created <%=quiz.getLinkHTML(false) %> at <%=quiz.getQuizTimestampString() %></li>
+						 <%} }%>
+				 	</ul>
 				 </div>	
 			</div>				
 

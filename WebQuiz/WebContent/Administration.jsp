@@ -243,8 +243,12 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td>Number of Users (Active & Disabled)</td>
+												<td>Number of Accounts (Active & Disabled)</td>
 												<td><%=AccountManager.getTotalAccountCount() %></td>
+											</tr>
+											<tr>
+												<td>Number of Active Accounts</td>
+												<td><%=AccountManager.getNumActiveAccounts() %></td>
 											</tr>
 											<tr>
 												<td>Number of Quizzes</td>

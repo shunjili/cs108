@@ -146,6 +146,49 @@ public class AccountManager {
 			return accountList;
 		}
 	}
+	
+	public static ArrayList<Account> getAllActiveAccounts() {
+		ArrayList<Account> accountList = new ArrayList<Account>();
+		//Check for user in database
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			//set up DB connection
+			Connection con = DriverManager.getConnection
+					( "jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+
+			//prepare query
+			String query = "SELECT * FROM " + MyDBInfo.ACCOUNTS_TABLE + ";";
+			//execute the query
+			ResultSet rs = stmt.executeQuery(query);
+
+			Account resultAccount = parseAccount(rs);
+			while(resultAccount != null) {
+				if (resultAccount.isActive()) {
+					accountList.add(resultAccount);
+					resultAccount = parseAccount(rs);
+				}
+			}
+
+			//if we reach this point, there was no account found, or the password was incorrect
+			con.close();
+			return accountList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return accountList;
+		}
+	}
+	
+	public static int getNumActiveAccounts() {
+		return getAllActiveAccounts().size();
+	}
 
 	public static Account getAccountByUsername(String queryUsername) {
 
@@ -358,11 +401,23 @@ public class AccountManager {
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
-			//prepare query
-			String query = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + ISACTIVE_COL + "=0 WHERE "
+			//prepare query to make account disabled
+			String update = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + ISACTIVE_COL + "=0 WHERE "
 					+ USERNAME_COL + "=\"" + username + "\";";
 			
-			int result = stmt.executeUpdate(query);
+			stmt.executeUpdate(update);
+			
+			//prepare query to remove all friendships
+			update = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username + "\" OR " + FRIENDS_COL2 + "=\"" + username + "\";";
+			stmt.executeUpdate(update);
+			
+			//prepare query to remove all pending friend requests
+			update = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
+					+ "=\"" + username + "\" OR " + REQUESTED_COL + "=\"" + username + "\";";
+			stmt.executeUpdate(update);
+			
+			
 			con.close();
 			return true;
 		} catch (SQLException e) {

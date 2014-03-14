@@ -26,6 +26,10 @@ if (loggedAccount == null) {
 	<p>Error getting account for username <%=shownUsername %></p>
 	<p>Return to <a href="loginPage.jsp">homepage</a></p>
 <%		
+} else if (!shownAccount.isActive()) {
+%>
+	<p><%=shownAccount.getDisplayName() %>'s account has been disabled.</p>
+<%
 } else {
 	String shownDisplayName = shownAccount.getDisplayName();
 	String loggedUsername = loggedAccount.getUsername();
@@ -165,6 +169,75 @@ if (loggedAccount == null) {
 			</div>
 <%
 		}
+		ArrayList<Quiz> createdQuizzes = QuizManager.getSelfCreatedQuiz(shownUsername);
+		if (createdQuizzes == null) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quizzes Created by <%=shownDisplayName %></div>
+						<div class="panel-body">Error getting quizzes created by <%=shownDisplayName %></div>
+					</div>
+				</div>
+			</div>
+<%
+		} else if (createdQuizzes.size() > 0) {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quizzes Created by <%=shownDisplayName %> <span class="badge"><%=createdQuizzes.size()%></span></div>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Quiz Name</th>
+										<th>Rating</th>
+										<th>Category</th>
+										<th>Times Taken</th>
+										<th>Creation Time</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (Quiz quiz : createdQuizzes) {
+									%>
+									<tr>
+										<td><a
+											href="QuizInfo.jsp?id=<%=quiz.getQuizID()%>"><%=quiz.getQuizName()%></a></td>
+										<td><%=quiz.getQuizRating()%></td>
+										<td><%=quiz.getQuizCategory()%></td>
+										<td><%=quiz.getTimesTaken() %></td>
+										<td><%=quiz.getQuizTimestampString() %></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+<%
+		} else {
+%>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Quizzes Created by <%=shownDisplayName %> <span class="badge"><%=createdQuizzes.size()%></span></div>
+						<div class="panel-body"><%=shownDisplayName %> has not created any quizzes</div>
+					</div>
+				</div>
+			</div>
+<%
+		}
+		
+		
+		
+		
 		ArrayList<Account> friends = AccountManager.getFriendsForUser(shownUsername);
 %>
 		<div class="row">
