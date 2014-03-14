@@ -26,11 +26,11 @@ if(thisAccount == null) {
 }
 String quiz_id = request.getParameter("quiz_id");
 if(quiz_id != null){
-	String placeHolderMessage = "Hi, would you like you to take this <a href = '/WebQuiz/quiz.jsp?id="+quiz_id+"'> quiz </a> ?";
+	String placeHolderMessage = "Hi, would you like you to take this <a href = '/WebQuiz/quiz.jsp?id="+quiz_id+"'>quiz</a>?";
 %>
 	<div class="page-header">
 			<div class="row">
-				<div class="col-md-3"></div>
+				<div class="col-md-2"></div>
 				<div class="col-md-7">
 					<h1>
 						Invite a Friend

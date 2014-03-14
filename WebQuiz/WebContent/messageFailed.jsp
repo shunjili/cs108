@@ -28,6 +28,12 @@
 <div class="row">
 	<div class="col-md-1"></div>
 	<div class="col-md-7">
+		<p>Check that the recipient was a valid account username (not Display Name).</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-7">
 		<a href="messages.jsp">View Your Messages</a>
 	</div>
 </div>
