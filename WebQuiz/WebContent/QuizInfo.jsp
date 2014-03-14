@@ -81,10 +81,12 @@ for (int i = 0; i < numTags; i++) {
 					    <li class="list-group-item">
 <%
 						ArrayList<QuizAttempt> attempts = QuizManager.getLastAttemptsForUser(quiz_id, loggedAccount.getUsername(), 5);
+						int size = 0;
+						if (attempts != null) size = attempts.size();
 %>
 						Your past performance on this quiz: 
 <%
-						if (attempts.size() > 0) {
+						if (size > 0) {
 %>
 					    	<br>
 					    	<table class="table">
@@ -119,14 +121,65 @@ for (int i = 0; i < numTags; i++) {
 %>
 					    </li>
 					    
+					     <%--High scores of the last day --%>
+					    <li class="list-group-item">
+<%
+						attempts = QuizManager.getTopAttemptsLastDay(quiz_id, 5);
+						size = 0;
+						if (attempts != null) size = attempts.size();
+%>
+						Best Scores in the Last Day: 
+<%
+						if (size > 0) {
+%>
+					    	<br>
+					    	<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Username</th>
+										<th>Score</th>
+										<th>Duration</th>
+										<th>Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (QuizAttempt attempt : attempts) {
+											Account acct = AccountManager.getAccountByUsername(attempt.getUsername());
+									%>
+									<tr>
+										<td><a
+											href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
+										<td><%=acct.getUsername()%></td>
+										<td><%=attempt.getScore()%></td>
+										<td><%=attempt.getDurationString() %></td>
+										<td><%=attempt.getStartTimeStr() %></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+<%
+						} else {
+%>
+						This quiz has not been attempted in the last day.
+<%
+						}
+%>
+					    </li>
+					    
 					    <%--High scores --%>
 					    <li class="list-group-item">
 <%
 						attempts = QuizManager.getTopAttempts(quiz_id, 5);
+						size = 0;
+						if (attempts != null) size = attempts.size();
 %>
 						High Scores: 
 <%
-						if (attempts.size() > 0) {
+						if (size > 0) {
 %>
 					    	<br>
 					    	<table class="table">
