@@ -1531,7 +1531,9 @@ public class QuizManager {
 	//main method for testing
 	public static void main(String[] args) {
 		
-		QuizManager.clearQuizHistory("3");
+		ArrayList<Account> testSearch = AccountManager.getAccountsByDisplayName("mar");
+		
+		//QuizManager.clearQuizHistory("3");
 		
 		//ArrayList<Quiz> tagSearch = QuizManager.getQuizzesWithTag("an");
 		
