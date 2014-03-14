@@ -90,7 +90,7 @@ page import="objects.*, java.util.ArrayList"
 				  						<li class="active"><a href=<%="\"#question_response" + j + "\""%> data-toggle="tab">Question Response</a></li>
 				  						<li><a href=<%="\"#multiple_choice" + j + "\""%> data-toggle="tab">Multiple Choice</a></li>
 				  						<li><a href=<%="\"#filling_blank" + j + "\""%> data-toggle="tab">Filling the blank</a></li>
-				  						<li><a href=<%="\"#picture_response" + j + "\""%> data-toggle="tab">Filling the blank</a></li>
+				  						<li><a href=<%="\"#picture_response" + j + "\""%> data-toggle="tab">Picture Response</a></li>
 									</ul>
 									<div class="tab-content"><br>
 				  						<div class="tab-pane active" id=<%="\"question_response" + j + "\""%>>
@@ -129,7 +129,7 @@ page import="objects.*, java.util.ArrayList"
 												<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 												<div class="input-group">
 									 				<span class="input-group-addon">Choice <%=i+1 %></span>
-									  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder="choice1">
+									  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"choice1" + (i+1) + "\"" %>>
 												</div><br>
 												<%} %>
 									 			 <div class="input-group">
@@ -180,7 +180,7 @@ page import="objects.*, java.util.ArrayList"
 							 				</form>
 										</div>
 										<div class="tab-pane" id=<%="\"picture_response" + j + "\""%>>
-						  					<form action="CreateQuestionServlet" method="post">
+						  					<form action="UpdateQuestionInEditQuestionServlet" method="post">
 												<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 												<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
 												<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">
@@ -281,7 +281,7 @@ page import="objects.*, java.util.ArrayList"
 								<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 								<div class="input-group">
 					 				<span class="input-group-addon">Choice <%=i+1 %></span>
-					  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder="choice1">
+					  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"choice1" + (i+1) + "\"" %>>
 								</div><br>
 								<%} %>
 					 			 <div class="input-group">
@@ -340,7 +340,7 @@ page import="objects.*, java.util.ArrayList"
 			 				</form>
 						</div>
 						<div class="tab-pane" id="picture_response">
-		  					<form action="CreateQuestionServlet" method="post">
+		  					<form action="AddQuestionInEditQuestionServlet" method="post">
 								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 								<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 								<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">

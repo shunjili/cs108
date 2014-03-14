@@ -80,6 +80,7 @@ public class CreateQuestionServlet extends HttpServlet {
 		Question.Type type = QuestionManager.getTypeForString(questionTypeString);
 		
 		int index =  Integer.parseInt(request.getParameter("questionIndex"));
+		
 		Timestamp timeStamp = new Timestamp( new Date().getTime());
 		Question toStore = QuestionManager.constructQuestion(type, "dummy_id", question, description, loggedAccount.getUsername(), score, timeStamp);
 		if(QuestionManager.storeNewQuestion(toStore, quiz_id, index, answer) >=0){

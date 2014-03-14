@@ -99,7 +99,7 @@ if(Questions != null){
 						<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 						<div class="input-group">
 			 				<span class="input-group-addon">Choice <%=i+1 %></span>
-			  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder="choice1">
+			  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"choice" + (i+1) + "\""%>>
 						</div>
 			 			<br>
 						<%} %>
