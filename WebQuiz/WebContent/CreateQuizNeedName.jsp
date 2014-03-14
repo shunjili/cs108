@@ -69,7 +69,7 @@
 		 				<span class="input-group-addon">Correct Immediately
 		  				<input type="checkbox" name="correctImmediately" value = True>
 		  				</span>
-		  				<span class="input-group-addon">One Page
+		  				<span class="input-group-addon">One page per question
 		  				<input type="checkbox" name="onePage" value = True>
 		  				</span>
 		  				<span class="input-group-addon">Random Order
