@@ -197,6 +197,7 @@ if(Questions != null){
  		<br>
 
 	<%}%>
+	<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Creating Questions</button></a>
 </div>	
 </body>
 </html>

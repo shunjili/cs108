@@ -17,6 +17,10 @@ page import="objects.*, java.util.ArrayList"
 <title>View The Quiz</title>
 </head>
 <% 
+Account loggedAccount = ((Account) request.getSession().getAttribute("loggedAccount"));
+if (loggedAccount == null) {
+	request.getRequestDispatcher("loginPage.jsp").forward(request, response);
+}
 String quiz_id = request.getParameter("id");
 Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 <body>
@@ -49,9 +53,12 @@ Quiz currentQuiz = QuizManager.getQuizById(quiz_id); %>
 					  			<a href = "/WebQuiz/quizOnePage.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Start the Quiz</button></a>
 					  		<%} %>
 								<a href = "/WebQuiz/InviteFriendForQuiz.jsp?quiz_id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Invite a Friend for this Quiz!</button></a>	
-							<%if(!currentQuiz.isPracticable()){ %>	
+							<%if(currentQuiz.isPracticable()){ %>	
 								<a href = "/WebQuiz/practiceMode.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Practice Mode</button></a>	
-							<%} %>				  		  	
+							<%} %>
+							<%if(currentQuiz.getQuizCreator().equals(loggedAccount.getUsername())){ %>	
+								<a href = "/WebQuiz/EditQuestions.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Edit Questions</button></a>	
+							<%} %>						  		  	
 					  	</li>
 					  </ul>
 				</div>
