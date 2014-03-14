@@ -129,6 +129,16 @@ if (shownAccount == null) {
 				</form>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+				<form action="RemoveFriendServlet" method="post">
+					<input type="hidden" name="username1" value="<%=shownUsername %>">
+					<input type="hidden" name="username2" value="<%=loggedUsername %>">
+					<button type="submit" class="btn btn-default">Remove Friend</button>
+				</form>
+				</div>
+			</div>
 <%
 			
 		} else if (requestShownToLogged) {

@@ -52,16 +52,18 @@
 							<th>Username</th>
 							<th>Type</th>
 							<th>Privacy</th>
+							<th>Request/Remove</th>
 						</tr>
 					</thead>
 					<tbody>
 						<%
 							for (Account acct : accounts) {
+								String username = acct.getUsername();
 						%>
 						<tr>
 							<td><a
-								href="showProfile.jsp?username=<%=acct.getUsername()%>"><%=acct.getDisplayName()%></a></td>
-							<td><%=acct.getUsername()%></td>
+								href="showProfile.jsp?username=<%=username%>"><%=acct.getDisplayName()%></a></td>
+							<td><%=username%></td>
 							<td><%=acct.getTypeString()%></td>
 							<td>
 <%
@@ -76,6 +78,44 @@
 							}
 %>
 							</td>
+<%
+							String loggedUsername = thisAccount.getUsername();
+							if (AccountManager.areFriends(loggedUsername, username)) {
+%>
+							<td>
+								<form action="RemoveFriendServlet" method="post">
+									<input type="hidden" name="username1" value="<%=username %>">
+									<input type="hidden" name="username2" value="<%=loggedUsername %>">
+									<button type="submit" class="btn btn-default">Remove Friend</button>
+								</form>
+							</td>
+<%
+							} else if (AccountManager.requestIsPending(loggedUsername, username)) {
+%>
+							<td>Request Pending</td>
+<%							
+							} else if (AccountManager.requestIsPending(username, loggedUsername)) {
+%>
+							<td>
+								<form action="ConfirmFriendRequestServlet" method="post">
+									<input type="hidden" name="requester" value="<%= username %>">
+									<input type="hidden" name="requested" value="<%= loggedUsername %>">
+									<button type="submit" class="btn btn-default">Confirm Friend Request</button>
+								</form>
+							</td>
+<%
+							} else {
+%>
+							<td>
+								<form action="SendFriendRequestServlet" method="get">
+									<input type="hidden" name="requester" value="<%=loggedUsername%>">
+									<input type="hidden" name="requested" value="<%=username%>">
+									<button type="submit" class="btn btn-default">Send Friend Request</button>
+								</form>
+							</td>
+<%
+							}
+%>
 						</tr>
 						<%
 							}
