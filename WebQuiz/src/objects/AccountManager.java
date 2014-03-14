@@ -358,11 +358,23 @@ public class AccountManager {
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 
-			//prepare query
-			String query = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + ISACTIVE_COL + "=0 WHERE "
+			//prepare query to make account disabled
+			String update = "UPDATE " + MyDBInfo.ACCOUNTS_TABLE + " SET " + ISACTIVE_COL + "=0 WHERE "
 					+ USERNAME_COL + "=\"" + username + "\";";
 			
-			int result = stmt.executeUpdate(query);
+			stmt.executeUpdate(update);
+			
+			//prepare query to remove all friendships
+			update = "DELETE FROM " + MyDBInfo.FRIENDS_TABLE + " WHERE " + FRIENDS_COL1
+					+ "=\"" + username + "\" OR " + FRIENDS_COL2 + "=\"" + username + "\";";
+			stmt.executeUpdate(update);
+			
+			//prepare query to remove all pending friend requests
+			update = "DELETE FROM " + MyDBInfo.FRIEND_REQUESTS_TABLE + " WHERE " + REQUESTER_COL
+					+ "=\"" + username + "\" OR " + REQUESTED_COL + "=\"" + username + "\";";
+			stmt.executeUpdate(update);
+			
+			
 			con.close();
 			return true;
 		} catch (SQLException e) {
