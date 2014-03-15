@@ -91,8 +91,14 @@ public class QuestionResponseQuestion implements Question {
 		if(userAnswers == null||userAnswers.size() <=0||userAnswers.contains(null)){
 			return false;
 		}else{
+			//ArrayList<String> answers = new ArrayList<String>();
+			//answers = QuestionManager.getAnswers(question_id);
 			ArrayList<String> answers = new ArrayList<String>();
-			answers = QuestionManager.getAnswers(question_id);
+			ArrayList<String> answertemp = new ArrayList<String>();
+			answertemp = QuestionManager.getAnswers(question_id);
+			for(int i = 0; i < answertemp.size(); i++){
+				answers.add(answertemp.get(i).toLowerCase());
+			}
 			//check answer might have multiple user answers 
 			int len = userAnswers.size();
 			boolean flag = true;
