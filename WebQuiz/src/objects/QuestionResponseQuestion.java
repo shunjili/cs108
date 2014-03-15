@@ -104,7 +104,7 @@ public class QuestionResponseQuestion implements Question {
 			boolean flag = true;
 			for(int i = 0; i < len; i++){
 				// if any of the solutions are not in the answer then it's false
-				if(!answers.contains(userAnswers.get(i).trim())){
+				if(!answers.contains(userAnswers.get(i).trim().toLowerCase())){
 					flag = false;
 					break;
 				}
