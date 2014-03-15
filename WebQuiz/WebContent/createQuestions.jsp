@@ -200,6 +200,8 @@ if(Questions != null){
 			</div>
 		</div>
 	</div>
+	<br>
+	<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Creating Questions</button></a>
 	<%if (Questions != null){%>
 		<%for (int i = 0; i < Questions.size(); i ++){ %>
 			<div class="panel panel-primary"> 
@@ -212,7 +214,7 @@ if(Questions != null){
  		<br>
 
 	<%}%>
-	<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Creating Questions</button></a>
+	
 	<br>
 </div>	
 </body>

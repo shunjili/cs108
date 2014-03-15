@@ -69,13 +69,22 @@ public class FillInBlankQuestion implements Question {
 	@Override
 	public String getHTML(boolean showAnswer) {
 		// TODO Auto-generated method stub
-		return " <div class=\"panel-body\">"+
+		String html =  " <div class=\"panel-body\">"+
  		question + 
  		"<div class=\"input-group\">"+ 
 			"<span class=\"input-group-addon\">Your Answer</span>"+
 			 "<input name = \"" + questionID + "\" type=\"text\" class=\"form-control\" placeholder=\"Please seperate your answers with #\">"+
 			"</div>"+
 			"</div>";
+		if(showAnswer){
+			ArrayList<String> answers = QuestionManager.getAnswers(questionID);
+			if(answers != null){
+				for(int i = 0; i < answers.size(); i++){
+					html += String.format("<div class=\"panel-footer\">%s</div>", answers.get(i));
+				}
+			}
+		}
+		return html;
 	}
 	
 	public boolean isCorrect(ArrayList<String> userAnswers){
