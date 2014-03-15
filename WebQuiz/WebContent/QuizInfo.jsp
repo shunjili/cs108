@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@
-page import="objects.*, java.util.ArrayList, servlets.*"
+page import="objects.*, java.util.*, servlets.*"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,18 +34,20 @@ int totalScore = 0;
 for (int i = 0; i < numQuestions; i++) {
 	totalScore += questions.get(i).getScore();
 }
-ArrayList<String> tags = QuizManager.getTagsForQuiz(quiz_id);
+ArrayList<String> tagList = QuizManager.getTagsForQuiz(quiz_id);
+HashSet<String> tags = new HashSet<String>(tagList);
 String tagsString = "";
 int numTags = tags.size();
-for (int i = 0; i < numTags; i++) {
-	String tag = tags.get(i);
+int count = 0;
+for (String tag : tags) {
 	if (!tag.equals("")) {
-		if (i == numTags - 1) {
-			tagsString += tags.get(i);
+		if (count == numTags - 1) {
+			tagsString += tag;
 		} else {
-			tagsString += tags.get(i) + ", ";
+			tagsString += tag + ", ";
 		}
 	}
+	count++;
 }
 %>
 <body>
