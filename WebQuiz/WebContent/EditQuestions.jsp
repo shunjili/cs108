@@ -384,6 +384,8 @@ page import="objects.*, java.util.ArrayList"
 					</div>
 				</div>
 			</div>
+			<br>
+			<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Creating Questions</button></a>
 		</div>
 			
 	</div>
