@@ -57,6 +57,10 @@ public class Account {
 		return isPrivate;
 	}
 	
+	public void setPrivacy(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+	
 	public boolean isActive() {
 		return this.isActive;
 	}

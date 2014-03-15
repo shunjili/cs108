@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import objects.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +39,11 @@ public class MakePublicServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		AccountManager.makePublic(username);
+		Account loggedAccount = (Account)(request.getSession().getAttribute("loggedAccount"));
+		if (loggedAccount != null && loggedAccount.getUsername().equals(username)) {
+			loggedAccount.setPrivacy(false);
+			request.getSession().setAttribute("loggedAccount", loggedAccount);
+		}
 		request.getRequestDispatcher("showProfile.jsp?username=" + username).forward(request, response);
 		return;
 	}

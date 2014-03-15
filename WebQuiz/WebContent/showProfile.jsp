@@ -125,7 +125,7 @@ if (shownAccount == null) {
 %>
 					<form action="MakePrivateServlet" method="post">
 						<input type="hidden" name="username" value="<%=shownUsername%>">
-						<button type="submit" class="btn btn-default">Make Account Public</button>
+						<button type="submit" class="btn btn-default">Make Account Private</button>
 					</form>
 <%					
 				}

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import objects.Account;
 import objects.AccountManager;
 
 /**
@@ -38,6 +39,11 @@ public class MakePrivateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		AccountManager.makePrivate(username);
+		Account loggedAccount = (Account)(request.getSession().getAttribute("loggedAccount"));
+		if (loggedAccount != null && loggedAccount.getUsername().equals(username)) {
+			loggedAccount.setPrivacy(true);
+			request.getSession().setAttribute("loggedAccount", loggedAccount);
+		}
 		request.getRequestDispatcher("showProfile.jsp?username=" + username).forward(request, response);
 		return;
 	}
