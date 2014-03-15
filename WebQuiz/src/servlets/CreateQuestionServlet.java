@@ -58,7 +58,7 @@ public class CreateQuestionServlet extends HttpServlet {
 //		String questionTypeString = request.getParameter("type").replace("\"", "\\\"");
 //		String scoreString = (request.getParameter("score"));
 //		String description = (request.getParameter("description"));
-		int score = 0;
+		int score = 1;
 		
 		if (question == null || question.equals("")||answer == null || answer.equals("")) {
 			request.getRequestDispatcher("createQuestions.jsp?id="+quiz_id+"&message=invalid input!").forward(request, response);
@@ -69,7 +69,7 @@ public class CreateQuestionServlet extends HttpServlet {
 			score = Integer.parseInt(scoreString);
 		} catch (NumberFormatException e) {
 			System.out.print("The entered score is not a valid number string");
-			score = 0;
+			score = 1;
 		}
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
 			for(int i = 0 ; i < Question.MAX_NUM_CHOICES; i ++){

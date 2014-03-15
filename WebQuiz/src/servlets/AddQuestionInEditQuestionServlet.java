@@ -53,7 +53,7 @@ public class AddQuestionInEditQuestionServlet extends HttpServlet {
 //		String description = (request.getParameter("description"));
 		
 		String scoreString = request.getParameter("score").replace("\"", "\\\"");
-		int score = 0;
+		int score = 1;
 		
 		if (question == null || question.equals("")||answer == null || answer.equals("")) {
 			request.getRequestDispatcher("EditQuestions.jsp?id="+quiz_id+"&message=invalid input!").forward(request, response);
@@ -65,7 +65,7 @@ public class AddQuestionInEditQuestionServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			System.out.print("The entered score is not a valid number string");
-			score = 0;
+			score = 1;
 		}
 		
 		if(questionTypeString.equals(Question.MULTIPLE_CHOICE_STR)){
