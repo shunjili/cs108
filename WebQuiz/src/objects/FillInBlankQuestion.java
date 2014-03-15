@@ -133,6 +133,9 @@ public class FillInBlankQuestion implements Question {
 		for(int i = 0; i < answers.size(); i++){
 			htmlContent += Integer.toString(i + 1) + ".";
 			htmlContent += answers.get(i);
+			if (i != answers.size() - 1) {
+				htmlContent += ",";
+			}
 			htmlContent += "&nbsp;";
 		}
 		
@@ -144,6 +147,9 @@ public class FillInBlankQuestion implements Question {
 		}else{
 			for(int i = 0; i < userAnswers.size(); i++){;
 				htmlContent += userAnswers.get(i);
+				if (i != userAnswers.size() - 1) {
+					htmlContent += ",";
+				}
 				htmlContent += "&nbsp;";
 			}	
 		}

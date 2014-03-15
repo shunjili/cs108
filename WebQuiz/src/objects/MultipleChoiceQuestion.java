@@ -158,6 +158,9 @@ public class MultipleChoiceQuestion implements Question {
 		for(int i = 0; i < answers.size(); i++){
 //			htmlContent += Integer.toString(i + 1) + ".";
 			htmlContent += choices[Integer.parseInt(answers.get(i))-1];
+			if (i != answers.size() - 1) {
+				htmlContent += ",";
+			}
 			htmlContent += "&nbsp;";
 		}		
 		htmlContent += "</td><td>";
@@ -168,6 +171,9 @@ public class MultipleChoiceQuestion implements Question {
 		}else{
 			for(int i = 0; i < userAnswers.size(); i++){;
 				htmlContent += choices[Integer.parseInt(userAnswers.get(i)) - 1];
+				if (i != userAnswers.size() - 1) {
+					htmlContent += ",";
+				}
 				htmlContent += "&nbsp;";
 			}	
 
