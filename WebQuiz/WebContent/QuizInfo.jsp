@@ -94,6 +94,7 @@ for (int i = 0; i < numTags; i++) {
 					    	<a href="showProfile?username="<%=creator.getUsername() %>><%=creator.getDisplayName() %></a></li>
 					    <li class="list-group-item">Description: <%= currentQuiz.getQuizDescription() %></li>
 					    <li class="list-group-item">Average Rating: <%= currentQuiz.getQuizRating() %></li>
+					    <li class="list-group-item">Number of Times Taken: <%=currentQuiz.getTimesTaken() %></li>
 					    <li class="list-group-item">Number of Questions: <%=numQuestions %></li>
 					    <li class="list-group-item">Total Score: <%=totalScore %></li>
 					    <li class="list-group-item">Tags: <%=tagsString %></li>

@@ -68,15 +68,14 @@ boolean valid = questionAnswerHash != null && questionsList != null && questionA
 			</div>
 		</div>
 	</div>
-	<div class="col-md-1"></div>
-		<div class="col-md-2">
-			<div>
-			Current Score: <%=tempScore %>
-			</div>
-		</div>
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-7">
+
+				<div>
+					Current Score: <%=tempScore %>
+				</div><br>
+
 				<%if(valid&&currentQuiz.isCorrectedImmediately()){ 
 					//for(int i = 0; i < questions.size(); i++){
 						Question question = questionsList.get(questionsList.size() - 1);
