@@ -319,7 +319,7 @@ page import="objects.*, java.util.ArrayList"%>
 <%
 					}
 %>
-					<a href="/WebQuiz/loginPage.jsp" class="list-group-item">Logout</a>
+					<a href="LogoutServlet" class="list-group-item">Logout</a>
 				</div>
 		</div>
 		<div class="col-md-1"></div>

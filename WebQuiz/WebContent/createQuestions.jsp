@@ -39,7 +39,7 @@ if(Questions != null){
 <%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
-			<div class="col-md-3"></div>
+			<div class="col-md-1"></div>
 			<div class="col-md-7">
 				<h1>
 					Create Questions
@@ -47,7 +47,7 @@ if(Questions != null){
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-1"></div>
 	<div class="col-md-7">
 		<div>
 			<%if(msg != null){ %>
@@ -60,7 +60,7 @@ if(Questions != null){
 				<ul class="nav nav-tabs">
 	  			<li class="active"><a href="#question_response" data-toggle="tab">Question Response</a></li>
 	  			<li><a href="#multiple_choice" data-toggle="tab">Multiple Choice</a></li>
-	  			<li><a href="#filling_blank" data-toggle="tab">Filling the blank</a></li>
+	  			<li><a href="#filling_blank" data-toggle="tab">Fill In The Blank</a></li>
 	  			<li><a href="#picture_response" data-toggle="tab">Picture Response</a></li>
 				</ul>
 			<div class="tab-content">
@@ -83,7 +83,7 @@ if(Questions != null){
 			 			<br>
 						<div class="input-group">
 			 				<span class="input-group-addon">Correct Answer</span>
-			  				<input type="text" name = "answer" class="form-control" placeholder="If you have multiple answers , seperate them with #">
+			  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
 						</div>
 						<br>
 			 			<div class="input-group">
@@ -148,7 +148,7 @@ if(Questions != null){
 			 			<br>
 			 			<div class="input-group">
 			 				<span class="input-group-addon">Score</span>
-			  				<input type="text"  name = "score" class="form-control" placeholder="score">
+			  				<input type="text"  name = "score" class="form-control" placeholder="Score">
 						</div>
 			 			<br>
 						<div class="input-group">
@@ -186,7 +186,7 @@ if(Questions != null){
 			 			<br>
 						<div class="input-group">
 			 				<span class="input-group-addon">Correct Answer</span>
-			  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
+			  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
 						</div>
 						<br>
 			 			<div class="input-group">

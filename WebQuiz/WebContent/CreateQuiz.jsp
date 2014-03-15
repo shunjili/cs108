@@ -42,16 +42,16 @@ if (thisAccount == null) {
 			    <form action="CreateQuizServlet" method="post">
 		    		<div class="input-group">
 		 				<span class="input-group-addon">Quiz name</span>
-		  				<input type="text"  name = "name" class="form-control" placeholder="Quiz name">
+		  				<input type="text"  name = "name" class="form-control" placeholder="Quiz Name">
 					</div>
 		 			 <br>
 		 			 <div class="input-group">
-		 				<span class="input-group-addon">description</span>
-		  				<input type="text"  name = "description" class="form-control" placeholder="description">
+		 				<span class="input-group-addon">Description</span>
+		  				<input type="text"  name = "description" class="form-control" placeholder="Description">
 					</div>
 		 			 <br>
 		 			 <div class="input-group">
-		 				<span class="input-group-addon">category</span>
+		 				<span class="input-group-addon">Category</span>
 		 				<span  class="form-control">
 		 					<select name="category">
 	  							<option value="Common Sense">Common Sense</option>
@@ -64,8 +64,8 @@ if (thisAccount == null) {
 					</div>
 		 			 <br>
 		 			 <div class="input-group">
-		 				<span class="input-group-addon">Tag(Optional)</span>
-		  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag split by #">
+		 				<span class="input-group-addon">Tags (Optional)</span>
+		  				<input type="text" name = "tag" class="form-control" placeholder="Question Tags (split by #)">
 					</div>
 					<br>
 					<div class="input-group">
@@ -84,8 +84,9 @@ if (thisAccount == null) {
 					</div>
 					<br>
 					<div>
-						Correct Immediately works if only one page is checked!
+						Note: Correct Immediately only works if one page is also checked.
 					</div>
+					<br>
 					<button type="submit" class="btn btn-default">Start Adding Questions</button>
 				</form>
 			</div>
