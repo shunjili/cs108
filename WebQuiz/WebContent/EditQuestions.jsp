@@ -55,7 +55,7 @@ page import="objects.*, java.util.ArrayList"
 <%@include file="navbar.html" %>
 	<div class="page-header">
 		<div class="row">
-			<div class="col-md-3"></div>
+			<div class="col-md-1"></div>
 			<div class="col-md-7">
 				<h1>
 					Edit Questions For Quiz <small> </small>
@@ -64,7 +64,7 @@ page import="objects.*, java.util.ArrayList"
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3"></div>
+		<div class="col-md-1"></div>
 
 		<div class="col-md-7">	
 			<div>
