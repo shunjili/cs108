@@ -71,7 +71,10 @@ page import="objects.*, java.util.ArrayList"
 				<%if(msg != null){ %>
 					<%=msg%>
 					<%} %>
-			</div>	
+			</div><br>
+			<div>
+				<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Editing Questions</button></a>
+			</div><br>
 		<%if (Questions != null){%>
 			<%for (int j = 0; j < Questions.size(); j ++){ %>	
 				<div class="panel panel-primary">
@@ -98,54 +101,62 @@ page import="objects.*, java.util.ArrayList"
 							 		<ul class="nav nav-tabs">
 				  						<li class="active"><a href=<%="\"#question_response" + j + "\""%> data-toggle="tab">Question Response</a></li>
 				  						<li><a href=<%="\"#multiple_choice" + j + "\""%> data-toggle="tab">Multiple Choice</a></li>
-				  						<li><a href=<%="\"#filling_blank" + j + "\""%> data-toggle="tab">Filling the blank</a></li>
+				  						<li><a href=<%="\"#filling_blank" + j + "\""%> data-toggle="tab">Fill In The blank</a></li>
 				  						<li><a href=<%="\"#picture_response" + j + "\""%> data-toggle="tab">Picture Response</a></li>
 									</ul>
 									<div class="tab-content"><br>
 				  						<div class="tab-pane active" id=<%="\"question_response" + j + "\""%>>
 								    		<form action="UpdateQuestionInEditQuestionServlet" method="post">
-												<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
-												<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
+								    			<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+												<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 												<input type = "hidden" name = "type" value = "<%= Question.QUESTION_RESPONSE_STR %>">
-				    							<div class="input-group">
-				 									<span class="input-group-addon">Question</span>
-				  									<input type="text"  name = "question" class="form-control" placeholder="Question">
-												</div><br>
-				 			 					<div class="input-group">
-				 									<span class="input-group-addon">Score</span>
-				  									<input type="text"  name = "score" class="form-control" placeholder="score">
-												</div><br>
+						    					<div class="input-group">
+						 							<span class="input-group-addon">Question</span>
+						  							<input type="text"  name = "question" class="form-control" placeholder="Question">
+												</div>
+						 			 			<br>
+									 			<div class="input-group">
+									 				<span class="input-group-addon">Score</span>
+									  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+												</div>
+						
+									 			<br>
 												<div class="input-group">
 									 				<span class="input-group-addon">Correct Answer</span>
-									  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
-												</div><br>
-									 			 <div class="input-group">
-									 				<span class="input-group-addon">Tag(Optional)</span>
+									  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
+												</div>
+												<br>
+									 			<div class="input-group">
+									 				<span class="input-group-addon">Tags (Optional)</span>
 									  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
-												</div><br>
-												<button type="submit" class="btn btn-default">Submit</button>
+												</div>
+												<br>
+												<button type="submit" class="btn btn-default">Add Question</button>
 											</form>
 				  						</div>
 				  						<div class="tab-pane" id=<%="\"multiple_choice" + j + "\""%>>
 				  							<form action="UpdateQuestionInEditQuestionServlet" method="post">
-												<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
-												<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
+				  								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+												<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 												<input type = "hidden" name = "type" value = "<%= Question.MULTIPLE_CHOICE_STR %>">
 									    		<div class="input-group">
 									 				<span class="input-group-addon">Question</span>
 									  				<input type="text"  name = "question" class="form-control" placeholder="Question">
-												</div><br>
+												</div>
+												<br>
 												<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 												<div class="input-group">
 									 				<span class="input-group-addon">Choice <%=i+1 %></span>
-									  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"choice1" + (i+1) + "\"" %>>
-												</div><br>
+									  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"Choice" + (i+1) + "\""%>>
+												</div>
+									 			<br>
 												<%} %>
-									 			 <div class="input-group">
-									 				<span class="input-group-addon">Score</span>
-									  				<input type="text"  name = "score" class="form-control" placeholder="score">
-												</div><br>
 												<div class="input-group">
+									 				<span class="input-group-addon">Score</span>
+									  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+												</div>
+									 			<br>
+									 			<div class="input-group">
 								 					<span class="input-group-addon">Correct Answer</span>
 								 					<span  class="form-control">
 								 						<select name="answer">
@@ -158,40 +169,45 @@ page import="objects.*, java.util.ArrayList"
 												</div>
 								 			 	<br>
 									 			 <div class="input-group">
-									 				<span class="input-group-addon">Tag(Optional)</span>
+									 				<span class="input-group-addon">Tags (Optional)</span>
 									  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
-												</div><br>
-												<button type="submit" class="btn btn-default">Submit</button>	
+												</div>
+												<br>
+												<button type="submit" class="btn btn-default">Add Question</button>	
 							 				</form>
 				  						</div>
 				  						<div class="tab-pane" id=<%="\"filling_blank" + j + "\""%>>
 				  							<form action="UpdateQuestionInEditQuestionServlet" method="post">
-												<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
-												<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
+				  								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+												<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 												<input type = "hidden" name = "type" value = "<%= Question.FILL_IN_BLANK_STR %>">
 									    		<div class="input-group">
 									 				<span class="input-group-addon">Question</span>
 									  				<input type="text"  name = "question" class="form-control" placeholder="Use #### to rerepsent blank to be filled in ">
-												</div><br>
+												</div>
+									 			<br>
 									 			<div class="input-group">
 									 				<span class="input-group-addon">Score</span>
-									  				<input type="text"  name = "score" class="form-control" placeholder="score">
-												</div><br>
+									  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+												</div>
+									 			<br>
 												<div class="input-group">
 									 				<span class="input-group-addon">Correct Answer</span>
-									  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
-												</div><br>
+									  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
+												</div>
+												<br>
 									 			<div class="input-group">
-									 				<span class="input-group-addon">Tag(Optional)</span>
+									 				<span class="input-group-addon">Tags (Optional)</span>
 									  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
-												</div><br>
-												<button type="submit" class="btn btn-default">Submit</button>
+												</div>
+												<br>
+												<button type="submit" class="btn btn-default">Add Question</button>
 							 				</form>
 										</div>
 										<div class="tab-pane" id=<%="\"picture_response" + j + "\""%>>
 						  					<form action="UpdateQuestionInEditQuestionServlet" method="post">
-												<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
-												<input type = "hidden" name = "question_id" value= "<%=Questions.get(j).getQuestionID() %>">
+						  						<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+												<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 												<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">
 									    		<div class="input-group">
 						 							<span class="input-group-addon">Question</span>
@@ -200,21 +216,21 @@ page import="objects.*, java.util.ArrayList"
 						 			 			<br>
 									 			<div class="input-group">
 									 				<span class="input-group-addon">Score</span>
-									  				<input type="text"  name = "score" class="form-control" placeholder="score">
+									  				<input type="text"  name = "score" class="form-control" placeholder="Score">
 												</div>
 									 			<br>
 									 			<div class="input-group">
-									 				<span class="input-group-addon">Picture Resourse</span>
-									  				<input type="text"  name = "description" class="form-control" placeholder="URL for Picture Resourse">
+									 				<span class="input-group-addon">Picture URL</span>
+									  				<input type="text"  name = "description" class="form-control" placeholder="Picture URL">
 												</div>
 									 			<br>
 												<div class="input-group">
 									 				<span class="input-group-addon">Correct Answer</span>
-									  				<input type="text" name = "answer" class="form-control" placeholder="Correct Answer">
+									  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
 												</div>
 												<br>
 									 			<div class="input-group">
-									 				<span class="input-group-addon">Tag(Optional)</span>
+									 				<span class="input-group-addon">Tags (Optional)</span>
 									  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 												</div>
 												<br>
@@ -239,7 +255,6 @@ page import="objects.*, java.util.ArrayList"
 		<%} %>
 		
 		
-		
 		<div class="panel panel-primary">
 			 <div class="panel-heading">Create a New Question</div>
 			 	<div class="panel-body">
@@ -252,56 +267,56 @@ page import="objects.*, java.util.ArrayList"
 					<div class="tab-content"><br>
   						<div class="tab-pane active" id="question_response">
 				    		<form action="AddQuestionInEditQuestionServlet" method="post">
-								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+				    			<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 								<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 								<input type = "hidden" name = "type" value = "<%= Question.QUESTION_RESPONSE_STR %>">
-    							<div class="input-group">
- 									<span class="input-group-addon">Question</span>
-  									<input type="text"  name = "question" class="form-control" placeholder="Question">
-								</div><br>
- 			 					<div class="input-group">
- 									<span class="input-group-addon">Score</span>
-  									<input type="text"  name = "score" class="form-control" placeholder="score">
-								</div><br>
- 			 					<div class="input-group">
- 									<span class="input-group-addon">Description</span>
-  									<input type="text"  name = "description" class="form-control" placeholder="description">
-								</div><br>
+		    					<div class="input-group">
+		 							<span class="input-group-addon">Question</span>
+		  							<input type="text"  name = "question" class="form-control" placeholder="Question">
+								</div>
+		 			 			<br>
+					 			<div class="input-group">
+					 				<span class="input-group-addon">Score</span>
+					  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+								</div>
+		
+					 			<br>
 								<div class="input-group">
 					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
-								</div><br>
-					 			 <div class="input-group">
-					 				<span class="input-group-addon">Tag(Optional)</span>
+					  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
+								</div>
+								<br>
+					 			<div class="input-group">
+					 				<span class="input-group-addon">Tags (Optional)</span>
 					  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
-								</div><br>
-								<button type="submit" class="btn btn-default">Submit</button>
+								</div>
+								<br>
+								<button type="submit" class="btn btn-default">Add Question</button>
 							</form>
   						</div>
   						<div class="tab-pane" id="multiple_choice">
   							<form action="AddQuestionInEditQuestionServlet" method="post">
-								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+  								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 								<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 								<input type = "hidden" name = "type" value = "<%= Question.MULTIPLE_CHOICE_STR %>">
 					    		<div class="input-group">
 					 				<span class="input-group-addon">Question</span>
 					  				<input type="text"  name = "question" class="form-control" placeholder="Question">
-								</div><br>
+								</div>
+								<br>
 								<% for (int i = 0 ; i < Question.MAX_NUM_CHOICES; i++) {%>
 								<div class="input-group">
 					 				<span class="input-group-addon">Choice <%=i+1 %></span>
-					  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"choice1" + (i+1) + "\"" %>>
-								</div><br>
+					  				<input type="text"  name = "choice<%=i%>" class="form-control" placeholder=<%="\"Choice" + (i+1) + "\""%>>
+								</div>
+					 			<br>
 								<%} %>
-					 			 <div class="input-group">
-					 				<span class="input-group-addon">Score</span>
-					  				<input type="text"  name = "score" class="form-control" placeholder="score">
-								</div><br>
-					 			<div class="input-group">
-					 				<span class="input-group-addon">Description</span>
-					  				<input type="text"  name = "description" class="form-control" placeholder="description">
-								</div><br>
 								<div class="input-group">
+					 				<span class="input-group-addon">Score</span>
+					  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+								</div>
+					 			<br>
+					 			<div class="input-group">
 				 					<span class="input-group-addon">Correct Answer</span>
 				 					<span  class="form-control">
 				 						<select name="answer">
@@ -313,44 +328,46 @@ page import="objects.*, java.util.ArrayList"
 				 					</span>
 								</div>
 				 			 	<br>
-					 			<div class="input-group">
-					 				<span class="input-group-addon">Tag(Optional)</span>
+					 			 <div class="input-group">
+					 				<span class="input-group-addon">Tags (Optional)</span>
 					  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
-								</div><br>
-								<button type="submit" class="btn btn-default">Submit</button>	
+								</div>
+								<br>
+								<button type="submit" class="btn btn-default">Add Question</button>
 			 				</form>
   						</div>
   						<div class="tab-pane" id="filling_blank">
   							<form action="AddQuestionInEditQuestionServlet" method="post">
-								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+  								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 								<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 								<input type = "hidden" name = "type" value = "<%= Question.FILL_IN_BLANK_STR %>">
 					    		<div class="input-group">
 					 				<span class="input-group-addon">Question</span>
 					  				<input type="text"  name = "question" class="form-control" placeholder="Use #### to rerepsent blank to be filled in ">
-								</div><br>
+								</div>
+					 			<br>
 					 			<div class="input-group">
 					 				<span class="input-group-addon">Score</span>
-					  				<input type="text"  name = "score" class="form-control" placeholder="score">
-								</div><br>
-					 			<div class="input-group">
-					 				<span class="input-group-addon">Description</span>
-					  				<input type="text"  name = "description" class="form-control" placeholder="description">
-								</div><br>
+					  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+								</div>
+					 			<br>
 								<div class="input-group">
 					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
-								</div><br>
+					  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
+								</div>
+								<br>
 					 			<div class="input-group">
-					 				<span class="input-group-addon">Tag(Optional)</span>
+					 				<span class="input-group-addon">Tags (Optional)</span>
 					  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
-								</div><br>
-								<button type="submit" class="btn btn-default">Submit</button>
+								</div>
+								<br>
+								<button type="submit" class="btn btn-default">Add Question</button>
 			 				</form>
 						</div>
 						<div class="tab-pane" id="picture_response">
+						
 		  					<form action="AddQuestionInEditQuestionServlet" method="post">
-								<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+		  						<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
 								<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
 								<input type = "hidden" name = "type" value = "<%= Question.PIC_RESPONSE_STR %>">
 					    		<div class="input-group">
@@ -360,21 +377,21 @@ page import="objects.*, java.util.ArrayList"
 		 			 			<br>
 					 			<div class="input-group">
 					 				<span class="input-group-addon">Score</span>
-					  				<input type="text"  name = "score" class="form-control" placeholder="score">
+					  				<input type="text"  name = "score" class="form-control" placeholder="Score">
 								</div>
 					 			<br>
 					 			<div class="input-group">
-					 				<span class="input-group-addon">Picture Resourse</span>
-					  				<input type="text"  name = "description" class="form-control" placeholder="URL for Picture Resourse">
+					 				<span class="input-group-addon">Picture URL</span>
+					  				<input type="text"  name = "description" class="form-control" placeholder="Picture URL">
 								</div>
 					 			<br>
 								<div class="input-group">
 					 				<span class="input-group-addon">Correct Answer</span>
-					  				<input type="text" name = "answer" class="form-control" placeholder="If you have multple answers, seperate them with #">
+					  				<input type="text" name = "answer" class="form-control" placeholder="If there are multiple correct answers , seperate them with #">
 								</div>
 								<br>
 					 			<div class="input-group">
-					 				<span class="input-group-addon">Tag(Optional)</span>
+					 				<span class="input-group-addon">Tags (Optional)</span>
 					  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
 								</div>
 								<br>
@@ -384,8 +401,6 @@ page import="objects.*, java.util.ArrayList"
 					</div>
 				</div>
 			</div>
-			<br>
-			<a href = "/WebQuiz/QuizInfo.jsp?id=<%=quiz_id%>"><button type="submit" class="btn btn-default">Finish Creating Questions</button></a>
 		</div>
 			
 	</div>
