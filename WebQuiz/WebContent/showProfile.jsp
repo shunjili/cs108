@@ -110,6 +110,28 @@ if (shownAccount == null) {
 					<p>This is your profile</p>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+<%
+				if (shownAccount.isPrivate()) {
+%>
+					<form action="MakePublicServlet" method="post">
+						<input type="hidden" name="username" value="<%=shownUsername%>">
+						<button type="submit" class="btn btn-default">Make Account Public</button>
+					</form>
+<%
+				} else {
+%>
+					<form action="MakePrivateServlet" method="post">
+						<input type="hidden" name="username" value="<%=shownUsername%>">
+						<button type="submit" class="btn btn-default">Make Account Public</button>
+					</form>
+<%					
+				}
+%>
+				</div>
+			</div>
 <%
 			
 		} else if (areFriends) {
