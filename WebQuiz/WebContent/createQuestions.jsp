@@ -62,6 +62,7 @@ if(Questions != null){
 	  			<li><a href="#multiple_choice" data-toggle="tab">Multiple Choice</a></li>
 	  			<li><a href="#filling_blank" data-toggle="tab">Filling the blank</a></li>
 	  			<li><a href="#picture_response" data-toggle="tab">Picture Response</a></li>
+	  			<li><a href="#multiple_answer_question" data-toggle="tab">Multiple Answer Question</a></li>
 				</ul>
 			<div class="tab-content">
 			<br>
@@ -197,6 +198,39 @@ if(Questions != null){
 						<button type="submit" class="btn btn-default">Add Question</button>
 					</form>
   				</div>
+  				<div class="tab-pane" id="multiple_answer_question">
+    				<form action="CreateQuestionServlet" method="post">
+						<input type = "hidden" name = "quiz_id" value= "<%=quiz_id %>">
+						<input type = "hidden" name = "questionIndex" value = "<%=questionIndex %>">
+						<input type = "hidden" name = "type" value = "<%= Question.QUESTION_RESPONSE_STR %>">
+    					<div class="input-group">
+ 							<span class="input-group-addon">Question</span>
+  							<input type="text"  name = "question" class="form-control" placeholder="Question">
+						</div>
+ 			 			<br>
+			 			<div class="input-group">
+			 				<span class="input-group-addon">Score</span>
+			  				<input type="text"  name = "score" class="form-control" placeholder="Score">
+						</div>
+			 			<br>
+			 			<div class="input-group">
+			 				<span class="input-group-addon">Number of Right Answers</span>
+			  				<input type="text"  name = "description" class="form-control" placeholder="Number of Right Answers">
+						</div>
+			 			<br>
+						<div class="input-group">
+			 				<span class="input-group-addon">Correct Answer</span>
+			  				<input type="text" name = "answer" class="form-control" placeholder="If you have multiple answers , seperate them with #">
+						</div>
+						<br>
+			 			<div class="input-group">
+			 				<span class="input-group-addon">Tags (Optional)</span>
+			  				<input type="text" name = "tag" class="form-control" placeholder="Question Tag">
+						</div>
+						<br>
+						<button type="submit" class="btn btn-default">Add Question</button>
+			 		</form>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -2,6 +2,7 @@ package objects;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MultipleAnswerQuestion implements Question{
 	private String questionID;
@@ -95,14 +96,20 @@ public class MultipleAnswerQuestion implements Question{
 				answers.add(answertemp.get(i).toLowerCase());
 			}
 			//check answer might have multiple user answers 
+			HashSet<String> userAnsTemp = new HashSet<String>();
 			int len = userAnswers.size();
 			boolean flag = true;
-			for(int i = 0; i < len; i++){
+			for(int i = 0; i < len; i++){		
 				// if any of the solutions are not in the answer then it's false
 				if(!answers.contains(userAnswers.get(i).trim().toLowerCase())){
-					flag = false;
-					break;
+					return false;
 				}
+				//System.out.print("haha");
+				//System.out.println(userAnswers.get(i).trim().toLowerCase());
+				if(!userAnsTemp.contains(userAnswers.get(i).trim().toLowerCase())){
+					return false;
+				}
+				userAnsTemp.add(userAnswers.get(i).trim().toLowerCase());
 			}		
 			//return flag
 			return flag;	
