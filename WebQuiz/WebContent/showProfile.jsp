@@ -131,7 +131,7 @@ if (shownAccount == null) {
 				}
 %>
 				</div>
-			</div>
+			</div><br>
 <%
 			
 		} else if (areFriends) {
