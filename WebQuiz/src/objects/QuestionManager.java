@@ -36,6 +36,8 @@ public class QuestionManager {
 			return Question.Type.QUESTION_RESPONSE;
 		} else if (type.equals(Question.PIC_RESPONSE_STR)) {
 			return Question.Type.PIC_RESPONSE;
+		}else if (type.equals(Question.MULTIPLE_ANSWER_STR)) {
+			return Question.Type.MULTIPLE_ANSWER;
 		}else return Question.Type.BAD_TYPE;
 	}
 
@@ -45,6 +47,7 @@ public class QuestionManager {
 		case MULTIPLE_CHOICE: return Question.MULTIPLE_CHOICE_STR;
 		case PIC_RESPONSE: return Question.PIC_RESPONSE_STR;
 		case QUESTION_RESPONSE: return Question.QUESTION_RESPONSE_STR;
+		case MULTIPLE_ANSWER: return Question.MULTIPLE_ANSWER_STR;
 		default: return Question.BAD_TYPE_STR;
 		}
 	}
@@ -338,6 +341,7 @@ public class QuestionManager {
 			case MULTIPLE_CHOICE: return new MultipleChoiceQuestion(question_id, question, description, creator_id, score, timestamp);
 			case QUESTION_RESPONSE: return new QuestionResponseQuestion(question_id, question, description, creator_id, score, timestamp);
 			case PIC_RESPONSE: return new PictureResponseQuestion(question_id, question, description, creator_id, score, timestamp);
+			case MULTIPLE_ANSWER: return new MultipleAnswerQuestion(question_id, question, description, creator_id, score, timestamp);
 			default: return null;
 		}
 	}
