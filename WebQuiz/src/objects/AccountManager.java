@@ -499,6 +499,10 @@ public class AccountManager {
 					+ "=\"" + username + "\" OR " + REQUESTED_COL + "=\"" + username + "\";";
 			stmt.executeUpdate(update);
 			
+			update = "DELETE FROM " + MyDBInfo.MESSAGES_TABLE + " WHERE " + MessageManager.SENDER_COL
+					+ "=\"" + username + "\" OR " + MessageManager.RECEIVER_COL + "=\"" + username + "\";";
+			stmt.executeUpdate(update);
+			
 			
 			con.close();
 			return true;

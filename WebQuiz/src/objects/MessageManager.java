@@ -14,11 +14,11 @@ public class MessageManager {
 	private static final int MAX_USERNAME_LEN = 32;
 
 
-	private static final String ID_COL = "message_id";
-	private static final String SENDER_COL = "sender";
-	private static final String RECEIVER_COL = "receiver";
-	private static final String MESSAGE_COL = "message";
-	private static final String TIMESTAMP_COL = "time_stamp";
+	public static final String ID_COL = "message_id";
+	public static final String SENDER_COL = "sender";
+	public static final String RECEIVER_COL = "receiver";
+	public static final String MESSAGE_COL = "message";
+	public static final String TIMESTAMP_COL = "time_stamp";
 
 
 	public static boolean sendMessage(Message newMsg) {
